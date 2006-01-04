@@ -1,4 +1,4 @@
--> Upgrade Instructions FOr Version 2.00 To Version 2.01
+-> Upgrade Instructions For Version 2.00 To Version 2.01
 ------------------------------------------------------------------
 // Open wp-admin folder
 
@@ -80,6 +80,6 @@ Default: email_link('EMail This Post', 'EMail This Page')
 
 
 
--> Upgrade Instructions FOr Version 1.0x To Version 2.00
+-> Upgrade Instructions For Version 1.0x To Version 2.00
 ------------------------------------------------------------------
 Please follow the instructions in readme-install.txt. This file is just a place holder for future version upgrade.
