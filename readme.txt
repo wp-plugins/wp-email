@@ -7,7 +7,9 @@ Demo	-> http://www.lesterchan.net/blogs/wp-email.php?p=647
 Updated	-> 1st January 2006
 --------------------------------------------------
 
+
 // Version 2.01 (01-01-2006)
+- NEW: Compatible With WordPress 2.0
 - NEW: EMail A Snippet Of The Post Rather Than The Whole Post. Able To Specify The No. Of Words Before Cutting Off
 - NEW: Spam Prevention - Better Checking Of Names, EMail Addresses And Remarks
 - NEW: Spam Prevention - Able To Specify The No. Of Mins Before User Is Allowed To Send A 2nd Article
