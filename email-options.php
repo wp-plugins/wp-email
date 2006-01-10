@@ -108,7 +108,7 @@ function email_default_templates(template) {
 	var default_template;
 	switch(template) {
 		case "subject":
-			default_template = "Recommanded Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
+			default_template = "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
 			break;
 		case "body":
 			default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommanded this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p>\n<p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p>\n<p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>\n%EMAIL_POST_CONTENT%\n<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
