@@ -223,7 +223,7 @@ if(!empty($did_email)) {
 				<?php while (have_posts()) : the_post(); ?>
 						<?php email_form_header(); ?>		
 						<p align="center">
-							Article: <b><?php the_title(); ?></b> Will Be Send To Your Friend.
+							E-Mail A Copy Of <b><?php the_title(); ?></b> To A Friend.
 						</p>
 						<p><b>* Required</b></p>
 						<p>
