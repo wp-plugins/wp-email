@@ -34,11 +34,21 @@ $wpdb->email = $table_prefix . 'email';
 add_action('admin_menu', 'email_menu');
 function email_menu() {
 	if (function_exists('add_menu_page')) {
-		add_menu_page('E-Mail', 'E-Mail', 1, 'email-manager.php');
+		add_menu_page(__('E-Mail'), __('E-Mail'), 'manage_email', 'email-manager.php');
 	}
 	if (function_exists('add_submenu_page')) {
-		add_submenu_page('email-manager.php', __('Manage E-Mail'), __('Manage E-Mail'), 1, 'email-manager.php');
-		add_submenu_page('email-manager.php', __('E-Mail Option'), __('E-Mail Option'), 1, 'email-options.php');
+		add_submenu_page('email-manager.php', __('Manage E-Mail'), __('Manage E-Mail'), 'manage_email', 'email-manager.php');
+		add_submenu_page('email-manager.php', __('E-Mail Option'), __('E-Mail Option'),  'manage_email', 'email-options.php');
+	}
+}
+
+
+### Function: E-Mail Administration Role
+add_action('admin_head', 'email_role');
+function email_role() {
+	if(function_exists('get_role')) {
+		$role = get_role('administrator');
+		$role->add_cap('manage_email');
 	}
 }
 

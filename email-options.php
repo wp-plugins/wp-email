@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.01										|
+|	WordPress 2.0 Plugin: WP-EMail 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -20,6 +20,13 @@
 ### Require Admin
 require_once('admin.php');
 
+
+### Check Whether User Can Manage EMail
+if(!current_user_can('manage_email')) {
+	die('Access Denied');
+}
+
+
 ### Variables Variables Variables
 $title = __('E-Mail Options');
 $this_file = 'email-options.php';
@@ -27,25 +34,10 @@ $parent_file = 'email-manager.php';
 $id = intval($_GET['id']);
 $standalone = 0;
 
+
 ### Require Admin Header
 require("./admin-header.php");
 
-### If User Less Than 8, Don't Let Him Pass
-if ($user_level < 8) {
-	die(__('Access Denied: Insufficient Access'));
-}
-
-### Magic Quotes GPC
-if (get_magic_quotes_gpc()) {
-   function traverse(&$arr) {
-       if(!is_array($arr))
-           return;
-       foreach($arr as $key => $val)
-           is_array($arr[$key]) ? traverse($arr[$key]) : ($arr[$key] = stripslashes($arr[$key]));
-   }
-   $gpc = array(&$_GET, &$_POST, &$_COOKIE);
-   traverse($gpc);
-}
 
 ### If Form Is Submitted
 if($_POST['Submit']) {

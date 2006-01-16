@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.01										|
+|	WordPress 2.0 Plugin: WP-EMail 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -20,14 +20,19 @@
 ### Require Admin
 require_once('admin.php');
 
-### File Variables
+
+### Check Whether User Can Manage EMail
+if(!current_user_can('manage_email')) {
+	die('Access Denied');
+}
+
+
+### Variables Variables Variables
 $title = __('Manage E-Mail');
 $this_file = $parent_file = 'email-manager.php';
 $standalone = 0;
 require("./admin-header.php");
-if ($user_level < 8) {
-	die(__('Access Denied: Insufficient Access'));
-}
+
 
 ### E-Mail Variables
 $email_page = intval($_GET['emailpage']);
@@ -37,17 +42,6 @@ $email_sortorder = trim($_GET['order']);
 $email_sortorder_text = '';
 $email_log_perpage = 20;
 
-### Magic Quotes GPC
-if (get_magic_quotes_gpc()) {
-   function traverse(&$arr) {
-       if(!is_array($arr))
-           return;
-       foreach($arr as $key => $val)
-           is_array($arr[$key]) ? traverse($arr[$key]) : ($arr[$key] = stripslashes($arr[$key]));
-   }
-   $gpc = array(&$_GET, &$_POST, &$_COOKIE);
-   traverse($gpc);
-}
 
 ### Get Order By
 switch($email_sortby) {
@@ -101,6 +95,7 @@ switch($email_sortby) {
 		$email_sortby_text = 'Date';
 }
 
+
 ### Get Sort Order
 switch($email_sortorder) {
 	case 'asc':
@@ -112,6 +107,7 @@ switch($email_sortorder) {
 		$email_sortorder = 'DESC';
 		$email_sortorder_text = 'Descending';
 }
+
 
 ### Form Processing 
 if(!empty($_POST['delete_logs'])) {
@@ -125,17 +121,21 @@ if(!empty($_POST['delete_logs'])) {
 	}
 }
 
+
 ### Get E-Mail Logs Data
 $total_email_success = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Success')."'");
 $total_email_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Failed')."'");
 $total_email = $total_email_success+$total_email_failed;
 
+
 ### Checking $email_page and $offset
 if (empty($email_page) || $email_page == 0) { $email_page = 1; }
 if (empty($offset)) { $offset = 0; }
 
+
 ### Determin $offset
 $offset = ($email_page-1) * $email_log_perpage;
+
 
 ### Determine Max Number Of Polls To Display On Page
 if(($offset + $email_log_perpage) > $total_email) { 
@@ -144,6 +144,7 @@ if(($offset + $email_log_perpage) > $total_email) {
 	$max_on_page = ($offset + $email_log_perpage); 
 }
 
+
 ### Determine Number Of Polls To Display On Page
 if (($offset + 1) > ($total_email)) { 
 	$display_on_page = $total_email; 
@@ -151,8 +152,10 @@ if (($offset + 1) > ($total_email)) {
 	$display_on_page = ($offset + 1); 
 }
 
+
 ### Determing Total Amount Of Pages
 $total_pages = ceil($total_email / $email_log_perpage);
+
 
 ### Get The Logs
 $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sortby $email_sortorder LIMIT $offset, $email_log_perpage");
