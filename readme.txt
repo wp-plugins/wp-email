@@ -1,10 +1,12 @@
 -> Email Plugin For WordPress 2.0
 --------------------------------------------------
-Author	-> Lester 'GaMerZ' Chan
-Email	-> lesterch@singnet.com.sg
-Website	-> http://www.lesterchan.net/
-Demo	-> http://www.lesterchan.net/blogs/wp-email.php?p=647
-Updated	-> 1st February 2006
+Author		-> Lester 'GaMerZ' Chan
+Email		-> lesterch@singnet.com.sg
+Website		-> http://www.lesterchan.net/
+Demo		-> http://www.lesterchan.net/blogs/wp-email.php?p=647
+Documentation	-> http://dev.wp-plugins.org/wiki/wp-email
+Development	-> http://dev.wp-plugins.org/browser/wp-email/
+Updated		-> 1st February 2006
 --------------------------------------------------
 
 
