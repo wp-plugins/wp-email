@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.01										|
+|	WordPress 2.0 Plugin: WP-EMail 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -221,6 +221,7 @@ if(!empty($did_email)) {
 		<?php if (not_spamming()): ?>
 			<?php if (have_posts()) : ?>
 				<?php while (have_posts()) : the_post(); ?>
+					<?php if(not_password_protected()) { ?>
 						<?php email_form_header(); ?>		
 						<p align="center">
 							E-Mail A Copy Of <b><?php the_title(); ?></b> To A Friend.
@@ -249,7 +250,8 @@ if(!empty($did_email)) {
 						<p align="center">
 							<input type="submit" value="     Mail It!     " name="wp-email" class="Buttons" />
 						</p>
-					</form>
+						</form>
+					<?php } else { echo get_the_password_form(); } ?>
 				<?php endwhile; ?>
 			<?php else : ?>
 				<p><b>Invalid Post</b></p>

@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.01										|
+|	WordPress 2.0 Plugin: WP-EMail 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -77,7 +77,12 @@ function email_content_alt() {
 
 ### Function: E-Mail Get The Content
 function get_email_content() {
-	global $pages, $multipage, $numpages;
+	global $pages, $multipage, $numpages, $post;
+	if (!empty($post->post_password)) {
+		if (stripslashes($_COOKIE['wp-postpass_'.COOKIEHASH]) != $post->post_password) {
+			return __('Password Protected Post');
+		}
+	}
 	if($multipage) {
 		for($page = 0; $page < $numpages; $page++) {
 			$content .= $pages[$page];
@@ -104,6 +109,17 @@ function get_email_ipaddress() {
 		$ip_address = $ip_address[0];
 	}
 	return $ip_address;
+}
+
+### Function: Check For Password Protected Post
+function not_password_protected() {
+	global $post;
+	if (!empty($post->post_password)) {
+		if ($_COOKIE['wp-postpass_'.COOKIEHASH] != $post->post_password) {
+			return false;
+		}
+	}
+	return true;
 }
 
 ### Function: Check Vaild Name (AlphaNumeric With Spaces Allowed Only)

@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.01										|
+|	WordPress 2.0 Plugin: WP-EMail 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -10,7 +10,7 @@
 |	- http://www.lesterchan.net													|
 |																							|
 |	File Information:																	|
-|	- Install WP-EMail 2.01															|
+|	- Install WP-EMail 2.02															|
 |	- wp-admin/email-install.php													|
 |																							|
 +----------------------------------------------------------------+
@@ -68,7 +68,7 @@ if(empty($wpdb->email)) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>WordPress &rsaquo; <?php _e('Installing'); ?> &rsaquo; <?php _e('WP-Email 2.01'); ?></title>
+	<title>WordPress &rsaquo; <?php _e('Installing'); ?> &rsaquo; <?php _e('WP-Email 2.02'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style type="text/css" media="screen">
 		@import url( wp-admin.css );
@@ -76,8 +76,8 @@ if(empty($wpdb->email)) {
 </head>
 <body>
 	<div class="wrap"> 
-		<h2><?php _e('Install WP-Email 2.01'); ?></h2>
-		<p><?php _e('This install script will install WP-EMail 2.01 for your Wordpress'); ?>.</p>
+		<h2><?php _e('Install WP-Email 2.02'); ?></h2>
+		<p><?php _e('This install script will install WP-EMail 2.02 for your Wordpress'); ?>.</p>
 		<p>
 			<?php _e('This install script will be doing the following:'); ?><br />
 			<b>&raquo;</b> <b>1</b> <?php _e('table will be created namely <b>email</b>.'); ?><br />
@@ -130,12 +130,12 @@ if(empty($wpdb->email)) {
 					echo "<br /><b>&raquo;</b> <b>$optimize_table_count / 2</b> Tables Optimized.</p>";
 					// Check Whether Install Is Successful
 					if($create_table_count == 1 && $insert_options_count == 11) {
-						echo '<p align="center"><b>'.__('WP-EMail 2.01 Installed Successfully.').'</b><br />'.__('Please remember to delete this file before proceeding on.').'</p>';
+						echo '<p align="center"><b>'.__('WP-EMail 2.02 Installed Successfully.').'</b><br />'.__('Please remember to delete this file before proceeding on.').'</p>';
 					}
 				} else {
 		?>
 				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-					<div align="center"><input type="submit" name="install" value="<?php _e('Click Here To Install WP-EMail 2.01'); ?>" class="button"></div>
+					<div align="center"><input type="submit" name="install" value="<?php _e('Click Here To Install WP-EMail 2.02'); ?>" class="button"></div>
 				</form>
 		<?php
 				}

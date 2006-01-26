@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Enable You To Send Your Webblog Entry To A Friend.
-Version: 2.01
+Version: 2.02
 Author: GaMerZ
 Author URI: http://www.lesterchan.net
 */

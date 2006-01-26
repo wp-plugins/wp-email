@@ -12,6 +12,7 @@ Updated		-> 1st February 2006
 
 // Version 2.02 (01-02-2006)
 - NEW: Added 'manage_email' Capabilities To Administrator Role
+- FIXED: Able To View Password Protected Blog
 
 // Version 2.01 (01-01-2006)
 - NEW: Compatible With WordPress 2.0

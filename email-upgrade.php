@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-Email 2.01										|
+|	WordPress 2.0 Plugin: WP-Email 2.02										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -10,7 +10,7 @@
 |	- http://www.lesterchan.net													|
 |																							|
 |	File Information:																	|
-|	- Upgrade WP-EMail From 2.0x To 2.01	 									|
+|	- Upgrade WP-EMail From 2.0x To 2.02	 									|
 |	- wp-admin/email-upgrade.php												|
 |																							|
 +----------------------------------------------------------------+
@@ -32,7 +32,7 @@ $insert_options[] ="INSERT INTO $wpdb->options VALUES (0, 0, 'email_snippet', 'Y
 $wpdb->show_errors = false;
 $check_upgrade = $wpdb->get_var("SELECT option_value FROM $wpdb->options WHERE option_name = 'email_snippet'");
 if($check_upgrade) {
-	$error = __('You Had Already Installed WP-EMail 2.01.');
+	$error = __('You Had Already Installed WP-EMail 2.02.');
 }
 if(empty($wpdb->email)) {
 	$error = __('Please Define The email in wp-settings.php.');
@@ -42,7 +42,7 @@ if(empty($wpdb->email)) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>WordPress &rsaquo; <?php _e('Upgrading'); ?> &rsaquo; <?php _e('WP-EMail 2.01'); ?></title>
+	<title>WordPress &rsaquo; <?php _e('Upgrading'); ?> &rsaquo; <?php _e('WP-EMail 2.02'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<style type="text/css" media="screen">
 		@import url( wp-admin.css );
@@ -50,8 +50,8 @@ if(empty($wpdb->email)) {
 </head>
 <body>
 	<div class="wrap"> 
-		<h2><?php _e('Upgrading WP-EMail 2.01'); ?></h2>
-		<p><?php _e('This upgrade script will upgrade WP-EMail to version 2.01 for your Wordpress.'); ?></p>
+		<h2><?php _e('Upgrading WP-EMail 2.02'); ?></h2>
+		<p><?php _e('This upgrade script will upgrade WP-EMail to version 2.02 for your Wordpress.'); ?></p>
 		<p>
 			<?php _e('This upgrade script will be doing the following:'); ?><br />
 			<b>&raquo;</b> <b>2</b> <?php _e('options will be inserted into the <b>options</b> table.'); ?><br />
@@ -89,12 +89,12 @@ if(empty($wpdb->email)) {
 					echo "<br /><b>&raquo;</b> <b>$optimize_table_count / 4</b> Tables Optimized.</p>";
 					// Check Whether Install Is Successful
 					if($insert_options_count == 2) {
-						echo '<p align="center"><b>'.__('WP-EMail Upgraded Successfully To Version 2.01.').'</b><br />'.__('Please remember to delete this file before proceeding on.').'</p>';
+						echo '<p align="center"><b>'.__('WP-EMail Upgraded Successfully To Version 2.02.').'</b><br />'.__('Please remember to delete this file before proceeding on.').'</p>';
 					}
 				} else {
 		?>
 				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-					<div align="center"><input type="submit" name="upgrade" value="<?php _e('Click Here To Upgrade WP-EMail 2.01'); ?>" class="button"></div>
+					<div align="center"><input type="submit" name="upgrade" value="<?php _e('Click Here To Upgrade WP-EMail 2.02'); ?>" class="button"></div>
 				</form>
 		<?php
 				}
