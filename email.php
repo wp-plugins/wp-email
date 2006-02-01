@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Enable You To Send Your Webblog Entry To A Friend.
-Version: 2.02
+Version: 2.03
 Author: GaMerZ
 Author URI: http://www.lesterchan.net
 */
@@ -30,6 +30,7 @@ Author URI: http://www.lesterchan.net
 ### E-Mail Table Name
 $wpdb->email = $table_prefix . 'email';
 
+
 ### Function: E-Mail Administration Menu
 add_action('admin_menu', 'email_menu');
 function email_menu() {
@@ -44,11 +45,13 @@ function email_menu() {
 
 
 ### Function: E-Mail Administration Role
-add_action('admin_head', 'email_role');
+add_action('activate_email.php', 'email_role');
 function email_role() {
-	if(function_exists('get_role')) {
+	if($_GET['action'] == 'activate' && $_GET['plugin'] == 'email.php') {
 		$role = get_role('administrator');
-		$role->add_cap('manage_email');
+		if(!$role->has_cap('manage_email')) {
+			$role->add_cap('manage_email');
+		}
 	}
 }
 

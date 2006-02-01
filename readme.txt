@@ -6,9 +6,12 @@ Website		-> http://www.lesterchan.net/
 Demo		-> http://www.lesterchan.net/blogs/wp-email.php?p=647
 Documentation	-> http://dev.wp-plugins.org/wiki/wp-email
 Development	-> http://dev.wp-plugins.org/browser/wp-email/
-Updated		-> 1st February 2006
+Updated		-> 1st March 2006
 --------------------------------------------------
 
+
+// Version 2.03 (01-03-2006)
+- NEW: Improved On 'manage_email' Capabilities
 
 // Version 2.02 (01-02-2006)
 - NEW: Added 'manage_email' Capabilities To Administrator Role
