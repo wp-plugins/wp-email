@@ -92,7 +92,6 @@ function get_email_content() {
 	}
 	$content = wptexturize($content);
 	$content = convert_smilies($content);
-	$content = convert_chars($content);
 	$content = wpautop($content);
 	return $content;
 }

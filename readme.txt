@@ -12,6 +12,8 @@ Updated		-> 1st March 2006
 
 // Version 2.03 (01-03-2006)
 - NEW: Improved On 'manage_email' Capabilities
+- FIXED: Charset Is Now UTF-8
+- FIXED: Quotes Not Displaying
 
 // Version 2.02 (01-02-2006)
 - NEW: Added 'manage_email' Capabilities To Administrator Role
