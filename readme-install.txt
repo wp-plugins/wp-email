@@ -1,22 +1,10 @@
 -> Installation Instructions
 ------------------------------------------------------------------
-// Open wp-admin folder
+// Open wp-content/plugins folder
 
 Put:
 ------------------------------------------------------------------
-email-install.php
-email-manager.php
-email-options.php
-------------------------------------------------------------------
-
-
-// Open wp-includes folder
-
-Put:
-------------------------------------------------------------------
-class-phpmailer.php
-class-smtp.php
-functions-wp-email.php
+Folder: email
 ------------------------------------------------------------------
 
 
@@ -28,15 +16,7 @@ wp-email.php
 ------------------------------------------------------------------
 
 
-// Open wp-content/plugins folder
-
-Put:
-------------------------------------------------------------------
-email.php
-------------------------------------------------------------------
-
-
-// Activate the email plugin
+// Activate the WP-EMail plugin
 
 Note: 
 ------------------------------------------------------------------
@@ -45,14 +25,11 @@ Options -> Permalinks Options -> Update Permalink Structure
 ------------------------------------------------------------------
 
 
-// Run wp-admin/email-install.php
 
-Note:
+
+
+-> Usage Instructions
 ------------------------------------------------------------------
-Please remember to remove email-install.php after installation.
-------------------------------------------------------------------
-
-
 // Open wp-content/themes/<YOUR THEME NAME>/index.php 
 
 Find:
@@ -71,31 +48,60 @@ Default: email_link('EMail This Post', 'EMail This Page')
 ------------------------------------------------------------------
 
 
-// Alternative placing of "Email this post"
-
-// Open wp-content/themes/<YOUR THEME NAME>/post.php 
-
-// Decide if link goes at header or footer of each post!
-
-------------------------------------------------------------------
-Add:
-------------------------------------------------------------------
-<?php if(function_exists('wp_email')) { email_link(); } ?>
-------------------------------------------------------------------
-Note:
-------------------------------------------------------------------
-Dependant on your theme
-------------------------------------------------------------------
-
-
-// Please proceed on to set your options
-
 // Log into http://www.yourdomain.com/wordpressdirectory/wp-admin/ 
 
-Click on the new main category "E-Mail"
+Click "E-Mail"
+------------------------------------------------------------------
+Modify your settings accordingly.
 ------------------------------------------------------------------
 Note:
 ------------------------------------------------------------------
 If the mailserver/type settings are not correct, WP-Email will
 NOT function.
+------------------------------------------------------------------
+
+
+// E-Mail Stats (You can place it anywhere outside the WP Loop)
+
+// To Display Most E-Mailed Posts
+Use:
+------------------------------------------------------------------
+<?php if (function_exists('get_mostemailed')): ?>
+	<?php get_mostemailed(); ?>
+<?php endif; ?>
+------------------------------------------------------------------
+Note:
+------------------------------------------------------------------
+The default limit is 10, you can change the limit by doing this
+<?php get_mostemailed(<LIMIT>); ?>
+------------------------------------------------------------------
+
+
+// To Display Total E-Mails Sent
+
+Use:
+------------------------------------------------------------------
+<?php if (function_exists('get_emails')): ?>
+	<?php get_emails(); ?>
+<?php endif; ?>
+------------------------------------------------------------------
+
+
+// To Display Total E-Mails Sent Successfully
+
+Use:
+------------------------------------------------------------------
+<?php if (function_exists('get_emails_success')): ?>
+	<?php get_emails_success(); ?>
+<?php endif; ?>
+------------------------------------------------------------------
+
+
+// To Display Total E-Mails Sent Unsuccessfully
+
+Use:
+------------------------------------------------------------------
+<?php if (function_exists('get_emails_failed')): ?>
+	<?php get_emails_failed(); ?>
+<?php endif; ?>
 ------------------------------------------------------------------

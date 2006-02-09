@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.02										|
+|	WordPress 2.0 Plugin: WP-EMail 2.03										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -11,14 +11,10 @@
 |																							|
 |	File Information:																	|
 |	- Configure E-Mail Options														|
-|	- wp-admin/email-options.php													|
+|	- wp-content/plugins/email/email-options.php							|
 |																							|
 +----------------------------------------------------------------+
 */
-
-
-### Require Admin
-require_once('admin.php');
 
 
 ### Check Whether User Can Manage EMail
@@ -27,47 +23,41 @@ if(!current_user_can('manage_email')) {
 }
 
 
-### Variables Variables Variables
-$title = __('E-Mail Options');
-$this_file = 'email-options.php';
-$parent_file = 'email-manager.php';
+### E-Mail Variables
+$base_name = plugin_basename('email/email-options.php');
+$base_page = 'admin.php?page='.$base_name;
 $id = intval($_GET['id']);
-$standalone = 0;
-
-
-### Require Admin Header
-require("./admin-header.php");
 
 
 ### If Form Is Submitted
 if($_POST['Submit']) {
-	$email_smtp_name = addslashes(strip_tags(trim($_POST['email_smtp_name'])));
-	$email_smtp_password = addslashes(strip_tags(trim($_POST['email_smtp_password'])));
-	$email_smtp_server = addslashes(strip_tags(trim($_POST['email_smtp_server'])));
+	$email_smtp_name = strip_tags(trim($_POST['email_smtp_name']));
+	$email_smtp_password = strip_tags(trim($_POST['email_smtp_password']));
+	$email_smtp_server = strip_tags(trim($_POST['email_smtp_server']));
 	$email_smtp = "$email_smtp_name|$email_smtp_password|$email_smtp_server";
-	$email_contenttype = addslashes(strip_tags(trim($_POST['email_contenttype'])));
-	$email_mailer =addslashes(strip_tags(trim($_POST['email_mailer'])));
+	$email_contenttype = strip_tags(trim($_POST['email_contenttype']));
+	$email_mailer = strip_tags(trim($_POST['email_mailer']));
 	$email_snippet = intval(trim($_POST['email_snippet']));
 	$email_interval = intval(trim($_POST['email_interval']));
-	$email_template_subject = addslashes(strip_tags(trim($_POST['email_template_subject'])));
-	$email_template_body = addslashes(trim($_POST['email_template_body']));
-	$email_template_bodyalt = addslashes(trim($_POST['email_template_bodyalt']));
-	$email_template_sentsuccess = addslashes(trim($_POST['email_template_sentsuccess']));
-	$email_template_sentfailed = addslashes(trim($_POST['email_template_sentfailed']));
-	$email_template_error = addslashes(trim($_POST['email_template_error']));
+	$email_template_subject = strip_tags(trim($_POST['email_template_subject']));
+	$email_template_body = trim($_POST['email_template_body']);
+	$email_template_bodyalt = trim($_POST['email_template_bodyalt']);
+	$email_template_sentsuccess = trim($_POST['email_template_sentsuccess']);
+	$email_template_sentfailed = trim($_POST['email_template_sentfailed']);
+	$email_template_error = trim($_POST['email_template_error']);
 	$update_email_queries = array();
 	$update_email_text = array();
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_smtp' WHERE option_name = 'email_smtp'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_contenttype' WHERE option_name = 'email_contenttype'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_mailer' WHERE option_name = 'email_mailer'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_snippet' WHERE option_name = 'email_snippet'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_interval' WHERE option_name = 'email_interval'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_subject' WHERE option_name = 'email_template_subject'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_body' WHERE option_name = 'email_template_body'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_bodyalt' WHERE option_name = 'email_template_bodyalt'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_sentsuccess' WHERE option_name = 'email_template_sentsuccess'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_sentfailed' WHERE option_name = 'email_template_sentfailed'";
-	$update_email_queries[] = "UPDATE $wpdb->options SET option_value = '$email_template_error' WHERE option_name = 'email_template_error'";
+	$update_email_queries[] = update_option('email_smtp', $email_smtp);
+	$update_email_queries[] = update_option('email_contenttype', $email_contenttype);
+	$update_email_queries[] = update_option('email_mailer', $email_mailer);
+	$update_email_queries[] = update_option('email_snippet', $email_snippet);
+	$update_email_queries[] = update_option('email_interval', $email_interval);
+	$update_email_queries[] = update_option('email_template_subject', $email_template_subject);
+	$update_email_queries[] = update_option('email_template_body', $email_template_body);
+	$update_email_queries[] = update_option('email_template_bodyalt', $email_template_bodyalt);
+	$update_email_queries[] = update_option('email_template_sentsuccess', $email_template_sentsuccess);
+	$update_email_queries[] = update_option('email_template_sentfailed', $email_template_sentfailed);
+	$update_email_queries[] = update_option('email_template_error', $email_template_error);
 	$update_email_text[] = __('SMTP Information');
 	$update_email_text[] = __('E-Mail Content Type');
 	$update_email_text[] = __('Send E-Mail Method');
@@ -82,10 +72,8 @@ if($_POST['Submit']) {
 	$i=0;
 	$text = '';
 	foreach($update_email_queries as $update_email_query) {
-		$updating = $wpdb->query($update_email_query);
-		if($updating) {
+		if($update_email_query) {
 			$text .= '<font color="green">'.$update_email_text[$i].' '.__('Updated').'</font><br />';
-			wp_cache_flush();
 		}
 		$i++;
 	}
@@ -103,7 +91,7 @@ function email_default_templates(template) {
 			default_template = "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
 			break;
 		case "body":
-			default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p>\n<p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p>\n<p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>\n%EMAIL_POST_CONTENT%\n<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
+			default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p><p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p><p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
 			break;
 		case "bodyalt":
 			default_template = "Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%";
@@ -112,10 +100,10 @@ function email_default_templates(template) {
 			default_template = "<p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p>";
 			break;
 		case "sentfailed":
-			default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>»</b> %EMAIL_ERROR_MSG%</p>";
+			default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
 			break;
 		case "error":
-			default_template = "<p>An Error Has Occured<br /><b>»</b> %EMAIL_ERROR_MSG%</p>";
+			default_template = "<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
 			break;
 	}
 	document.getElementById("email_template_" + template).value = default_template;
@@ -125,7 +113,7 @@ function email_default_templates(template) {
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <div class="wrap"> 
 	<h2><?php echo $title; ?></h2> 
-	<form name="email_options" method="post" action="email-options.php"> 
+	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
 		<fieldset class="options">
 			<legend><?php _e('SMTP Settings'); ?></legend>
 			<?php
@@ -135,15 +123,15 @@ function email_default_templates(template) {
 			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
 				 <tr valign="top">
 					<th scope="row" width="40%"><?php _e('SMTP Username:'); ?></th>
-					 <td><input type="text" name="email_smtp_name" value="<?echo $smtp_info[0]; ?>" size="30" /></td>
+					 <td><input type="text" name="email_smtp_name" value="<?php echo  $smtp_info[0]; ?>" size="30" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" width="40%"><?php _e('SMTP Password:'); ?></th>
-					 <td><input type="text" name="email_smtp_password" value="<?echo $smtp_info[1]; ?>" size="30" /></td>
+					 <td><input type="text" name="email_smtp_password" value="<?php echo  $smtp_info[1]; ?>" size="30" /></td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" width="40%"><?php _e('SMTP Server:'); ?></th>
-					 <td><input type="text" name="email_smtp_server" value="<?echo $smtp_info[2]; ?>" size="30" /><br />You may leave the above fields blank if you do not use a SMTP server.</td>
+					 <td><input type="text" name="email_smtp_server" value="<?php echo  $smtp_info[2]; ?>" size="30" /><br />You may leave the above fields blank if you do not use a SMTP server.</td>
 				</tr>
 			</table>
 		</fieldset>
@@ -172,11 +160,11 @@ function email_default_templates(template) {
 				</tr>
 				<tr valign="top"> 
 					<th scope="row" width="40%"><?php _e('No. Of Words Before Cutting Off'); ?></th>
-					<td><input type="text" id="email_snippet" name="email_snippet" value="<?echo get_settings('email_snippet'); ?>" size="5" maxlength="5"><br />Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.</td> 
+					<td><input type="text" id="email_snippet" name="email_snippet" value="<?php echo  get_settings('email_snippet'); ?>" size="5" maxlength="5"><br />Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.</td> 
 				</tr>
 				<tr valign="top"> 
 					<th scope="row" width="40%"><?php _e('Interval Between E-Mails'); ?></th>
-					<td><input type="text" id="email_interval" name="email_interval" value="<?echo get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
+					<td><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
 				</tr>
 			</table>
 		</fieldset>
@@ -336,5 +324,4 @@ function email_default_templates(template) {
 			<input type="submit" name="Submit" value="<?php _e('Update Options'); ?> &raquo;" /> 
 		</p>
 	</form> 
-</div> 
-<?php include('./admin-footer.php') ?>
+</div>

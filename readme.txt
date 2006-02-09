@@ -1,4 +1,4 @@
--> Email Plugin For WordPress 2.0
+-> EMail Plugin For WordPress 2.0
 --------------------------------------------------
 Author		-> Lester 'GaMerZ' Chan
 Email		-> lesterch@singnet.com.sg
@@ -8,10 +8,19 @@ Documentation	-> http://dev.wp-plugins.org/wiki/wp-email
 Development	-> http://dev.wp-plugins.org/browser/wp-email/
 Updated		-> 1st March 2006
 --------------------------------------------------
+Note: I have changed almost the whole structure of WP-EMail, So if there is any bug,
+please contact me immediately.
+--------------------------------------------------
 
 
 // Version 2.03 (01-03-2006)
 - NEW: Improved On 'manage_email' Capabilities
+- NEW: Neater Structure
+- NEW: No More Install/Upgrade File, It Will Install/Upgrade When You Activate The Plugin
+- NEW: Added E-Mail Stats Function
+- NEW: Per Page Option In email-manager.php
+- FIXED: Now Paginate Have Sort Options
+- FIXED: Default Mailer Type Is Now PHP
 - FIXED: Charset Is Now UTF-8
 - FIXED: Quotes Not Displaying
 

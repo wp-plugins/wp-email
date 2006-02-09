@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.02										|
+|	WordPress 2.0 Plugin: WP-EMail 2.03										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -11,14 +11,10 @@
 |																							|
 |	File Information:																	|
 |	- Manages Your E-Mail Logs													|
-|	- wp-admin/email-manager.php												|
+|	- wp-content/plugins/email/email-manager.php							|
 |																							|
 +----------------------------------------------------------------+
 */
-
-
-### Require Admin
-require_once('admin.php');
 
 
 ### Check Whether User Can Manage EMail
@@ -27,20 +23,28 @@ if(!current_user_can('manage_email')) {
 }
 
 
-### Variables Variables Variables
-$title = __('Manage E-Mail');
-$this_file = $parent_file = 'email-manager.php';
-$standalone = 0;
-require("./admin-header.php");
-
-
 ### E-Mail Variables
+$base_name = plugin_basename('email/email-manager.php');
+$base_page = 'admin.php?page='.$base_name;
 $email_page = intval($_GET['emailpage']);
 $email_sortby = trim($_GET['by']);
 $email_sortby_text = '';
 $email_sortorder = trim($_GET['order']);
 $email_sortorder_text = '';
-$email_log_perpage = 20;
+$email_log_perpage = intval($_GET['perpage']);
+$email_sort_url = '';
+
+
+### Form Sorting URL
+if(!empty($email_sortby)) {
+	$email_sort_url .= '&amp;by='.$email_sortby;
+}
+if(!empty($email_sortorder)) {
+	$email_sort_url .= '&amp;order='.$email_sortorder;
+}
+if(!empty($email_log_perpage)) {
+	$email_sort_url .= '&amp;perpage='.$email_log_perpage;
+}
 
 
 ### Get Order By
@@ -129,8 +133,9 @@ $total_email = $total_email_success+$total_email_failed;
 
 
 ### Checking $email_page and $offset
-if (empty($email_page) || $email_page == 0) { $email_page = 1; }
-if (empty($offset)) { $offset = 0; }
+if(empty($email_page) || $email_page == 0) { $email_page = 1; }
+if(empty($offset)) { $offset = 0; }
+if(empty($email_log_perpage) || $email_log_perpage == 0) { $email_log_perpage = 20; }
 
 
 ### Determin $offset
@@ -226,7 +231,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="left" width="50%">
 					<?php
 						if($email_page > 1 && ((($email_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_email)) {
-							echo '<b>&laquo;</b> <a href="email-manager.php?emailpage='.($email_page-1).'" title="&laquo; '.__('Previous Page').'">'.__('Previous Page').'</a>';
+							echo '<b>&laquo;</b> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).'" title="&laquo; '.__('Previous Page').'">'.__('Previous Page').'</a>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -235,7 +240,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="right" width="50%">
 					<?php
 						if($email_page >= 1 && ((($email_page*$email_log_perpage)+1) <=  $total_email)) {
-							echo '<a href="email-manager.php?emailpage='.($email_page+1).'" title="'.__('Next Page').' &raquo;">'.__('Next Page').'</a> <b>&raquo;</b>';
+							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).'" title="'.__('Next Page').' &raquo;">'.__('Next Page').'</a> <b>&raquo;</b>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -244,28 +249,28 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<?php _e('Pages'); ?> (<?echo $total_pages; ?>) :
+					<?php _e('Pages'); ?> (<?php echo $total_pages; ?>) :
 					<?php
 						if ($email_page >= 4) {
-							echo '<b><a href="email-manager.php?emailpage=1" title="'.__('Go to First Page').'">&laquo; '.__('First').'</a></b> ... ';
+							echo '<b><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.$email_sort_url.'" title="'.__('Go to First Page').'">&laquo; '.__('First').'</a></b> ... ';
 						}
 						if($email_page > 1) {
-							echo ' <b><a href="email-manager.php?emailpage='.($email_page-1).'" title="&laquo; '.__('Go to Page').' '.($email_page-1).'">&laquo;</a></b> ';
+							echo ' <b><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page').' '.($email_page-1).'">&laquo;</a></b> ';
 						}
 						for($i = $email_page - 2 ; $i  <= $email_page +2; $i++) {
 							if ($i >= 1 && $i <= $total_pages) {
 								if($i == $email_page) {
 									echo "<b>[$i]</b> ";
 								} else {
-									echo '<a href="email-manager.php?emailpage='.($i).'" title="'.__('Page').' '.$i.'">'.$i.'</a> ';
+									echo '<a href="'.$base_page.'&amp;emailpage='.($i).$email_sort_url.'" title="'.__('Page').' '.$i.'">'.$i.'</a> ';
 								}
 							}
 						}
 						if($email_page < $total_pages) {
-							echo ' <b><a href="email-manager.php?emailemailpage='.($email_page+1).'" title="'.__('Go to Page').' '.($email_page+1).' &raquo;">&raquo;</a></b> ';
+							echo ' <b><a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Go to Page').' '.($email_page+1).' &raquo;">&raquo;</a></b> ';
 						}
 						if (($email_page+2) < $total_pages) {
-							echo ' ... <b><a href="email-manager.php?emailemailpage='.($total_pages).'" title="'.__('Go to Last Page').'">'.__('Last').' &raquo;</a></b>';
+							echo ' ... <b><a href="'.$base_page.'&amp;emailpage='.($total_pages).$email_sort_url.'" title="'.__('Go to Last Page').'">'.__('Last').' &raquo;</a></b>';
 						}
 					?>
 				</td>
@@ -276,7 +281,8 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			}
 		?>
 	<br />
-	<form name="sort_email_logs" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+		<input type="hidden" name="page" value="<?php echo $base_name; ?>">
 		Sort Options:&nbsp;&nbsp;&nbsp;
 		<select name="by" size="1">
 			<option value="id"<?php if($email_sortby == 'email_id') { echo ' selected="selected"'; }?>>ID</option>
@@ -296,6 +302,18 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		<select name="order" size="1">
 			<option value="asc"<?php if($email_sortorder == 'ASC') { echo ' selected="selected"'; }?>>Ascending</option>
 			<option value="desc"<?php if($email_sortorder == 'DESC') { echo ' selected="selected"'; } ?>>Descending</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;
+		<select name="perpage" size="1">
+		<?php
+			for($i=10; $i <= 100; $i+=10) {
+				if($email_log_perpage == $i) {
+					echo "<option value=\"$i\" selected=\"selected\">Per Page: $i</option>\n";
+				} else {
+					echo "<option value=\"$i\">Per Page: $i</option>\n";
+				}
+			}
+		?>
 		</select>
 		<input type="submit" value="Sort" class="Button" />
 	</form>
@@ -324,15 +342,10 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 <div class="wrap">
 	<h2><?php _e('Delete E-Mail Logs'); ?></h2>
 	<center>
-		<form name="delete_email_logs" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+		<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 			<b>Are You Sure You Want To Delete All E-Mail Logs?</b><br /><br />
 			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;Yes<br /><br />
 			<input type="submit" name="delete_logs" value="Delete" class="Button" onclick="return confirm('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose \'Cancel\' to stop, \'OK\' to delete.')" />
 		</form>
 	</center>
 </div>
-
-<?php
-### Require Admin Footer
-require_once 'admin-footer.php';
-?>

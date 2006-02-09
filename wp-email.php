@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.02										|
+|	WordPress 2.0 Plugin: WP-EMail 2.03										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -32,10 +32,10 @@ add_action('init', 'get_email_content');
 add_filter('wp_title', 'email_pagetitle');
 
 ### Require PHP-Mailer Class
-require(ABSPATH.WPINC.'/class-phpmailer.php');
+require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
 
 ### Require WP-EMail Functions
-require(ABSPATH.WPINC.'/functions-wp-email.php');
+require(ABSPATH.'wp-content/plugins/email/functions-wp-email.php');
 
 ### If User Click On Mail
 if(!empty($did_email)) {
