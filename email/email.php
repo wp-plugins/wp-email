@@ -99,9 +99,9 @@ function get_emails() {
 
 
 ### Function: Get EMail Total Sent Success
-function get_emails_success() {
-	global $wpdb; 
-	if(function_exists('wp_email')) {
+if(!function_exists('get_emails_success')) {
+	function get_emails_success() {
+		global $wpdb; 
 		$totalemails_success = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Success')."'");
 		echo $totalemails_success;
 	}
@@ -109,9 +109,9 @@ function get_emails_success() {
 
 
 ### Function: Get EMail Total Sent Failed
-function get_emails_failed() {
-	global $wpdb; 
-	if(function_exists('wp_email')) {
+if(!function_exists('get_emails_failed')) {
+	function get_emails_failed() {
+		global $wpdb; 
 		$totalemails_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '". __('Failed')."'");
 		echo $totalemails_failed;
 	}
@@ -119,18 +119,26 @@ function get_emails_failed() {
 
 
 ### Function: Get Most E-Mailed
-function get_mostemailed($limit = 10) {
-	global $wpdb, $post;
-	if(function_exists('wp_email')) {
-		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS 'email_total' FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND (post_status = 'publish' OR post_status = 'static') AND post_password = '' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
+if(!function_exists('get_mostemailed')) {
+	function get_mostemailed($mode = '', $limit = 10) {
+		global $wpdb, $post;
+		$where = '';
+		if($mode == 'post') {
+				$where = 'post_status = \'publish\'';
+		} elseif($mode == 'page') {
+				$where = 'post_status = \'static\'';
+		} else {
+				$where = '(post_status = \'publish\' OR post_status = \'static\')';
+		}
+		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS 'email_total' FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
 		if($mostemailed) {
 			foreach ($mostemailed as $post) {
 					$post_title = htmlspecialchars(stripslashes($post->post_title));
 					$email_total = intval($post->email_total);
-					echo "- <a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."<br />";
+					echo "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."</li>";
 			}
 		} else {
-			_e('N/A');
+			echo '<li>'.__('N/A').'</li>';
 		}
 	}
 }
