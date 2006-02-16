@@ -31,7 +31,7 @@ Overwrite:
 wp-email.php
 ------------------------------------------------------------------
 
-// Deavtivate and activate back WP-EMail plugin
+// Activate WP-EMail plugin
 
 Note: 
 ------------------------------------------------------------------
