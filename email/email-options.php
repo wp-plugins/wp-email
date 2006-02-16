@@ -110,7 +110,7 @@ function email_default_templates(template) {
 </script>
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <div class="wrap"> 
-	<h2><?php echo $title; ?></h2> 
+	<h2><?php _e('E-Mail Options'); ?></h2> 
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
 		<fieldset class="options">
 			<legend><?php _e('SMTP Settings'); ?></legend>

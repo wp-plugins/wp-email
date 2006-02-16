@@ -39,7 +39,7 @@ function email_menu() {
 	}
 	if (function_exists('add_submenu_page')) {
 		add_submenu_page('email/email-manager.php', __('Manage E-Mail'), __('Manage E-Mail'), 'manage_email', 'email/email-manager.php');
-		add_submenu_page('email/email-manager.php', __('E-Mail Option'), __('E-Mail Option'),  'manage_email', 'email/email-options.php');
+		add_submenu_page('email/email-manager.php', __('E-Mail Options'), __('E-Mail Options'),  'manage_email', 'email/email-options.php');
 	}
 }
 
