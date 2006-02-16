@@ -96,6 +96,7 @@ if(!empty($did_email)) {
 			$post_date = the_date('jS F Y @ H:i', '', '', false);
 			$post_category = email_category();
 			$post_category_alt = strip_tags($post_category);
+			$post_excerpt = get_the_excerpt();
 			$post_content .= email_content();
 			$post_content_alt = email_content_alt();
 						
@@ -122,6 +123,7 @@ if(!empty($did_email)) {
 			$template_email_body = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_body);
 			$template_email_body = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_body);
 			$template_email_body = str_replace("%EMAIL_POST_CATEGORY%", $post_category, $template_email_body);
+			$template_email_body = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_body);
 			$template_email_body = str_replace("%EMAIL_POST_CONTENT%", $post_content, $template_email_body);
 			$template_email_body = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_body);
 			$template_email_body = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_body);
@@ -138,11 +140,12 @@ if(!empty($did_email)) {
 			$template_email_bodyalt = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_POST_CATEGORY%", $post_category_alt, $template_email_bodyalt);
+			$template_email_bodyalt = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_POST_CONTENT%", $post_content_alt, $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_bodyalt);
-			
+
 			// PHP Mailer Variables
 			$mail = new PHPMailer();
 			$mail->From     = $youremail;

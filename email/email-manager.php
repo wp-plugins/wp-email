@@ -173,14 +173,14 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<p><?php _e('Sorted By'); ?> <b><?php echo $email_sortby_text;?></b> <?php _e('In'); ?> <b><?php echo $email_sortorder_text;?></b> <?php _e('Order'); ?></p>
 	<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 	<tr>
-		<th scope="col" width="2%"><?php _e('ID'); ?></th>
-		<th scope="col" width="16%"><?php _e('From'); ?></th>
-		<th scope="col" width="16%"><?php _e('To'); ?></th>
-		<th scope="col" width="15%"><?php _e('Remarks'); ?></th>
-		<th scope="col" width="16%"><?php _e('Date / Time'); ?></th>
-		<th scope="col" width="14%"><?php _e('IP / Host'); ?></th>
-		<th scope="col" width="16%"><?php _e('Post Title'); ?></th>
-		<th scope="col" width="5%"><?php _e('Status'); ?></th>
+		<th width="2%"><?php _e('ID'); ?></th>
+		<th width="16%"><?php _e('From'); ?></th>
+		<th width="16%"><?php _e('To'); ?></th>
+		<th width="15%"><?php _e('Remarks'); ?></th>
+		<th width="16%"><?php _e('Date / Time'); ?></th>
+		<th width="14%"><?php _e('IP / Host'); ?></th>
+		<th width="16%"><?php _e('Post Title'); ?></th>
+		<th width="5%"><?php _e('Status'); ?></th>
 	</tr>
 	<?php
 		if($email_logs) {
@@ -223,7 +223,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	</table>
 		<!-- <Paging> -->
 		<?php
-			if($total_email > 0) {
+			if($total_pages > 1) {
 		?>
 		<br />
 		<table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -315,7 +315,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			}
 		?>
 		</select>
-		<input type="submit" value="Sort" class="Button" />
+		<input type="submit" value="Sort" class="button" />
 	</form>
 </div>
 
@@ -324,15 +324,15 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<h2><?php _e('E-Mail Logs Stats'); ?></h2>
 	<table border="0" cellspacing="3" cellpadding="3">
 	<tr>
-		<th align="left" scope="row"><?php _e('Total E-Mails:'); ?></th>
+		<th align="left"><?php _e('Total E-Mails:'); ?></th>
 		<td align="left"><?php echo number_format($total_email); ?></td>
 	</tr>
 	<tr>
-		<th align="left" scope="row"><?php _e('Total E-Mail Sent:'); ?></th>
+		<th align="left"><?php _e('Total E-Mail Sent:'); ?></th>
 		<td align="left"><?php echo number_format($total_email_success); ?></td>
 	</tr>
 	<tr>
-		<th align="left" scope="row"><?php _e('Total E-Mail Failed:'); ?></th>
+		<th align="left"><?php _e('Total E-Mail Failed:'); ?></th>
 		<td align="left"><?php echo number_format($total_email_failed); ?></td>
 	</tr>
 	</table>
@@ -341,11 +341,11 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 <!-- Delete E-Mail Logs -->
 <div class="wrap">
 	<h2><?php _e('Delete E-Mail Logs'); ?></h2>
-	<center>
+	<div align="center">
 		<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 			<b>Are You Sure You Want To Delete All E-Mail Logs?</b><br /><br />
 			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;Yes<br /><br />
-			<input type="submit" name="delete_logs" value="Delete" class="Button" onclick="return confirm('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose \'Cancel\' to stop, \'OK\' to delete.')" />
+			<input type="submit" name="delete_logs" value="Delete" class="button" onclick="return confirm('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose \'Cancel\' to stop, \'OK\' to delete.')" />
 		</form>
-	</center>
+	</div>
 </div>

@@ -26,7 +26,6 @@ if(!current_user_can('manage_email')) {
 ### E-Mail Variables
 $base_name = plugin_basename('email/email-options.php');
 $base_page = 'admin.php?page='.$base_name;
-$id = intval($_GET['id']);
 
 
 ### If Form Is Submitted
@@ -108,7 +107,6 @@ function email_default_templates(template) {
 	}
 	document.getElementById("email_template_" + template).value = default_template;
 }
-
 </script>
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <div class="wrap"> 
@@ -120,27 +118,27 @@ function email_default_templates(template) {
 				$smtp_info = get_settings('email_smtp');
 				$smtp_info = explode('|', $smtp_info);
 			?>
-			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
-					<th scope="row" width="40%"><?php _e('SMTP Username:'); ?></th>
-					 <td><input type="text" name="email_smtp_name" value="<?php echo  $smtp_info[0]; ?>" size="30" /></td>
+					<th align="left" width="20%"><?php _e('SMTP Username:'); ?></th>
+					<td align="left"><input type="text" name="email_smtp_name" value="<?php echo $smtp_info[0]; ?>" size="30" /></td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" width="40%"><?php _e('SMTP Password:'); ?></th>
-					 <td><input type="text" name="email_smtp_password" value="<?php echo  $smtp_info[1]; ?>" size="30" /></td>
+					<th align="left" width="20%"><?php _e('SMTP Password:'); ?></th>
+					<td align="left"><input type="text" name="email_smtp_password" value="<?php echo $smtp_info[1]; ?>" size="30" /></td>
 				</tr>
 				<tr valign="top">
-					<th scope="row" width="40%"><?php _e('SMTP Server:'); ?></th>
-					 <td><input type="text" name="email_smtp_server" value="<?php echo  $smtp_info[2]; ?>" size="30" /><br />You may leave the above fields blank if you do not use a SMTP server.</td>
+					<th align="left" width="20%"><?php _e('SMTP Server:'); ?></th>
+					<td align="left"><input type="text" name="email_smtp_server" value="<?php echo $smtp_info[2]; ?>" size="30" /><br />You may leave the above fields blank if you do not use a SMTP server.</td>
 				</tr>
 			</table>
 		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('E-Mail Settings'); ?></legend>
-			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
-					<th scope="row" width="40%"><?php _e('E-Mail Content Type:'); ?></th>
-					 <td>
+					<th align="left" width="30%"><?php _e('E-Mail Content Type:'); ?></th>
+					 <td align="left">
 						<select name="email_contenttype" size="1">
 							<option value="text/plain"<?php selected('text/plain', get_settings('email_contenttype')); ?>><?php _e('Plain Text'); ?></option>
 							<option value="text/html"<?php selected('text/html', get_settings('email_contenttype')); ?>><?php _e('HTML'); ?></option>
@@ -148,8 +146,8 @@ function email_default_templates(template) {
 					</td>
 				</tr>
 				<tr valign="top"> 
-					<th scope="row" width="40%"><?php _e('Method Used To Send E-Mail'); ?></th>
-					<td>
+					<th align="left" width="30%"><?php _e('Method Used To Send E-Mail:'); ?></th>
+					<td align="left">
 						<select name="email_mailer" size="1">
 							<option value="php"<?php selected('php', get_settings('email_mailer')); ?>><?php _e('PHP'); ?></option>
 							<option value="sendmail"<?php selected('sendmail', get_settings('email_mailer')); ?>><?php _e('SendMail'); ?></option>
@@ -159,18 +157,18 @@ function email_default_templates(template) {
 					</td> 
 				</tr>
 				<tr valign="top"> 
-					<th scope="row" width="40%"><?php _e('No. Of Words Before Cutting Off'); ?></th>
-					<td><input type="text" id="email_snippet" name="email_snippet" value="<?php echo  get_settings('email_snippet'); ?>" size="5" maxlength="5"><br />Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.</td> 
+					<th align="left" width="30%"><?php _e('No. Of Words Before Cutting Off:'); ?></th>
+					<td align="left"><input type="text" id="email_snippet" name="email_snippet" value="<?php echo  get_settings('email_snippet'); ?>" size="5" maxlength="5"><br />Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.</td> 
 				</tr>
 				<tr valign="top"> 
-					<th scope="row" width="40%"><?php _e('Interval Between E-Mails'); ?></th>
-					<td><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
+					<th align="left" width="30%"><?php _e('Interval Between E-Mails:'); ?></th>
+					<td align="left"><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
 				</tr>
 			</table>
 		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('Template Variables'); ?></legend>
-			<table width="100%" cellspacing="2" cellpadding="5" align="center"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				<tr>
 					<td><b>%EMAIL_YOUR_NAME%</b> - <?php _e('Display the sender\'s name'); ?></td>
 					<td><b>%EMAIL_POST_TITLE%</b> - <?php _e('Display the post\'s title'); ?></td>
@@ -189,27 +187,27 @@ function email_default_templates(template) {
 				</tr>
 				<tr>
 					<td><b>%EMAIL_FRIEND_EMAIL%</b> - <?php _e('Display the friend\'s email'); ?></td>
-					<td><b>%EMAIL_POST_CONTENT%</b> - <?php _e('Display the post\'s content'); ?></td>
+					<td><b>%EMAIL_POST_EXCERPT%</b> - <?php _e('Display the post\'s excerpt'); ?><</td>
 				</tr>
 				<tr>
 					<td><b>%EMAIL_ERROR_MSG%</b> - <?php _e('Display the error message'); ?></td>
+					<td><b>%EMAIL_POST_CONTENT%</b> - <?php _e('Display the post\'s content'); ?></td>
+				</tr>
+				<tr>
 					<td><b>%EMAIL_BLOG_NAME%</b> - <?php _e('Display the blog\'s name'); ?></td>
-				</tr>
-				<tr>
-					<td>&nbsp</td>
-					<td><b>%EMAIL_BLOG_URL%</b> - <?php _e('Display the blog\'s url'); ?></td>
-				</tr>
-				<tr>
-					<td>&nbsp</td>
 					<td><b>%EMAIL_PERMALINK%</b> - <?php _e('Display the permalink of the post'); ?></td>
+				</tr>
+				<tr>
+					<td><b>%EMAIL_BLOG_URL%</b> - <?php _e('Display the blog\'s url'); ?></td>
+					<td>&nbsp;</td>
 				</tr>
 			</table>
 		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('E-Mail Templates'); ?></legend>
-			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
-					<td width="30%" align="left">
+					<td align="left" width="30%">
 						<b><?php _e('E-Mail Subject:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
@@ -223,10 +221,10 @@ function email_default_templates(template) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('subject');" class="button" />
 					</td>
-					<td width="70%" align="right"><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo stripslashes(get_settings('email_template_subject')); ?>" size="62" /></td>
+					<td align="left"><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo stripslashes(get_settings('email_template_subject')); ?>" size="82" /></td>
 				</tr>
 				<tr valign="top"> 
-					<td width="30%" align="left">
+					<td align="left" width="30%">
 						<b><?php _e('E-Mail Body:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
@@ -238,16 +236,17 @@ function email_default_templates(template) {
 						- %EMAIL_POST_AUTHOR%<br />
 						- %EMAIL_POST_DATE%<br />
 						- %EMAIL_POST_CATEGORY%<br />
+						- %EMAIL_POST_EXCERPT%<br />
 						- %EMAIL_POST_CONTENT%<br />
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('body');" class="button" />
 					</td>
-					<td width="70%" align="right"><textarea cols="60" rows="15" id="email_template_body" name="email_template_body"><?php echo stripslashes(get_settings('email_template_body')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo stripslashes(get_settings('email_template_body')); ?></textarea></td> 
 				</tr>
 				<tr valign="top"> 
-					<td width="30%" align="left">
+					<td align="left" width="30%">
 						<b><?php _e('E-Mail Alternate Body:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
@@ -259,21 +258,22 @@ function email_default_templates(template) {
 						- %EMAIL_POST_AUTHOR%<br />
 						- %EMAIL_POST_DATE%<br />
 						- %EMAIL_POST_CATEGORY%<br />
+						- %EMAIL_POST_EXCERPT%<br />
 						- %EMAIL_POST_CONTENT%<br />
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('bodyalt');" class="button" />
 					</td>
-					<td width="70%" align="right"><textarea cols="60" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo stripslashes(get_settings('email_template_bodyalt')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo stripslashes(get_settings('email_template_bodyalt')); ?></textarea></td> 
 				</tr>
 			</table>
 		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('After Sending E-Mail Templates'); ?></legend>
-			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
-					<td width="30%" align="left">
+					<td align="left" width="30%">
 						<b><?php _e('Sent Successfully:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_FRIEND_NAME%<br />
@@ -284,10 +284,10 @@ function email_default_templates(template) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('sentsuccess');" class="button" />
 					</td>
-					<td width="70%" align="right"><textarea cols="60" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo stripslashes(get_settings('email_template_sentsuccess')); ?></textarea></td>
+					<td align="left"><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo stripslashes(get_settings('email_template_sentsuccess')); ?></textarea></td>
 				</tr>
 				<tr valign="top"> 
-					<td width="30%" align="left">
+					<td align="left" width="30%">
 						<b><?php _e('Sent Failed:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_FRIEND_NAME%<br />
@@ -299,16 +299,16 @@ function email_default_templates(template) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('sentfailed');" class="button" />
 					</td>
-					<td width="70%" align="right"><textarea cols="60" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo stripslashes(get_settings('email_template_sentfailed')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo stripslashes(get_settings('email_template_sentfailed')); ?></textarea></td> 
 				</tr>
 			</table>
 		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('E-Mail Misc Templates'); ?></legend>
-			<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
-					<td width="30%" align="left">
-						<b><?php _e('E-Mail Error'); ?></b><br /><br />
+					<td align="left" width="30%">
+						<b><?php _e('E-Mail Error:'); ?></b><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_ERROR_MSG%<br />
 						- %EMAIL_BLOG_NAME%<br />
@@ -316,12 +316,12 @@ function email_default_templates(template) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('error');" class="button" />
 					</td>
-					<td width="70%" align="right"><textarea cols="60" rows="10" id="email_template_error" name="email_template_error"><?php echo stripslashes(get_settings('email_template_error')); ?></textarea></td>
+					<td align="left"><textarea cols="80" rows="10" id="email_template_error" name="email_template_error"><?php echo stripslashes(get_settings('email_template_error')); ?></textarea></td>
 				</tr>
 			</table>
 		</fieldset>
-		<p class="submit"> 
-			<input type="submit" name="Submit" value="<?php _e('Update Options'); ?> &raquo;" /> 
-		</p>
+		<div align="center">
+			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options'); ?>" /> 
+		</div>
 	</form> 
 </div>
