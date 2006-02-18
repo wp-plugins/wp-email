@@ -88,6 +88,32 @@ function email_link($text_post = 'Email This Post', $text_page = 'EMail This Pag
 }
 
 
+### Function: Display E-Mail Image Link
+function email_link_image() {
+	global $id;
+	$using_permalink = get_settings('permalink_structure');
+	$permalink = get_permalink();
+	if(file_exists(ABSPATH.'/wp-content/plugins/email/images/email.gif')) {
+		$email_image = '<img src="'.get_settings('siteurl').'/wp-content/plugins/email/images/email.gif" alt="E-Mail This Post/Page" />';
+	} else {
+		$email_image = 'E-Mail';
+	}
+	if(!empty($using_permalink)) {
+		if(is_page()) {
+			echo '<a href="'.$permalink.'emailpage/">'.$email_image.'</a>';
+		} else {
+			echo '<a href="'.$permalink.'email/">'.$email_image.'</a>';
+		}
+	} else {
+		if(is_page()) {
+			echo '<a href="'.get_settings('home').'/wp-email.php?page_id='.$id.'">'.$email_image.'</a>';
+		} else {
+			echo '<a href="'.get_settings('home').'/wp-email.php?p='.$id.'">'.$email_image.'</a>';
+		}
+	}
+}
+
+
 ### Function: Get EMail Total Sent
 function get_emails() {
 	global $wpdb;

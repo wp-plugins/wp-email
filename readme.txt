@@ -20,6 +20,7 @@ please contact me immediately.
 - NEW: Added E-Mail Stats Function
 - NEW: Per Page Option In email-manager.php
 - NEW: Added Excerpt As A Template Variable
+- NEW: Added EMail Image With email_link_image()
 - FIXED: Now Paginate Have Sort Options
 - FIXED: Default Mailer Type Is Now PHP
 - FIXED: Charset Is Now UTF-8
