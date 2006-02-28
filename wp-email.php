@@ -77,14 +77,12 @@ if(!empty($did_email)) {
 			if(!empty($error)) {
 				$error = substr($error, 20);
 				get_header();
-				echo '<div id="content" class="narrowcolumn">'."\n";
 				$template_email_error = stripslashes(get_settings('email_template_error'));
 				$template_email_error = str_replace("%EMAIL_ERROR_MSG%", $error, $template_email_error);
 				$template_email_error = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_error);
 				$template_email_error = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_error);
 				$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);
 				echo $template_email_error;
-				echo '</div>'."\n";
 				get_sidebar();
 				get_footer();
 				exit();
@@ -168,7 +166,6 @@ if(!empty($did_email)) {
 				$email_status = __('Success');
 				get_header();
 				// Template For Sent Successfully
-				echo '<div id="content" class="narrowcolumn">'."\n";
 				$template_email_sentsuccess = stripslashes(get_settings('email_template_sentsuccess'));
 				$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentsuccess);
 				$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentsuccess);
@@ -177,7 +174,6 @@ if(!empty($did_email)) {
 				$template_email_sentsuccess = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentsuccess);
 				$template_email_sentsuccess = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentsuccess);
 				echo $template_email_sentsuccess;
-				echo '</div>'."\n";
 				get_sidebar();
 				get_footer();
 
@@ -186,7 +182,6 @@ if(!empty($did_email)) {
 				$email_status = __('Failed');
 				get_header();
 				// Template For Sent Failed
-				echo '<div id="content" class="narrowcolumn">'."\n";
 				$template_email_sentfailed = stripslashes(get_settings('email_template_sentfailed'));
 				$template_email_sentfailed = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentfailed);
 				$template_email_sentfailed = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentfailed);
@@ -196,7 +191,6 @@ if(!empty($did_email)) {
 				$template_email_sentfailed = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentfailed);
 				$template_email_sentfailed = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentfailed);
 				echo $template_email_sentfailed;
-				echo '</div>'."\n";
 				get_sidebar();
 				get_footer();
 			}

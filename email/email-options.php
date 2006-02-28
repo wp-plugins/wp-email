@@ -96,13 +96,13 @@ function email_default_templates(template) {
 			default_template = "Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%";
 			break;
 		case "sentsuccess":
-			default_template = "<p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p>";
+			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>";
 			break;
 		case "sentfailed":
-			default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
+			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
 			break;
 		case "error":
-			default_template = "<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
+			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
 			break;
 	}
 	document.getElementById("email_template_" + template).value = default_template;

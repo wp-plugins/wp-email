@@ -216,9 +216,9 @@ function create_email_table() {
 	'%EMAIL_POST_CONTENT%'."\n".
 	'Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%'."\n".
 	'URL to article: %EMAIL_PERMALINK%', 'Template For E-Mail Alternate Body');
-	add_option('email_template_sentsuccess', '<p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p>', 'Template For E-Mail That Is Sent Successfully');
-	add_option('email_template_sentfailed', '<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent');
-	add_option('email_template_error', '<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error');
+	add_option('email_template_sentsuccess', '<div id="content" class="narrowcolumn"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p>', 'Template For E-Mail That Is Sent Successfully</div>');
+	add_option('email_template_sentfailed', '<div id="content" class="narrowcolumn"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent</div>');
+	add_option('email_template_error', '<div id="content" class="narrowcolumn"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error</div>');
 	add_option('email_interval', 10, 'The Number Of Minutes Before The User Can E-Mail The Next Article');
 	add_option('email_snippet', 100, 'Enable Snippet Feature For Your E-Mail?');
 	// Set 'manage_email' Capabilities To Administrator	
