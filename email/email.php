@@ -184,7 +184,7 @@ function wp_email() {
 add_action('activate_email/email.php', 'create_email_table');
 function create_email_table() {
 	global $wpdb;
-	include(ABSPATH.'/wp-admin/upgrade-functions.php');
+	include_once(ABSPATH.'/wp-admin/upgrade-functions.php');
 	// Create E-Mail Table
 	$create_table = "CREATE TABLE $wpdb->email (".
 							"email_id int(10) NOT NULL auto_increment,".
