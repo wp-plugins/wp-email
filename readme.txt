@@ -6,12 +6,16 @@ Website		-> http://www.lesterchan.net/
 Demo		-> http://www.lesterchan.net/blogs/wp-email.php?p=647
 Documentation	-> http://dev.wp-plugins.org/wiki/wp-email
 Development	-> http://dev.wp-plugins.org/browser/wp-email/
-Updated		-> 1st March 2006
+Updated		-> 1st April 2006
 --------------------------------------------------
 Note: I have changed almost the whole structure of WP-EMail, So if there is any bug,
 please contact me immediately.
 --------------------------------------------------
 
+
+// Version 2.04 (01-04-2006)
+- NEW: Ability To Sent To Multiple EMails (Config Via Admin Panel)
+- NEW: Added wp-email-popup.php For Using WP-EMail In A Pop Up Window
 
 // Version 2.03 (01-03-2006)
 - NEW: Improved On 'manage_email' Capabilities

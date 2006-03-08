@@ -46,8 +46,14 @@ The first value you pass in is the text for emailing post.
 The second value is the text for emailing page.
 Default: email_link('EMail This Post', 'EMail This Page')
 
-If you want to use an image/icon instead, replace email_link() 
-with email_link_image()
+If you want to use an image/icon instead, replace email_link(); 
+with email_link_image();
+
+If you want to use a popup window, replace email_link();
+with email_popup(); for normal link or email_popup_image(); for image/icon.
+
+If you are having templates problem, I recommend you to use the popup
+window option instead.
 ------------------------------------------------------------------
 
 

@@ -1,3 +1,38 @@
+-> Upgrade Instructions For Version 2.03 To Version 2.04
+------------------------------------------------------------------
+// Deactivate WP-EMail plugin
+
+
+// Open wp-content/plugins folder
+
+Overwrite:
+------------------------------------------------------------------
+Folder: email
+------------------------------------------------------------------
+
+
+// Open root Wordpress folder
+
+Overwrite:
+------------------------------------------------------------------
+wp-email.php
+------------------------------------------------------------------
+
+Put:
+------------------------------------------------------------------
+wp-email-popup.php
+------------------------------------------------------------------
+
+
+// Activate WP-EMail plugin
+
+
+// Refer to readme-install.txt for further usage instructions
+
+
+
+
+
 -> Upgrade Instructions For Version 1.0x To Version 2.03
 ------------------------------------------------------------------
 // Deactivate WP-EMail plugin

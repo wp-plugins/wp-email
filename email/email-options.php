@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.03										|
+|	WordPress 2.0 Plugin: WP-EMail 2.04										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -38,6 +38,7 @@ if($_POST['Submit']) {
 	$email_mailer = strip_tags(trim($_POST['email_mailer']));
 	$email_snippet = intval(trim($_POST['email_snippet']));
 	$email_interval = intval(trim($_POST['email_interval']));
+	$email_multiple = intval(trim($_POST['email_multiple']));
 	$email_template_subject = strip_tags(trim($_POST['email_template_subject']));
 	$email_template_body = trim($_POST['email_template_body']);
 	$email_template_bodyalt = trim($_POST['email_template_bodyalt']);
@@ -51,6 +52,7 @@ if($_POST['Submit']) {
 	$update_email_queries[] = update_option('email_mailer', $email_mailer);
 	$update_email_queries[] = update_option('email_snippet', $email_snippet);
 	$update_email_queries[] = update_option('email_interval', $email_interval);
+	$update_email_queries[] = update_option('email_multiple', $email_multiple);
 	$update_email_queries[] = update_option('email_template_subject', $email_template_subject);
 	$update_email_queries[] = update_option('email_template_body', $email_template_body);
 	$update_email_queries[] = update_option('email_template_bodyalt', $email_template_bodyalt);
@@ -62,6 +64,7 @@ if($_POST['Submit']) {
 	$update_email_text[] = __('Send E-Mail Method');
 	$update_email_text[] = __('Snippet Option');
 	$update_email_text[] = __('Interval Option');
+	$update_email_text[] = __('Multiple E-Mails Option');
 	$update_email_text[] = __('Subject Template');
 	$update_email_text[] = __('Body Template');
 	$update_email_text[] = __('Alternate Body Template');
@@ -102,7 +105,7 @@ function email_default_templates(template) {
 			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
 			break;
 		case "error":
-			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
+			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p><p><a href=\"#\" onclick=\"javascript:history.go(-1); return false;\">&laquo; Go Back</a></p></div>";
 			break;
 	}
 	document.getElementById("email_template_" + template).value = default_template;
@@ -163,6 +166,10 @@ function email_default_templates(template) {
 				<tr valign="top"> 
 					<th align="left" width="30%"><?php _e('Interval Between E-Mails:'); ?></th>
 					<td align="left"><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
+				</tr>
+				<tr valign="top"> 
+					<th align="left" width="30%"><?php _e('Max Number Of Multiple E-Mails:'); ?></th>
+					<td align="left"><input type="text" id="email_multiple" name="email_multiple" value="<?php echo  get_settings('email_multiple'); ?>" size="5" maxlength="3"><br />Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go.</td> 
 				</tr>
 			</table>
 		</fieldset>
