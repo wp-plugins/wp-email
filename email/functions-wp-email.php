@@ -90,9 +90,7 @@ function get_email_content() {
 	} else {
 		$content = $pages[0];
 	}
-	$content = wptexturize($content);
-	$content = convert_smilies($content);
-	$content = wpautop($content);
+	$content = apply_filters('the_content', $content);
 	return $content;
 }
 
