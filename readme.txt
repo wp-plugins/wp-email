@@ -16,6 +16,8 @@ please contact me immediately.
 // Version 2.04 (01-04-2006)
 - NEW: Ability To Sent To Multiple EMails (Config Via Admin Panel)
 - NEW: Added wp-email-popup.php For Using WP-EMail In A Pop Up Window
+- NEW: Combined functions-wp-email.php With email.php
+- NEW: Moved wp-email.php/wp-email-popup.php To Plugin Folder
 
 // Version 2.03 (01-03-2006)
 - NEW: Improved On 'manage_email' Capabilities
