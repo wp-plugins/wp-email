@@ -13,27 +13,20 @@ Folder: email
 
 // Open root Wordpress folder
 
-Overwrite:
+Delete:
 ------------------------------------------------------------------
 wp-email.php
-------------------------------------------------------------------
-
-Put:
-------------------------------------------------------------------
-wp-email-popup.php
 ------------------------------------------------------------------
 
 
 // Activate WP-EMail plugin
 
 
-// Refer to readme-install.txt for further usage instructions
+// Go to 'WP-Admin -> EMail -> EMail Options' and restore all the template variables to Default
 
 
 
-
-
--> Upgrade Instructions For Version 1.0x To Version 2.03
+-> Upgrade Instructions For Version 1.0x To Version 2.04
 ------------------------------------------------------------------
 // Deactivate WP-EMail plugin
 
@@ -56,14 +49,6 @@ wp-includes/functions-wp-email.php
 Put:
 ------------------------------------------------------------------
 Folder: email
-------------------------------------------------------------------
-
-
-// Open root Wordpress folder
-
-Overwrite:
-------------------------------------------------------------------
-wp-email.php
 ------------------------------------------------------------------
 
 
