@@ -25,6 +25,16 @@ wp-email.php
 // Go to 'WP-Admin -> EMail -> EMail Options' and restore all the template variables to Default
 
 
+// Tutorial On How To Integrate wp-email.php With Your Theme
+
+Go To:
+------------------------------------------------------------------
+http://www.lesterchan.net/wordpress/tutorials/integrating/
+------------------------------------------------------------------
+
+
+
+
 
 -> Upgrade Instructions For Version 1.0x To Version 2.04
 ------------------------------------------------------------------

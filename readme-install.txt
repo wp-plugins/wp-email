@@ -17,6 +17,12 @@ Options -> Permalinks Options -> Update Permalink Structure
 ------------------------------------------------------------------
 
 
+// Tutorial On How To Integrate wp-email.php With Your Theme
+
+Go To:
+------------------------------------------------------------------
+http://www.lesterchan.net/wordpress/tutorials/integrating/
+------------------------------------------------------------------
 
 
 
