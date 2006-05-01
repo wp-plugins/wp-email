@@ -368,7 +368,7 @@ class PHPMailer
             case "sendmail":
                 $result = $this->SendmailSend($header, $body);
                 break;
-            case "mail":
+            case "php":
                 $result = $this->MailSend($header, $body);
                 break;
             case "smtp":
