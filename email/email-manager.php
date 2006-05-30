@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.04										|
+|	WordPress 2.0 Plugin: WP-EMail 2.05										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -68,10 +68,6 @@ switch($email_sortby) {
 	case 'toemail':
 		$email_sortby = 'email_friendemail';
 		$email_sortby_text = 'To E-Mail';
-		break;
-	case 'remarks':
-		$email_sortby = 'email_yourremarks';
-		$email_sortby_text = 'Remarks';
 		break;
 	case 'postid':
 		$email_sortby = 'email_postid';
@@ -173,14 +169,13 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<p><?php _e('Sorted By'); ?> <b><?php echo $email_sortby_text;?></b> <?php _e('In'); ?> <b><?php echo $email_sortorder_text;?></b> <?php _e('Order'); ?></p>
 	<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 	<tr>
-		<th width="2%"><?php _e('ID'); ?></th>
-		<th width="16%"><?php _e('From'); ?></th>
-		<th width="16%"><?php _e('To'); ?></th>
-		<th width="15%"><?php _e('Remarks'); ?></th>
-		<th width="16%"><?php _e('Date / Time'); ?></th>
-		<th width="14%"><?php _e('IP / Host'); ?></th>
-		<th width="16%"><?php _e('Post Title'); ?></th>
-		<th width="5%"><?php _e('Status'); ?></th>
+		<th width="5%"><?php _e('ID'); ?></th>
+		<th width="17%"><?php _e('From'); ?></th>
+		<th width="17%"><?php _e('To'); ?></th>
+		<th width="17%"><?php _e('Date / Time'); ?></th>
+		<th width="17%"><?php _e('IP / Host'); ?></th>
+		<th width="17%"><?php _e('Post Title'); ?></th>
+		<th width="10%"><?php _e('Status'); ?></th>
 	</tr>
 	<?php
 		if($email_logs) {
@@ -194,7 +189,6 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$email_id = intval($email_log->email_id);
 				$email_yourname = stripslashes($email_log->email_yourname);
 				$email_youremail = stripslashes($email_log->email_youremail);
-				$email_yourremarks = stripslashes($email_log->email_yourremarks);
 				$email_friendname = stripslashes($email_log->email_friendname);
 				$email_friendemail = stripslashes($email_log->email_friendemail);
 				$email_postid = intval($email_log->email_postid);
@@ -208,7 +202,6 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				echo "<td>$email_id</td>\n";
 				echo "<td>$email_yourname<br />$email_youremail</td>\n";
 				echo "<td>$email_friendname<br />$email_friendemail</td>\n";
-				echo "<td>$email_yourremarks</td>\n";
 				echo "<td>$email_date<br />$email_time</td>\n";
 				echo "<td>$email_ip<br />$email_host</td>\n";
 				echo "<td>$email_posttitle</td>\n";
@@ -217,7 +210,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$i++;
 			}
 		} else {
-			echo '<tr><td colspan="8" align="center"><b>'.__('No E-Mail Logs Found').'</b></td></tr>';
+			echo '<tr><td colspan="7" align="center"><b>'.__('No E-Mail Logs Found').'</b></td></tr>';
 		}
 	?>
 	</table>
@@ -282,7 +275,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		?>
 	<br />
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-		<input type="hidden" name="page" value="<?php echo $base_name; ?>">
+		<input type="hidden" name="page" value="<?php echo $base_name; ?>" />
 		Sort Options:&nbsp;&nbsp;&nbsp;
 		<select name="by" size="1">
 			<option value="id"<?php if($email_sortby == 'email_id') { echo ' selected="selected"'; }?>>ID</option>
@@ -290,7 +283,6 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			<option value="fromemail"<?php if($email_sortby == 'email_youremail') { echo ' selected="selected"'; }?>>From E-Mail</option>
 			<option value="toname"<?php if($email_sortby == 'email_friendname') { echo ' selected="selected"'; }?>>To Name</option>
 			<option value="toemail"<?php if($email_sortby == 'email_friendemail') { echo ' selected="selected"'; }?>>To E-Mail</option>
-			<option value="remarks"<?php if($email_sortby == 'email_yourremarks') { echo ' selected="selected"'; }?>>Remarks</option>
 			<option value="date"<?php if($email_sortby == 'email_timestamp') { echo ' selected="selected"'; }?>>Date</option>
 			<option value="postid"<?php if($email_sortby == 'email_postid') { echo ' selected="selected"'; }?>>Post ID</option>
 			<option value="posttitle"<?php if($email_sortby == 'email_posttitle') { echo ' selected="selected"'; }?>>Post Title</option>

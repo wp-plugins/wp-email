@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.04										|
+|	WordPress 2.0 Plugin: WP-EMail 2.05										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -16,6 +16,12 @@
 +----------------------------------------------------------------+
 */
 
+
+### Session Start
+session_start();
+
+### Image Verification
+$email_image_verify = intval(get_settings('email_imageverify'));
 
 ### Variables
 $did_email = get_query_var('wp-email');
@@ -37,6 +43,7 @@ if(!empty($did_email)) {
 	$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
 	$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
 	$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
+	$imageverify = $_POST['imageverify'];
 	$smtp_info = get_settings('email_smtp');
 	$smtp_info = explode('|', $smtp_info);
 	$error = '';
@@ -97,6 +104,17 @@ if(!empty($did_email)) {
 			}
 			if(sizeof($friends) > $multiple_max) {
 				$error .= '<br /><b>&raquo;</b> '.__('Maximum '.$multiple_max.' entries allowed');
+			}
+
+			// Check Whether We Enable Image Verification
+			if($email_image_verify) {
+				if(empty($imageverify)) {
+					$error .= '<br /><b>&raquo;</b> '.__('Image verification is empty.');
+				} else {
+					if($_SESSION['email_verify'] != md5($imageverify)) {
+						$error .= '<br /><b>&raquo;</b> '.__('Image verification failed.');
+					}
+				}
 			}
 
 			// If There Are Errors
@@ -257,25 +275,31 @@ if(!empty($did_email)) {
 						</p>
 						<p><b>* Required Field</b></p>
 						<p>
-							<b>Your Name: *</b><br />
-							<input type="text" size="50" maxlength="50" name="yourname" class="Forms" />
+							<b><label for="yourname">Your Name: *</label></b><br />
+							<input type="text" size="50" id="yourname" name="yourname" class="Forms" />
 						</p>
 						<p>
-							<b>Your E-Mail: *</b><br />
-							<input type="text" size="50" maxlength="100" name="youremail" class="Forms" />
+							<b><label for="youremail">Your E-Mail: *</label></b><br />
+							<input type="text" size="50" id="youremail" name="youremail" class="Forms" />
 						</p>
 						<p>
-							<b>Your Remarks:</b><br />
-							<textarea cols="49" rows="8" name="yourremarks" class="Forms"></textarea>
+							<b><label for="yourremarks">Your Remarks:</label></b><br />
+							<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"></textarea>
 						</p>
 						<p>
-							<b>Friend's Name: *</b><br />
-							<input type="text" size="50" maxlength="100" name="friendname" class="Forms" /><?php email_multiple(); ?>
+							<b><label for="friendname">Friend's Name: *</label></b><br />
+							<input type="text" size="50" id="friendname" name="friendname" class="Forms" /><?php email_multiple(); ?>
 						</p>
 						<p>
-							<b>Friend's E-Mail: *</b><br />
-							<input type="text" size="50" maxlength="100" name="friendemail" class="Forms" /><?php email_multiple(); ?>
+							<b><label for="friendemail">Friend's E-Mail: *</label></b><br />
+							<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" /><?php email_multiple(); ?>
 						</p>
+						<?php if($email_image_verify): ?>
+							<p>
+								<b><label for="imageverify">Image Verification: *</label></b><br />
+								<img src="<?php echo get_settings('siteurl'); ?>/wp-content/plugins/email/email-image-verify.php" width="60" height="22" alt="Image Verification" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />
+							</p>
+						<?php endif; ?>
 						<p align="center">
 							<input type="submit" value="     Mail It!     " name="wp-email" class="Buttons" />
 						</p>

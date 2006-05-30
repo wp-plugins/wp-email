@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.04										|
+|	WordPress 2.0 Plugin: WP-EMail 2.05										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -39,6 +39,7 @@ if($_POST['Submit']) {
 	$email_snippet = intval(trim($_POST['email_snippet']));
 	$email_interval = intval(trim($_POST['email_interval']));
 	$email_multiple = intval(trim($_POST['email_multiple']));
+	$email_imageverify = intval(trim($_POST['email_imageverify']));
 	$email_template_subject = strip_tags(trim($_POST['email_template_subject']));
 	$email_template_body = trim($_POST['email_template_body']);
 	$email_template_bodyalt = trim($_POST['email_template_bodyalt']);
@@ -53,6 +54,7 @@ if($_POST['Submit']) {
 	$update_email_queries[] = update_option('email_snippet', $email_snippet);
 	$update_email_queries[] = update_option('email_interval', $email_interval);
 	$update_email_queries[] = update_option('email_multiple', $email_multiple);
+	$update_email_queries[] = update_option('email_imageverify', $email_imageverify);
 	$update_email_queries[] = update_option('email_template_subject', $email_template_subject);
 	$update_email_queries[] = update_option('email_template_body', $email_template_body);
 	$update_email_queries[] = update_option('email_template_bodyalt', $email_template_bodyalt);
@@ -65,6 +67,7 @@ if($_POST['Submit']) {
 	$update_email_text[] = __('Snippet Option');
 	$update_email_text[] = __('Interval Option');
 	$update_email_text[] = __('Multiple E-Mails Option');
+	$update_email_text[] = __('Image Verification Option');
 	$update_email_text[] = __('Subject Template');
 	$update_email_text[] = __('Body Template');
 	$update_email_text[] = __('Alternate Body Template');
@@ -85,31 +88,33 @@ if($_POST['Submit']) {
 }
 
 ?>
-<script language="JavaScript" type="text/javascript">
-function email_default_templates(template) {
-	var default_template;
-	switch(template) {
-		case "subject":
-			default_template = "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
-			break;
-		case "body":
-			default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p><p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p><p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
-			break;
-		case "bodyalt":
-			default_template = "Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%";
-			break;
-		case "sentsuccess":
-			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>";
-			break;
-		case "sentfailed":
-			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
-			break;
-		case "error":
-			default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p><p><a href=\"#\" onclick=\"javascript:history.go(-1); return false;\">&laquo; Go Back</a></p></div>";
-			break;
-	}
-	document.getElementById("email_template_" + template).value = default_template;
+<script type="text/javascript">
+/* <![CDATA[*/
+	function email_default_templates(template) {
+		var default_template;
+		switch(template) {
+			case "subject":
+				default_template = "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
+				break;
+			case "body":
+				default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p><p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p><p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
+				break;
+			case "bodyalt":
+				default_template = "Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%";
+				break;
+			case "sentsuccess":
+				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>";
+				break;
+			case "sentfailed":
+				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
+				break;
+			case "error":
+				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p><p><a href=\"#\" onclick=\"javascript:history.go(-1); return false;\">&laquo; Go Back</a></p></div>";
+				break;
+		}
+		document.getElementById("email_template_" + template).value = default_template;
 }
+/* ]]> */
 </script>
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <div class="wrap"> 
@@ -168,8 +173,13 @@ function email_default_templates(template) {
 					<td align="left"><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
 				</tr>
 				<tr valign="top"> 
-					<th align="left" width="30%"><?php _e('Max Number Of Multiple E-Mails:'); ?></th>
-					<td align="left"><input type="text" id="email_multiple" name="email_multiple" value="<?php echo  get_settings('email_multiple'); ?>" size="5" maxlength="3"><br />Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go.</td> 
+					<th align="left" width="30%"><?php _e('Enable Image Verification:'); ?></th>
+					<td align="left">
+						<select name="email_imageverify" size="1">
+							<option value="1"<?php selected('1', get_settings('email_imageverify')); ?>><?php _e('Yes'); ?></option>
+							<option value="0"<?php selected('0', get_settings('email_imageverify')); ?>><?php _e('No'); ?></option>
+						</select><br />It is recommanded to choose <b>Yes</b> unless your server does not support PHP GD Library.
+					</td> 
 				</tr>
 			</table>
 		</fieldset>
