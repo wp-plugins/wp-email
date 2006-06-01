@@ -197,6 +197,7 @@ function email_content() {
 
 ### Function: E-Mail Alternate Content
 function email_content_alt() {
+	remove_filter('the_content', 'wptexturize');
 	$content = get_email_content();
 	$content = clean_pre($content);
 	$content = strip_tags($content);

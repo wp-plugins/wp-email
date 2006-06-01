@@ -173,6 +173,10 @@ if($_POST['Submit']) {
 					<td align="left"><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_settings('email_interval'); ?>" size="5" maxlength="5"> Mins<br />It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.</td> 
 				</tr>
 				<tr valign="top"> 
+						<th align="left" width="30%"><?php _e('Max Number Of Multiple E-Mails:'); ?></th>
+						<td align="left"><input type="text" id="email_multiple" name="email_multiple" value="<?php echo  get_settings('email_multiple'); ?>" size="5" maxlength="3"><br />Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go.</td> 
+				</tr> 
+				<tr valign="top"> 
 					<th align="left" width="30%"><?php _e('Enable Image Verification:'); ?></th>
 					<td align="left">
 						<select name="email_imageverify" size="1">

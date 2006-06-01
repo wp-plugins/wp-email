@@ -258,7 +258,7 @@ if(!empty($did_email)) {
 				$email_youremail = addslashes($youremail);
 				$email_yourremarks = addslashes($yourremarks);
 				$email_postid = email_id();
-				$email_posttitle = addslashes(email_title());
+				$email_posttitle = addslashes($post_title);
 				$email_timestamp = current_time('timestamp');
 				$email_ip = get_email_ipaddress();
 				$email_host = gethostbyaddr($email_ip);

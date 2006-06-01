@@ -103,10 +103,10 @@ class PHPMailer
     var $WordWrap          = 0;
 
     /**
-     * Method to send mail: ("mail", "sendmail", or "smtp").
+     * Method to send mail: ("php", "sendmail", or "smtp").
      * @var string
      */
-    var $Mailer            = "mail";
+    var $Mailer            = "php";
 
     /**
      * Sets the path of the sendmail program.
@@ -252,7 +252,7 @@ class PHPMailer
      * @return void
      */
     function IsMail() {
-        $this->Mailer = "mail";
+        $this->Mailer = "php";
     }
 
     /**
@@ -769,7 +769,7 @@ class PHPMailer
             $result .= $this->HeaderLine("Return-Path", trim($this->Sender));
         
         // To be created automatically by mail()
-        if($this->Mailer != "mail")
+        if($this->Mailer != "php")
         {
             if(count($this->to) > 0)
                 $result .= $this->AddrAppend("To", $this->to);
@@ -785,14 +785,14 @@ class PHPMailer
         $result .= $this->AddrAppend("From", $from); 
 
         // sendmail and mail() extract Bcc from the header before sending
-        if((($this->Mailer == "sendmail") || ($this->Mailer == "mail")) && (count($this->bcc) > 0))
+        if((($this->Mailer == "sendmail") || ($this->Mailer == "php")) && (count($this->bcc) > 0))
             $result .= $this->AddrAppend("Bcc", $this->bcc);
 
         if(count($this->ReplyTo) > 0)
             $result .= $this->AddrAppend("Reply-to", $this->ReplyTo);
 
         // mail() sets the subject itself
-        if($this->Mailer != "mail")
+        if($this->Mailer != "php")
             $result .= $this->HeaderLine("Subject", $this->EncodeHeader(trim($this->Subject)));
 
         $result .= sprintf("Message-ID: <%s@%s>%s", $uniq_id, $this->ServerHostname(), $this->LE);
@@ -841,7 +841,7 @@ class PHPMailer
                 break;
         }
 
-        if($this->Mailer != "mail")
+        if($this->Mailer != "php")
             $result .= $this->LE.$this->LE;
 
         return $result;
