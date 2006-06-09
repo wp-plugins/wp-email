@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Enable You To Send Your Webblog Entry To A Friend.
-Version: 2.05
+Version: 2.06
 Author: GaMerZ
 Author URI: http://www.lesterchan.net
 */
@@ -403,7 +403,7 @@ if(!function_exists('get_emails_failed')) {
 
 ### Function: Get Most E-Mailed
 if(!function_exists('get_mostemailed')) {
-	function get_mostemailed($mode = '', $limit = 10) {
+	function get_mostemailed($mode = '', $limit = 10, $chars = 0) {
 		global $wpdb, $post;
 		$where = '';
 		if($mode == 'post') {
@@ -415,10 +415,18 @@ if(!function_exists('get_mostemailed')) {
 		}
 		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS 'email_total' FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
 		if($mostemailed) {
-			foreach ($mostemailed as $post) {
-					$post_title = htmlspecialchars(stripslashes($post->post_title));
-					$email_total = intval($post->email_total);
-					echo "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."</li>";
+			if($chars > 0) {
+				foreach ($mostemailed as $post) {
+						$post_title = htmlspecialchars(stripslashes($post->post_title));
+						$email_total = intval($post->email_total);
+						echo "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('Emails')."</li>";
+				}
+			} else {
+				foreach ($mostemailed as $post) {
+						$post_title = htmlspecialchars(stripslashes($post->post_title));
+						$email_total = intval($post->email_total);
+						echo "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."</li>";
+				}
 			}
 		} else {
 			echo '<li>'.__('N/A').'</li>';
