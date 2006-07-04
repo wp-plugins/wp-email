@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Enable You To Send Your Webblog Entry To A Friend.
-Version: 2.06
+Version: 2.07
 Author: GaMerZ
 Author URI: http://www.lesterchan.net
 */
@@ -85,12 +85,12 @@ function email_link($text_post = 'EMail This Post', $text_page = 'EMail This Pag
 	$permalink = get_permalink();
 	if(!empty($using_permalink)) {
 		if(is_page()) {
-			echo '<a href="'.$permalink.'emailpage/" title="'.$text_page.'">'.$text_page.'</a>';
+			echo '<a href="'.$permalink.'emailpage/" title="'.$text_page.'" rel="nofollow">'.$text_page.'</a>';
 		} else {
-			echo '<a href="'.$permalink.'email/" title="'.$text_post.'">'.$text_post.'</a>';
+			echo '<a href="'.$permalink.'email/" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
 		}
 	} else {
-		echo '<a href="'.$permalink.'&amp;email=1" title="'.$text_post.'">'.$text_post.'</a>';
+		echo '<a href="'.$permalink.'&amp;email=1" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
 	}
 }
 
@@ -107,12 +107,12 @@ function email_link_image() {
 	}
 	if(!empty($using_permalink)) {
 		if(is_page()) {
-			echo '<a href="'.$permalink.'emailpage/" title="EMail This Page">'.$email_image.'</a>';
+			echo '<a href="'.$permalink.'emailpage/" title="EMail This Page" rel="nofollow">'.$email_image.'</a>';
 		} else {
-			echo '<a href="'.$permalink.'email/" title="EMail This Post">'.$email_image.'</a>';
+			echo '<a href="'.$permalink.'email/" title="EMail This Post" rel="nofollow">'.$email_image.'</a>';
 		}
 	} else {
-		echo '<a href="'.$permalink.'&amp;email=1" title="EMail This Post/Page">'.$email_image.'</a>';
+		echo '<a href="'.$permalink.'&amp;email=1" title="EMail This Post/Page" rel="nofollow">'.$email_image.'</a>';
 	}
 }
 
@@ -121,9 +121,9 @@ function email_link_image() {
 function email_popup($text_post = 'EMail This Post', $text_page = 'EMail This Page') {
 	global $id;
 	if(is_page()) {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_page.'">'.$text_page.'</a>';
+		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_page.'" rel="nofollow">'.$text_page.'</a>';
 	} else {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_post.'">'.$text_post.'</a>';
+		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
 	}
 }
 
@@ -137,9 +137,9 @@ function email_popup_image() {
 		$email_image = 'E-Mail';
 	}
 	if(is_page()) {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Page">'.$email_image.'</a>';
+		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Page" rel="nofollow">'.$email_image.'</a>';
 	} else {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Post">'.$email_image.'</a>';
+		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Post" rel="nofollow">'.$email_image.'</a>';
 	}
 }
 
