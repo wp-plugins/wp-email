@@ -130,6 +130,7 @@ if(!empty($did_email)) {
 
 			// Check Whether We Enable Image Verification
 			if($email_image_verify) {
+				$imageverify = strtoupper($imageverify);
 				if(empty($imageverify)) {
 					$error .= '<br /><b>&raquo;</b> '.__('Image verification is empty.');
 				} else {
