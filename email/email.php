@@ -158,7 +158,7 @@ function snippet_text($text, $length = 0) {
 ### Function: E-Mail ID
 function email_id() {
 	global $id;
-	return $id;
+	return intval($id);
 }
 
 
