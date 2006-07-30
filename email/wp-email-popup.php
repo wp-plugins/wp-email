@@ -37,6 +37,13 @@ add_filter('wp_title', 'email_pagetitle');
 
 ### Require PHP-Mailer Class
 require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
+
+### Form Variables
+$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
+$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
+$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
+$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
+$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -59,17 +66,10 @@ require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
 ### If User Click On Mail
 if(!empty($did_email)) {
 	// Variables Variables Variables
-	$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
-	$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
-	$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
-	$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
-	$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 	$imageverify = $_POST['imageverify'];
 	$smtp_info = get_settings('email_smtp');
 	$smtp_info = explode('|', $smtp_info);
 	$error = '';
-	// If Remarks Is Empty, Assign N/A
-	if(empty($yourremarks)) { $yourremarks = 'N/A'; }
 
 	// If There Is Post
 	if(have_posts()){
@@ -81,7 +81,6 @@ if(!empty($did_email)) {
 			$multiple_names = explode(',', $friendname);
 			$multiple_emails = explode(',', $friendemail);
 			$multiple_max = intval(get_settings('email_multiple'));
-
 			if($multiple_max == 0) { $multiple_max = 1; }
 
 			// Check Fields For Error
@@ -125,7 +124,7 @@ if(!empty($did_email)) {
 				}
 			}
 			if(sizeof($friends) > $multiple_max) {
-				$error .= '<br /><b>&raquo;</b> '.__('Maximum '.$multiple_max.' entries allowed.');
+				$error .= '<br /><b>&raquo;</b> '.__('Maximum '.$multiple_max.' entries allowed');
 			}
 
 			// Check Whether We Enable Image Verification
@@ -139,19 +138,12 @@ if(!empty($did_email)) {
 					}
 				}
 			}
+			
+			// If There Is No Error, We Process The E-Mail
+			if(empty($error)) {
+				// If Remarks Is Empty, Assign N/A
+				if(empty($yourremarks)) { $yourremarks = 'N/A'; }
 
-			// If There Are Errors
-			if(!empty($error)) {
-				$error = substr($error, 20);
-				$template_email_error = stripslashes(get_settings('email_template_error'));
-				$template_email_error = str_replace("%EMAIL_ERROR_MSG%", $error, $template_email_error);
-				$template_email_error = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_error);
-				$template_email_error = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_error);
-				$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);
-				echo $template_email_error;
-
-			// If There Are No Errors
-			} else {
 				// Variables Variables Variables
 				$post_title = email_title();
 				$post_author = the_author('', false);
@@ -207,7 +199,7 @@ if(!empty($did_email)) {
 				$template_email_bodyalt = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_bodyalt);
 				$template_email_bodyalt = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_bodyalt);
 				$template_email_bodyalt = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_bodyalt);
-
+				
 				// PHP Mailer Variables
 				$mail = new PHPMailer();
 				$mail->From     = $youremail;
@@ -242,6 +234,7 @@ if(!empty($did_email)) {
 
 				// If There Is Error Sending
 				} else {
+					if($yourremarks == 'N/A') { $yourremarks = ''; }
 					$email_status = __('Failed');
 					// Template For Sent Failed
 					$template_email_sentfailed = stripslashes(get_settings('email_template_sentfailed'));
@@ -252,7 +245,6 @@ if(!empty($did_email)) {
 					$template_email_sentfailed = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_sentfailed);
 					$template_email_sentfailed = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentfailed);
 					$template_email_sentfailed = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentfailed);
-					echo $template_email_sentfailed;
 				}
 
 				// Logging
@@ -270,13 +262,23 @@ if(!empty($did_email)) {
 					$log_email_sending = email_log("0, '$email_yourname', '$email_youremail', '$email_yourremarks', '$email_friendname', '$email_friendemail', $email_postid, '$email_posttitle', '$email_timestamp', '$email_ip', '$email_host', '$email_status'");
 					if(!$log_email_sending) {
 						die('Error Logging E-Mail Sending');
-					} // End if(!$log_email_sending)
-				} // End foreach($friends as $friend)
-			} // End if(!empty($error))
+					}
+				}
+
+			// If There Are Errors
+			} else {			
+				$error = substr($error, 20);
+				$template_email_error = stripslashes(get_settings('email_template_error'));
+				$template_email_error = str_replace("%EMAIL_ERROR_MSG%", $error, $template_email_error);
+				$template_email_error = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_error);
+				$template_email_error = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_error);
+				$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);				
+			} // End if(empty($error))
 		} // End while (have_posts())
 	} // End if(have_posts())
-} else {
+} // End if(!empty($did_email))
 ?>
+<?php if(empty($email_status) || $email_status == __('Failed')): ?>
 	<?php if (not_spamming()): ?>
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : the_post(); ?>
@@ -285,26 +287,30 @@ if(!empty($did_email)) {
 					<p style="text-align: center">
 						E-Mail A Copy Of <b><?php the_title(); ?></b> To A Friend.
 					</p>
+					<!-- Display Error, If There Is Any -->
+					<?php echo $template_email_sentfailed; ?>
+					<?php echo $template_email_error; ?>
+					<!-- End Display Error, If There Is Any -->
 					<p><b>* Required Field</b></p>
 					<p>
 						<b><label for="yourname">Your Name: *</label></b><br />
-						<input type="text" size="50" id="yourname" name="yourname" class="Forms" />
+						<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="<?php echo $yourname; ?>" />
 					</p>
 					<p>
 						<b><label for="youremail">Your E-Mail: *</label></b><br />
-						<input type="text" size="50" id="youremail" name="youremail" class="Forms" />
+						<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="<?php echo $youremail; ?>" />
 					</p>
 					<p>
 						<b><label for="yourremarks">Your Remarks:</label></b><br />
-						<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"></textarea>
+						<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"><?php echo $yourremarks; ?></textarea>
 					</p>
 					<p>
 						<b><label for="friendname">Friend's Name: *</label></b><br />
-						<input type="text" size="50" id="friendname" name="friendname" class="Forms" /><?php email_multiple(); ?>
+						<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="<?php echo $friendname; ?>" /><?php email_multiple(); ?>
 					</p>
 					<p>
 						<b><label for="friendemail">Friend's E-Mail: *</label></b><br />
-						<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" /><?php email_multiple(); ?>
+						<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="<?php echo $friendemail; ?>" /><?php email_multiple(); ?>
 					</p>
 					<?php if($email_image_verify): ?>
 						<p>
@@ -324,7 +330,7 @@ if(!empty($did_email)) {
 	<?php else : ?>
 			<p>Please Wait For <b><?php email_flood_interval(); ?> Minutes</b> Before Sending The Next Article.</p>
 	<?php endif; ?>
-<?php } // End if(!empty($did_email)) ?>
+<?php endif; ?>
 	<p style="text-align: center; padding-top: 20px;"><a href="#" onclick="window.close();">Close This Window</a></p>
 </body>
 </html>

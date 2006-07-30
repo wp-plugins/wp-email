@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.05										|
+|	WordPress 2.0 Plugin: WP-EMail 2.07										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -106,10 +106,10 @@ if($_POST['Submit']) {
 				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>";
 				break;
 			case "sentfailed":
-				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p></div>";
+				default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
 				break;
 			case "error":
-				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p><p><a href=\"#\" onclick=\"javascript:history.go(-1); return false;\">&laquo; Go Back</a></p></div>";
+				default_template = "<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
 				break;
 		}
 		document.getElementById("email_template_" + template).value = default_template;

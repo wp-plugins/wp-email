@@ -35,20 +35,20 @@ add_filter('wp_title', 'email_pagetitle');
 ### Require PHP-Mailer Class
 require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
 
+### Form Variables
+$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
+$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
+$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
+$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
+$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
+
 ### If User Click On Mail
 if(!empty($did_email)) {
 	// Variables Variables Variables
-	$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
-	$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
-	$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
-	$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
-	$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 	$imageverify = $_POST['imageverify'];
 	$smtp_info = get_settings('email_smtp');
 	$smtp_info = explode('|', $smtp_info);
 	$error = '';
-	// If Remarks Is Empty, Assign N/A
-	if(empty($yourremarks)) { $yourremarks = 'N/A'; }
 
 	// If There Is Post
 	if(have_posts()){
@@ -117,152 +117,153 @@ if(!empty($did_email)) {
 					}
 				}
 			}
+			
+			// If There Is No Error, We Process The E-Mail
+			if(empty($error)) {
+				// If Remarks Is Empty, Assign N/A
+				if(empty($yourremarks)) { $yourremarks = 'N/A'; }
+
+				// Variables Variables Variables
+				$post_title = email_title();
+				$post_author = the_author('', false);
+				$post_date = the_date('jS F Y @ H:i', '', '', false);
+				$post_category = email_category();
+				$post_category_alt = strip_tags($post_category);
+				$post_excerpt = get_the_excerpt();
+				$post_content .= email_content();
+				$post_content_alt = email_content_alt();
+							
+				// Template For E-Mail Subject
+				$template_email_subject = stripslashes(get_settings('email_template_subject'));
+				$template_email_subject = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_POST_CATEGORY%", $post_category_alt, $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_subject);
+				$template_email_subject = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_subject);
+
+				// Template For E-Mail Body
+				$template_email_body = stripslashes(get_settings('email_template_body'));
+				$template_email_body = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_YOUR_REMARKS%", $yourremarks, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_CATEGORY%", $post_category, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_POST_CONTENT%", $post_content, $template_email_body);
+				$template_email_body = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_body);
+				$template_email_body = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_body);
+				$template_email_body = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_body);
+
+				// Template For E-Mail Alternate Body
+				$template_email_bodyalt = stripslashes(get_settings('email_template_bodyalt'));
+				$template_email_bodyalt = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_YOUR_REMARKS%", $yourremarks, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_CATEGORY%", $post_category_alt, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_POST_CONTENT%", $post_content_alt, $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_bodyalt);
+				$template_email_bodyalt = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_bodyalt);
+				
+				// PHP Mailer Variables
+				$mail = new PHPMailer();
+				$mail->From     = $youremail;
+				$mail->FromName = $yourname;
+				foreach($friends as $friend) {
+					$mail->AddAddress($friend['email'], $friend['name']);
+				}
+				$mail->Username = $smtp_info[0]; 
+				$mail->Password = $smtp_info[1];
+				$mail->Host     = $smtp_info[2];
+				$mail->Mailer   = get_settings('email_mailer');
+				$mail->ContentType =  get_settings('email_contenttype');
+				$mail->Subject = $template_email_subject;
+				if(get_settings('email_contenttype') == 'text/plain') {
+					$mail->Body    = $template_email_bodyalt;
+				} else {
+					$mail->Body    = $template_email_body;
+					$mail->AltBody = $template_email_bodyalt;
+				}
+				// Send The Mail
+				if($mail->Send()) {
+					$email_status = __('Success');
+					get_header();
+					// Template For Sent Successfully
+					$template_email_sentsuccess = stripslashes(get_settings('email_template_sentsuccess'));
+					$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentsuccess);
+					$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentsuccess);
+					$template_email_sentsuccess = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_sentsuccess);
+					$template_email_sentsuccess = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_sentsuccess);
+					$template_email_sentsuccess = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentsuccess);
+					$template_email_sentsuccess = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentsuccess);
+					echo $template_email_sentsuccess;
+					get_sidebar();
+					get_footer();
+
+				// If There Is Error Sending
+				} else {
+					if($yourremarks == 'N/A') { $yourremarks = ''; }
+					$email_status = __('Failed');
+					// Template For Sent Failed
+					$template_email_sentfailed = stripslashes(get_settings('email_template_sentfailed'));
+					$template_email_sentfailed = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_ERROR_MSG%", $mail->ErrorInfo, $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentfailed);
+					$template_email_sentfailed = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentfailed);
+				}
+
+				// Logging
+				$email_yourname = addslashes($yourname);
+				$email_youremail = addslashes($youremail);
+				$email_yourremarks = addslashes($yourremarks);
+				$email_postid = email_id();
+				$email_posttitle = addslashes($post_title);
+				$email_timestamp = current_time('timestamp');
+				$email_ip = get_email_ipaddress();
+				$email_host = gethostbyaddr($email_ip);
+				foreach($friends as $friend) {
+					$email_friendname = addslashes($friend['name']);
+					$email_friendemail = addslashes($friend['email']);
+					$log_email_sending = email_log("0, '$email_yourname', '$email_youremail', '$email_yourremarks', '$email_friendname', '$email_friendemail', $email_postid, '$email_posttitle', '$email_timestamp', '$email_ip', '$email_host', '$email_status'");
+					if(!$log_email_sending) {
+						die('Error Logging E-Mail Sending');
+					}
+				}
+
+				// If E-Mail Sent Successfully, We No Not Need The E-Mail Form Anymore
+				if($email_status == __('Success')) {
+					exit();
+				}
 
 			// If There Are Errors
-			if(!empty($error)) {
+			} else {			
 				$error = substr($error, 20);
-				get_header();
 				$template_email_error = stripslashes(get_settings('email_template_error'));
 				$template_email_error = str_replace("%EMAIL_ERROR_MSG%", $error, $template_email_error);
 				$template_email_error = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_error);
 				$template_email_error = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_error);
-				$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);
-				echo $template_email_error;
-				get_sidebar();
-				get_footer();
-				exit();
-			}
-
-			// Variables Variables Variables
-			$post_title = email_title();
-			$post_author = the_author('', false);
-			$post_date = the_date('jS F Y @ H:i', '', '', false);
-			$post_category = email_category();
-			$post_category_alt = strip_tags($post_category);
-			$post_excerpt = get_the_excerpt();
-			$post_content .= email_content();
-			$post_content_alt = email_content_alt();
-						
-			// Template For E-Mail Subject
-			$template_email_subject = stripslashes(get_settings('email_template_subject'));
-			$template_email_subject = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_POST_CATEGORY%", $post_category_alt, $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_subject);
-			$template_email_subject = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_subject);
-
-			// Template For E-Mail Body
-			$template_email_body = stripslashes(get_settings('email_template_body'));
-			$template_email_body = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_YOUR_REMARKS%", $yourremarks, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_CATEGORY%", $post_category, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_POST_CONTENT%", $post_content, $template_email_body);
-			$template_email_body = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_body);
-			$template_email_body = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_body);
-			$template_email_body = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_body);
-
-			// Template For E-Mail Alternate Body
-			$template_email_bodyalt = stripslashes(get_settings('email_template_bodyalt'));
-			$template_email_bodyalt = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_YOUR_EMAIL%", $youremail, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_YOUR_REMARKS%", $yourremarks, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_DATE%", $post_date, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_CATEGORY%", $post_category_alt, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_EXCERPT%", $post_excerpt, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_POST_CONTENT%", $post_content_alt, $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_bodyalt);
-			$template_email_bodyalt = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_bodyalt);
-			
-			// PHP Mailer Variables
-			$mail = new PHPMailer();
-			$mail->From     = $youremail;
-			$mail->FromName = $yourname;
-			foreach($friends as $friend) {
-				$mail->AddAddress($friend['email'], $friend['name']);
-			}
-			$mail->Username = $smtp_info[0]; 
-			$mail->Password = $smtp_info[1];
-			$mail->Host     = $smtp_info[2];
-			$mail->Mailer   = get_settings('email_mailer');
-			$mail->ContentType =  get_settings('email_contenttype');
-			$mail->Subject = $template_email_subject;
-			if(get_settings('email_contenttype') == 'text/plain') {
-				$mail->Body    = $template_email_bodyalt;
-			} else {
-				$mail->Body    = $template_email_body;
-				$mail->AltBody = $template_email_bodyalt;
-			}
-			// Send The Mail
-			if($mail->Send()) {
-				$email_status = __('Success');
-				get_header();
-				// Template For Sent Successfully
-				$template_email_sentsuccess = stripslashes(get_settings('email_template_sentsuccess'));
-				$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentsuccess);
-				$template_email_sentsuccess = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentsuccess);
-				$template_email_sentsuccess = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_sentsuccess);
-				$template_email_sentsuccess = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_sentsuccess);
-				$template_email_sentsuccess = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentsuccess);
-				$template_email_sentsuccess = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentsuccess);
-				echo $template_email_sentsuccess;
-				get_sidebar();
-				get_footer();
-
-			// If There Is Error Sending
-			} else {
-				$email_status = __('Failed');
-				get_header();
-				// Template For Sent Failed
-				$template_email_sentfailed = stripslashes(get_settings('email_template_sentfailed'));
-				$template_email_sentfailed = str_replace("%EMAIL_FRIEND_NAME%", $friendname, $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_FRIEND_EMAIL%", $friendemail, $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_ERROR_MSG%", $mail->ErrorInfo, $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_sentfailed);
-				$template_email_sentfailed = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_sentfailed);
-				echo $template_email_sentfailed;
-				get_sidebar();
-				get_footer();
-			}
-
-			// Logging
-			$email_yourname = addslashes($yourname);
-			$email_youremail = addslashes($youremail);
-			$email_yourremarks = addslashes($yourremarks);
-			$email_postid = email_id();
-			$email_posttitle = addslashes($post_title);
-			$email_timestamp = current_time('timestamp');
-			$email_ip = get_email_ipaddress();
-			$email_host = gethostbyaddr($email_ip);
-			foreach($friends as $friend) {
-				$email_friendname = addslashes($friend['name']);
-				$email_friendemail = addslashes($friend['email']);
-				$log_email_sending = email_log("0, '$email_yourname', '$email_youremail', '$email_yourremarks', '$email_friendname', '$email_friendemail', $email_postid, '$email_posttitle', '$email_timestamp', '$email_ip', '$email_host', '$email_status'");
-				if(!$log_email_sending) {
-					die('Error Logging E-Mail Sending');
-				}
-			}
-			exit();
-		}
-	}
-}
+				$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);				
+			} // End if(empty($error))
+		} // End while (have_posts())
+	} // End if(have_posts())
+} // End if(!empty($did_email))
 ?>
 <?php get_header(); ?>
 	<div id="content" class="narrowcolumn">
@@ -271,29 +272,33 @@ if(!empty($did_email)) {
 				<?php while (have_posts()) : the_post(); ?>
 					<?php if(not_password_protected()) { ?>
 						<?php email_form_header(); ?>		
-						<p align="center">
+						<p style="text-align: center">
 							E-Mail A Copy Of <b><?php the_title(); ?></b> To A Friend.
 						</p>
+						<!-- Display Error, If There Is Any -->
+						<?php echo $template_email_sentfailed; ?>
+						<?php echo $template_email_error; ?>
+						<!-- End Display Error, If There Is Any -->
 						<p><b>* Required Field</b></p>
 						<p>
 							<b><label for="yourname">Your Name: *</label></b><br />
-							<input type="text" size="50" id="yourname" name="yourname" class="Forms" />
+							<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="<?php echo $yourname; ?>" />
 						</p>
 						<p>
 							<b><label for="youremail">Your E-Mail: *</label></b><br />
-							<input type="text" size="50" id="youremail" name="youremail" class="Forms" />
+							<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="<?php echo $youremail; ?>" />
 						</p>
 						<p>
 							<b><label for="yourremarks">Your Remarks:</label></b><br />
-							<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"></textarea>
+							<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"><?php echo $yourremarks; ?></textarea>
 						</p>
 						<p>
 							<b><label for="friendname">Friend's Name: *</label></b><br />
-							<input type="text" size="50" id="friendname" name="friendname" class="Forms" /><?php email_multiple(); ?>
+							<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="<?php echo $friendname; ?>" /><?php email_multiple(); ?>
 						</p>
 						<p>
 							<b><label for="friendemail">Friend's E-Mail: *</label></b><br />
-							<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" /><?php email_multiple(); ?>
+							<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="<?php echo $friendemail; ?>" /><?php email_multiple(); ?>
 						</p>
 						<?php if($email_image_verify): ?>
 							<p>

@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.05										|
+|	WordPress 2.0 Plugin: WP-EMail 2.07										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
