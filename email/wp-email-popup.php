@@ -20,9 +20,6 @@
 ### Session Start
 session_start();
 
-###  Load wp-blog-header.php
-require('../../../wp-blog-header.php');
-
 ### Image Verification
 $email_image_verify = intval(get_settings('email_imageverify'));
 
@@ -332,5 +329,6 @@ if(!empty($did_email)) {
 	<?php endif; ?>
 <?php endif; ?>
 	<p style="text-align: center; padding-top: 20px;"><a href="#" onclick="window.close();">Close This Window</a></p>
+	<?php wp_footer(); ?>
 </body>
 </html>

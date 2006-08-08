@@ -47,6 +47,7 @@ function email_menu() {
 ### Function: E-Mail htaccess ReWrite Rules
 add_filter('generate_rewrite_rules', 'email_rewrite');
 function email_rewrite($wp_rewrite) {
+	// WP-EMail Rules
 	$rewrite_rules2 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'email');
 	array_splice($rewrite_rules2, 1);
 	$r_rule = array_shift(array_keys($rewrite_rules2));
@@ -54,7 +55,16 @@ function email_rewrite($wp_rewrite) {
 	$r_link = array_shift(array_values($rewrite_rules2));
 	$r_link = str_replace('tb=1', 'email=1', $r_link);
     $email_rules = array($r_rule => $r_link, '(.+)/emailpage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&email=1');
-    $wp_rewrite->rules = $email_rules + $wp_rewrite->rules;
+	$wp_rewrite->rules = $email_rules + $wp_rewrite->rules;
+	// WP-EMail PopUp Rules
+	$rewrite_rules3 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'emailpopup');
+	array_splice($rewrite_rules3, 1);
+	$r_rule2 = array_shift(array_keys($rewrite_rules3));
+	$r_rule2 = str_replace('/trackback', '', $r_rule2);
+	$r_link2 = array_shift(array_values($rewrite_rules3));
+	$r_link2 = str_replace('tb=1', 'emailpopup=1', $r_link2);
+	$emailpopup_rules = array($r_rule2 => $r_link2, '(.+)/emailpopuppage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&emailpopup=1');
+	$wp_rewrite->rules = $emailpopup_rules + $wp_rewrite->rules;
 }
 
 
@@ -62,6 +72,7 @@ function email_rewrite($wp_rewrite) {
 add_filter('query_vars', 'email_variables');
 function email_variables($public_query_vars) {
 	$public_query_vars[] = 'email';
+	$public_query_vars[] = 'emailpopup';
 	$public_query_vars[] = 'wp-email';
 	return $public_query_vars;
 }
@@ -122,11 +133,16 @@ function email_link_image() {
 
 ### Function: Display E-Mail Popup Window
 function email_popup($text_post = 'EMail This Post', $text_page = 'EMail This Page') {
-	global $id;
-	if(is_page()) {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_page.'" rel="nofollow">'.$text_page.'</a>';
+	$using_permalink = get_settings('permalink_structure');
+	$permalink = get_permalink();
+	if(!empty($using_permalink)) {
+		if(is_page()) {
+			echo '<a href="'.$permalink.'emailpopuppage/" onclick="email_popup(this.href); return false" title="'.$text_page.'" rel="nofollow">'.$text_page.'</a>';
+		} else {
+			echo '<a href="'.$permalink.'emailpopup/" onclick="email_popup(this.href); return false" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
+		}
 	} else {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
+		echo '<a href="'.$permalink.'&amp;emailpopup=1" onclick="email_popup(this.href); return false" title="'.$text_post.'" rel="nofollow">'.$text_post.'</a>';
 	}
 }
 
@@ -134,15 +150,21 @@ function email_popup($text_post = 'EMail This Post', $text_page = 'EMail This Pa
 ### Function: Display E-Mail Image Popup Window
 function email_popup_image() {
 	global $id;
+	$using_permalink = get_settings('permalink_structure');
+	$permalink = get_permalink();
 	if(file_exists(ABSPATH.'/wp-content/plugins/email/images/email.gif')) {
 		$email_image = '<img src="'.get_settings('siteurl').'/wp-content/plugins/email/images/email.gif" alt="E-Mail This Post/Page" />';
 	} else {
 		$email_image = 'E-Mail';
 	}
-	if(is_page()) {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Page" rel="nofollow">'.$email_image.'</a>';
+	if(!empty($using_permalink)) {
+		if(is_page()) {
+			echo '<a href="'.$permalink.'emailpopuppage/" onclick="email_popup(this.href); return false" title="EMail This Page" rel="nofollow">'.$email_image.'</a>';
+		} else {
+			echo '<a href="'.$permalink.'emailpopup/" onclick="email_popup(this.href); return false" title="EMail This Post" rel="nofollow">'.$email_image.'</a>';
+		}
 	} else {
-		echo '<a href="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" onclick="email_popup(this.href); return false" title="EMail This Post" rel="nofollow">'.$email_image.'</a>';
+		echo '<a href="'.$permalink.'&amp;emailpopup=1" onclick="email_popup(this.href); return false" title="EMail This Post/Page" rel="nofollow">'.$email_image.'</a>';
 	}
 }
 
@@ -444,6 +466,9 @@ add_action('template_redirect', 'wp_email');
 function wp_email() {
 	if(intval(get_query_var('email')) == 1) {
 		include(ABSPATH . 'wp-content/plugins/email/wp-email.php');
+		exit;
+	} elseif(intval(get_query_var('emailpopup')) == 1) {
+		include(ABSPATH . 'wp-content/plugins/email/wp-email-popup.php');
 		exit;
 	}
 }
