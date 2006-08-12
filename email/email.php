@@ -368,12 +368,24 @@ function email_form_header() {
 ### Function: E-Mail Form Header For Popup
 function email_popup_form_header() {
 	global $id;
-	if(is_page()) {
-		echo '<form action="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?page_id='.$id.'" method="post">'."\n";
-		echo '<input type="hidden" name="page_id" value="'.$id.'" />'."\n";
+	$using_permalink = get_settings('permalink_structure');
+	$permalink = get_permalink();
+	if(!empty($using_permalink)) {
+		if(is_page()) {
+			echo '<form action="'.$permalink.'emailpopuppage/" method="post">'."\n";
+			echo '<input type="hidden" name="page_id" value="'.$id.'" />'."\n";
+		} else {
+			echo '<form action="'.$permalink.'emailpopup/" method="post">'."\n";
+			echo '<input type="hidden" name="p" value="'.$id.'" />'."\n";
+		}
 	} else {
-		echo '<form action="'.get_settings('home').'/wp-content/plugins/email/wp-email-popup.php?p='.$id.'" method="post">'."\n";
-		echo '<input type="hidden" name="p" value="'.$id.'" />'."\n";
+		if(is_page()) {
+			echo '<form action="'.$permalink.'&amp;emailpopup=1" method="post">'."\n";
+			echo '<input type="hidden" name="page_id" value="'.$id.'" />'."\n";
+		} else {
+			echo '<form action="'.$permalink.'&amp;emailpopup=1" method="post">'."\n";
+			echo '<input type="hidden" name="p" value="'.$id.'" />'."\n";
+		}
 	}
 }
 
