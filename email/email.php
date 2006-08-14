@@ -409,11 +409,13 @@ function email_multiple() {
 
 ### Function: Get EMail Total Sent
 if(!function_exists('get_emails')) {
-	function get_emails() {
+	function get_emails($display = true) {
 		global $wpdb;
-		if(function_exists('wp_email')) {
-			$totalemails = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email");
+		$totalemails = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email");
+		if($display) {
 			echo number_format($totalemails);
+		} else {
+			return number_format($totalemails);
 		}
 	}
 }
@@ -421,29 +423,38 @@ if(!function_exists('get_emails')) {
 
 ### Function: Get EMail Total Sent Success
 if(!function_exists('get_emails_success')) {
-	function get_emails_success() {
+	function get_emails_success($display = true) {
 		global $wpdb; 
 		$totalemails_success = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Success')."'");
-		echo number_format($totalemails_success);
+		if($display) {
+			echo number_format($totalemails_success);
+		} else {
+			return number_format($totalemails_success);
+		}
 	}
 }
 
 
 ### Function: Get EMail Total Sent Failed
 if(!function_exists('get_emails_failed')) {
-	function get_emails_failed() {
+	function get_emails_failed($display = true) {
 		global $wpdb; 
 		$totalemails_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '". __('Failed')."'");
-		echo number_format($totalemails_failed);
+		if($display) {
+			echo number_format($totalemails_failed);
+		} else {
+			return number_format($totalemails_failed);
+		}
 	}
 }
 
 
 ### Function: Get Most E-Mailed
 if(!function_exists('get_mostemailed')) {
-	function get_mostemailed($mode = '', $limit = 10, $chars = 0) {
+	function get_mostemailed($mode = '', $limit = 10, $chars = 0, $display = true) {
 		global $wpdb, $post;
 		$where = '';
+		$temp = '';
 		if($mode == 'post') {
 				$where = 'post_status = \'publish\'';
 		} elseif($mode == 'page') {
@@ -457,17 +468,22 @@ if(!function_exists('get_mostemailed')) {
 				foreach ($mostemailed as $post) {
 						$post_title = htmlspecialchars(stripslashes($post->post_title));
 						$email_total = intval($post->email_total);
-						echo "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('Emails')."</li>";
+						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('Emails')."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
 						$post_title = htmlspecialchars(stripslashes($post->post_title));
 						$email_total = intval($post->email_total);
-						echo "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."</li>";
+						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails')."</li>\n";
 				}
 			}
 		} else {
-			echo '<li>'.__('N/A').'</li>';
+			$temp = '<li>'.__('N/A').'</li>'."\n";
+		}
+		if($display) {
+			echo $temp;
+		} else {
+			return $temp;
 		}
 	}
 }
