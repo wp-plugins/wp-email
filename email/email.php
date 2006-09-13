@@ -50,18 +50,22 @@ function email_rewrite($wp_rewrite) {
 	// WP-EMail Rules
 	$rewrite_rules2 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'email');
 	array_splice($rewrite_rules2, 1);
-	$r_rule = array_shift(array_keys($rewrite_rules2));
+	$r_rule = array_keys($rewrite_rules2);
+	$r_rule = array_shift($r_rule);
 	$r_rule = str_replace('/trackback', '', $r_rule);
-	$r_link = array_shift(array_values($rewrite_rules2));
+	$r_link = array_values($rewrite_rules2);
+	$r_link = array_shift($r_link);
 	$r_link = str_replace('tb=1', 'email=1', $r_link);
     $email_rules = array($r_rule => $r_link, '(.+)/emailpage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&email=1');
 	$wp_rewrite->rules = $email_rules + $wp_rewrite->rules;
 	// WP-EMail PopUp Rules
 	$rewrite_rules3 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'emailpopup');
 	array_splice($rewrite_rules3, 1);
-	$r_rule2 = array_shift(array_keys($rewrite_rules3));
+	$r_rule2 = array_keys($rewrite_rules3);
+	$r_rule2 = array_shift($r_rule2);
 	$r_rule2 = str_replace('/trackback', '', $r_rule2);
-	$r_link2 = array_shift(array_values($rewrite_rules3));
+	$r_link2 = array_values($rewrite_rules3);
+	$r_link2 = array_shift($r_link2);
 	$r_link2 = str_replace('tb=1', 'emailpopup=1', $r_link2);
 	$emailpopup_rules = array($r_rule2 => $r_link2, '(.+)/emailpopuppage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&emailpopup=1');
 	$wp_rewrite->rules = $emailpopup_rules + $wp_rewrite->rules;
