@@ -64,20 +64,20 @@ if(!empty($did_email)) {
 
 			// Check Fields For Error
 			if(!is_valid_name($yourname) || empty($yourname)) {
-				$error .= '<br /><b>&raquo;</b> '.__('Your name is invalid or is empty.');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Your name is invalid or is empty.');
 			}
 			if(!is_valid_email($youremail) || empty($youremail)) {
-				$error .= '<br /><b>&raquo;</b> '.__('Your email is invalid or is empty.');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Your email is invalid or is empty.');
 			}
 			if(!is_valid_remarks($yourremarks)) {
-				$error .= '<br /><b>&raquo;</b> '.__('Your remarks is invalid.');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Your remarks is invalid.');
 			}
 			if($multiple_names) {
 				$i = 0;
 				foreach($multiple_names as $multiple_name) {
 					$multiple_name = trim($multiple_name);
 					if(!is_valid_name($multiple_name) || empty($multiple_name)) {
-						$error .= '<br /><b>&raquo;</b> '.__('Friend\'s name ('.$multiple_name.') is invalid or is empty.');
+						$error .= '<br /><strong>&raquo;</strong> '.__('Friend\'s name ('.$multiple_name.') is invalid or is empty.');
 					} else {
 						$friends[$i]['name'] = $multiple_name;
 						$i++;
@@ -92,7 +92,7 @@ if(!empty($did_email)) {
 				foreach($multiple_emails as $multiple_email) {
 					$multiple_email = trim($multiple_email);
 					if(!is_valid_email($multiple_email) || empty($multiple_email)) {
-						$error .= '<br /><b>&raquo;</b> '.__('Friend\'s email ('.$multiple_email.') is invalid or is empty.');
+						$error .= '<br /><strong>&raquo;</strong> '.__('Friend\'s email ('.$multiple_email.') is invalid or is empty.');
 					} else {
 						$friends[$i]['email'] = $multiple_email;
 						$i++;
@@ -103,17 +103,17 @@ if(!empty($did_email)) {
 				}
 			}
 			if(sizeof($friends) > $multiple_max) {
-				$error .= '<br /><b>&raquo;</b> '.__('Maximum '.$multiple_max.' entries allowed');
+				$error .= '<br /><strong>&raquo;</strong> '.__('Maximum '.$multiple_max.' entries allowed');
 			}
 
 			// Check Whether We Enable Image Verification
 			if($email_image_verify) {
 				$imageverify = strtoupper($imageverify);
 				if(empty($imageverify)) {
-					$error .= '<br /><b>&raquo;</b> '.__('Image verification is empty.');
+					$error .= '<br /><strong>&raquo;</strong> '.__('Image verification is empty.');
 				} else {
 					if($_SESSION['email_verify'] != md5($imageverify)) {
-						$error .= '<br /><b>&raquo;</b> '.__('Image verification failed.');
+						$error .= '<br /><strong>&raquo;</strong> '.__('Image verification failed.');
 					}
 				}
 			}
@@ -273,36 +273,36 @@ if(!empty($did_email)) {
 					<?php if(not_password_protected()) { ?>
 						<?php email_form_header(); ?>		
 						<p style="text-align: center">
-							E-Mail A Copy Of <b><?php the_title(); ?></b> To A Friend.
+							E-Mail A Copy Of <strong><?php the_title(); ?></strong> To A Friend.
 						</p>
 						<!-- Display Error, If There Is Any -->
 						<?php echo $template_email_sentfailed; ?>
 						<?php echo $template_email_error; ?>
 						<!-- End Display Error, If There Is Any -->
-						<p><b>* Required Field</b></p>
+						<p><strong>* Required Field</strong></p>
 						<p>
-							<b><label for="yourname">Your Name: *</label></b><br />
+							<strong><label for="yourname">Your Name: *</label></strong><br />
 							<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="<?php echo $yourname; ?>" />
 						</p>
 						<p>
-							<b><label for="youremail">Your E-Mail: *</label></b><br />
+							<strong><label for="youremail">Your E-Mail: *</label></strong><br />
 							<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="<?php echo $youremail; ?>" />
 						</p>
 						<p>
-							<b><label for="yourremarks">Your Remarks:</label></b><br />
+							<strong><label for="yourremarks">Your Remarks:</label></strong><br />
 							<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms"><?php echo $yourremarks; ?></textarea>
 						</p>
 						<p>
-							<b><label for="friendname">Friend's Name: *</label></b><br />
+							<strong><label for="friendname">Friend's Name: *</label></strong><br />
 							<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="<?php echo $friendname; ?>" /><?php email_multiple(); ?>
 						</p>
 						<p>
-							<b><label for="friendemail">Friend's E-Mail: *</label></b><br />
+							<strong><label for="friendemail">Friend's E-Mail: *</label></strong><br />
 							<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="<?php echo $friendemail; ?>" /><?php email_multiple(); ?>
 						</p>
 						<?php if($email_image_verify): ?>
 							<p>
-								<b><label for="imageverify">Image Verification: *</label></b><br />
+								<strong><label for="imageverify">Image Verification: *</label></strong><br />
 								<img src="<?php echo get_settings('siteurl'); ?>/wp-content/plugins/email/email-image-verify.php" width="60" height="22" alt="Image Verification" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />
 							</p>
 						<?php endif; ?>
@@ -313,10 +313,10 @@ if(!empty($did_email)) {
 					<?php } else { echo get_the_password_form(); } ?>
 				<?php endwhile; ?>
 			<?php else : ?>
-				<p><b>Invalid Post</b></p>
+				<p><strong>Invalid Post</strong></p>
 			<?php endif; ?>
 		<?php else : ?>
-				<p>Please Wait For <b><?php email_flood_interval(); ?> Minutes</b> Before Sending The Next Article.</p>
+				<p>Please Wait For <strong><?php email_flood_interval(); ?> Minutes</strong> Before Sending The Next Article.</p>
 		<?php endif; ?>
 	</div>
 <?php get_sidebar(); ?>

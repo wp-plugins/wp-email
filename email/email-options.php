@@ -97,19 +97,19 @@ if($_POST['Submit']) {
 				default_template = "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%";
 				break;
 			case "body":
-				default_template = "<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled '<b>%EMAIL_POST_TITLE%</b>' to you.</p><p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p><p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
+				default_template = "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remarks:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>";
 				break;
 			case "bodyalt":
 				default_template = "Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%";
 				break;
 			case "sentsuccess":
-				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>";
+				default_template = "<div id=\"content\" class=\"narrowcolumn\"><p>Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p></div>";
 				break;
 			case "sentfailed":
-				default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
+				default_template = "<p>An Error Has Occured When Trying To Send The E-Mail<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
 				break;
 			case "error":
-				default_template = "<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>";
+				default_template = "<p>An Error Has Occured<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
 				break;
 		}
 		document.getElementById("email_template_" + template).value = default_template;
@@ -182,7 +182,7 @@ if($_POST['Submit']) {
 						<select name="email_imageverify" size="1">
 							<option value="1"<?php selected('1', get_settings('email_imageverify')); ?>><?php _e('Yes'); ?></option>
 							<option value="0"<?php selected('0', get_settings('email_imageverify')); ?>><?php _e('No'); ?></option>
-						</select><br />It is recommanded to choose <b>Yes</b> unless your server does not support PHP GD Library.
+						</select><br />It is recommanded to choose <strong>Yes</strong> unless your server does not support PHP GD Library.
 					</td> 
 				</tr>
 			</table>
@@ -191,35 +191,35 @@ if($_POST['Submit']) {
 			<legend><?php _e('Template Variables'); ?></legend>
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				<tr>
-					<td><b>%EMAIL_YOUR_NAME%</b> - <?php _e('Display the sender\'s name'); ?></td>
-					<td><b>%EMAIL_POST_TITLE%</b> - <?php _e('Display the post\'s title'); ?></td>
+					<td><strong>%EMAIL_YOUR_NAME%</strong> - <?php _e('Display the sender\'s name'); ?></td>
+					<td><strong>%EMAIL_POST_TITLE%</strong> - <?php _e('Display the post\'s title'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_YOUR_EMAIL%</b> - <?php _e('Display the sender\'s email'); ?></td>
-					<td><b>%EMAIL_POST_AUTHOR%</b> - <?php _e('Display the post\'s author'); ?></td>
+					<td><strong>%EMAIL_YOUR_EMAIL%</strong> - <?php _e('Display the sender\'s email'); ?></td>
+					<td><strong>%EMAIL_POST_AUTHOR%</strong> - <?php _e('Display the post\'s author'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_YOUR_REMARKS%</b> - <?php _e('Display the sender\'s remarks'); ?></td>
-					<td><b>%EMAIL_POST_DATE%</b> - <?php _e('Display the post\'s date'); ?></td>
+					<td><strong>%EMAIL_YOUR_REMARKS%</strong> - <?php _e('Display the sender\'s remarks'); ?></td>
+					<td><strong>%EMAIL_POST_DATE%</strong> - <?php _e('Display the post\'s date'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_FRIEND_NAME%</b> - <?php _e('Display the friend\'s name'); ?></td>
-					<td><b>%EMAIL_POST_CATEGORY%</b> - <?php _e('Display the post\'s category'); ?></td>
+					<td><strong>%EMAIL_FRIEND_NAME%</strong> - <?php _e('Display the friend\'s name'); ?></td>
+					<td><strong>%EMAIL_POST_CATEGORY%</strong> - <?php _e('Display the post\'s category'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_FRIEND_EMAIL%</b> - <?php _e('Display the friend\'s email'); ?></td>
-					<td><b>%EMAIL_POST_EXCERPT%</b> - <?php _e('Display the post\'s excerpt'); ?><</td>
+					<td><strong>%EMAIL_FRIEND_EMAIL%</strong> - <?php _e('Display the friend\'s email'); ?></td>
+					<td><strong>%EMAIL_POST_EXCERPT%</strong> - <?php _e('Display the post\'s excerpt'); ?><</td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_ERROR_MSG%</b> - <?php _e('Display the error message'); ?></td>
-					<td><b>%EMAIL_POST_CONTENT%</b> - <?php _e('Display the post\'s content'); ?></td>
+					<td><strong>%EMAIL_ERROR_MSG%</strong> - <?php _e('Display the error message'); ?></td>
+					<td><strong>%EMAIL_POST_CONTENT%</strong> - <?php _e('Display the post\'s content'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_BLOG_NAME%</b> - <?php _e('Display the blog\'s name'); ?></td>
-					<td><b>%EMAIL_PERMALINK%</b> - <?php _e('Display the permalink of the post'); ?></td>
+					<td><strong>%EMAIL_BLOG_NAME%</strong> - <?php _e('Display the blog\'s name'); ?></td>
+					<td><strong>%EMAIL_PERMALINK%</strong> - <?php _e('Display the permalink of the post'); ?></td>
 				</tr>
 				<tr>
-					<td><b>%EMAIL_BLOG_URL%</b> - <?php _e('Display the blog\'s url'); ?></td>
+					<td><strong>%EMAIL_BLOG_URL%</strong> - <?php _e('Display the blog\'s url'); ?></td>
 					<td>&nbsp;</td>
 				</tr>
 			</table>
@@ -229,7 +229,7 @@ if($_POST['Submit']) {
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
 					<td align="left" width="30%">
-						<b><?php _e('E-Mail Subject:'); ?></b><br /><br />
+						<strong><?php _e('E-Mail Subject:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
 						- %EMAIL_YOUR_EMAIL%<br />
@@ -246,7 +246,7 @@ if($_POST['Submit']) {
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
-						<b><?php _e('E-Mail Body:'); ?></b><br /><br />
+						<strong><?php _e('E-Mail Body:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
 						- %EMAIL_YOUR_EMAIL%<br />
@@ -268,7 +268,7 @@ if($_POST['Submit']) {
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
-						<b><?php _e('E-Mail Alternate Body:'); ?></b><br /><br />
+						<strong><?php _e('E-Mail Alternate Body:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_YOUR_NAME%<br />
 						- %EMAIL_YOUR_EMAIL%<br />
@@ -295,7 +295,7 @@ if($_POST['Submit']) {
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
 					<td align="left" width="30%">
-						<b><?php _e('Sent Successfully:'); ?></b><br /><br />
+						<strong><?php _e('Sent Successfully:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_FRIEND_NAME%<br />
 						- %EMAIL_FRIEND_EMAIL%<br />
@@ -309,7 +309,7 @@ if($_POST['Submit']) {
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
-						<b><?php _e('Sent Failed:'); ?></b><br /><br />
+						<strong><?php _e('Sent Failed:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_FRIEND_NAME%<br />
 						- %EMAIL_FRIEND_EMAIL%<br />
@@ -329,7 +329,7 @@ if($_POST['Submit']) {
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 				 <tr valign="top">
 					<td align="left" width="30%">
-						<b><?php _e('E-Mail Error:'); ?></b><br /><br />
+						<strong><?php _e('E-Mail Error:'); ?></strong><br /><br />
 						<?php _e('Allowed Variables:'); ?><br />
 						- %EMAIL_ERROR_MSG%<br />
 						- %EMAIL_BLOG_NAME%<br />

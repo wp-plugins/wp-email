@@ -165,8 +165,8 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 <!-- Manage E-Mail -->
 <div class="wrap">
 	<h2><?php _e('E-Mail Logs'); ?></h2>
-	<p><?php _e('Displaying'); ?> <b><?php echo $display_on_page;?></b> <?php _e('To'); ?> <b><?php echo $max_on_page; ?></b> <?php _e('Of'); ?> <b><?php echo $total_email; ?></b> <?php _e('E-Mail Logs'); ?></p>
-	<p><?php _e('Sorted By'); ?> <b><?php echo $email_sortby_text;?></b> <?php _e('In'); ?> <b><?php echo $email_sortorder_text;?></b> <?php _e('Order'); ?></p>
+	<p><?php _e('Displaying'); ?> <strong><?php echo $display_on_page;?></strong> <?php _e('To'); ?> <strong><?php echo $max_on_page; ?></strong> <?php _e('Of'); ?> <strong><?php echo $total_email; ?></strong> <?php _e('E-Mail Logs'); ?></p>
+	<p><?php _e('Sorted By'); ?> <strong><?php echo $email_sortby_text;?></strong> <?php _e('In'); ?> <strong><?php echo $email_sortorder_text;?></strong> <?php _e('Order'); ?></p>
 	<table width="100%"  border="0" cellspacing="3" cellpadding="3">
 	<tr>
 		<th width="5%"><?php _e('ID'); ?></th>
@@ -210,7 +210,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$i++;
 			}
 		} else {
-			echo '<tr><td colspan="7" align="center"><b>'.__('No E-Mail Logs Found').'</b></td></tr>';
+			echo '<tr><td colspan="7" align="center"><strong>'.__('No E-Mail Logs Found').'</strong></td></tr>';
 		}
 	?>
 	</table>
@@ -224,7 +224,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="left" width="50%">
 					<?php
 						if($email_page > 1 && ((($email_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_email)) {
-							echo '<b>&laquo;</b> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).'" title="&laquo; '.__('Previous Page').'">'.__('Previous Page').'</a>';
+							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).'" title="&laquo; '.__('Previous Page').'">'.__('Previous Page').'</a>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -233,7 +233,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="right" width="50%">
 					<?php
 						if($email_page >= 1 && ((($email_page*$email_log_perpage)+1) <=  $total_email)) {
-							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).'" title="'.__('Next Page').' &raquo;">'.__('Next Page').'</a> <b>&raquo;</b>';
+							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).'" title="'.__('Next Page').' &raquo;">'.__('Next Page').'</a> <strong>&raquo;</strong>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -245,25 +245,25 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 					<?php _e('Pages'); ?> (<?php echo $total_pages; ?>) :
 					<?php
 						if ($email_page >= 4) {
-							echo '<b><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.$email_sort_url.'" title="'.__('Go to First Page').'">&laquo; '.__('First').'</a></b> ... ';
+							echo '<strong><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.$email_sort_url.'" title="'.__('Go to First Page').'">&laquo; '.__('First').'</a></strong> ... ';
 						}
 						if($email_page > 1) {
-							echo ' <b><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page').' '.($email_page-1).'">&laquo;</a></b> ';
+							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page').' '.($email_page-1).'">&laquo;</a></strong> ';
 						}
 						for($i = $email_page - 2 ; $i  <= $email_page +2; $i++) {
 							if ($i >= 1 && $i <= $total_pages) {
 								if($i == $email_page) {
-									echo "<b>[$i]</b> ";
+									echo "<strong>[$i]</strong> ";
 								} else {
 									echo '<a href="'.$base_page.'&amp;emailpage='.($i).$email_sort_url.'" title="'.__('Page').' '.$i.'">'.$i.'</a> ';
 								}
 							}
 						}
 						if($email_page < $total_pages) {
-							echo ' <b><a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Go to Page').' '.($email_page+1).' &raquo;">&raquo;</a></b> ';
+							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Go to Page').' '.($email_page+1).' &raquo;">&raquo;</a></strong> ';
 						}
 						if (($email_page+2) < $total_pages) {
-							echo ' ... <b><a href="'.$base_page.'&amp;emailpage='.($total_pages).$email_sort_url.'" title="'.__('Go to Last Page').'">'.__('Last').' &raquo;</a></b>';
+							echo ' ... <strong><a href="'.$base_page.'&amp;emailpage='.($total_pages).$email_sort_url.'" title="'.__('Go to Last Page').'">'.__('Last').' &raquo;</a></strong>';
 						}
 					?>
 				</td>
@@ -335,7 +335,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<h2><?php _e('Delete E-Mail Logs'); ?></h2>
 	<div align="center">
 		<form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
-			<b>Are You Sure You Want To Delete All E-Mail Logs?</b><br /><br />
+			<strong>Are You Sure You Want To Delete All E-Mail Logs?</strong><br /><br />
 			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;Yes<br /><br />
 			<input type="submit" name="delete_logs" value="Delete" class="button" onclick="return confirm('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose \'Cancel\' to stop, \'OK\' to delete.')" />
 		</form>

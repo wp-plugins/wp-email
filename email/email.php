@@ -533,7 +533,7 @@ function create_email_table() {
 	add_option('email_contenttype', 'text/html', 'Your E-Mail Type');
 	add_option('email_mailer', 'php', 'Your Mailer Type');
 	add_option('email_template_subject', 'Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'Template For E-Mail Subject');
-	add_option('email_template_body', '<p>Hi <b>%EMAIL_FRIEND_NAME%</b>,<br />Your friend, <b>%EMAIL_YOUR_NAME%</b>, has recommended this article entitled \'<b>%EMAIL_POST_TITLE%</b>\' to you.</p><p><b>Here is his/her remarks:</b><br />%EMAIL_YOUR_REMARKS%</p><p><b>%EMAIL_POST_TITLE%</b><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'Template For E-Mail Body');
+	add_option('email_template_body', '<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remarks:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'Template For E-Mail Body');
 	add_option('email_template_bodyalt', 'Hi %EMAIL_FRIEND_NAME%,'."\n".
 	'Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.'."\n\n".
 	'Here is his/her remarks:'."\n".
@@ -543,9 +543,9 @@ function create_email_table() {
 	'%EMAIL_POST_CONTENT%'."\n".
 	'Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%'."\n".
 	'URL to article: %EMAIL_PERMALINK%', 'Template For E-Mail Alternate Body');
-	add_option('email_template_sentsuccess', '<div id="content" class="narrowcolumn"><p>Article: <b>%EMAIL_POST_TITLE%</b> Has Been Sent To <b>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</b></p></div>', 'Template For E-Mail That Is Sent Successfully');
-	add_option('email_template_sentfailed', '<p>An Error Has Occured When Trying To Send The E-Mail<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent');
-	add_option('email_template_error', '<p>An Error Has Occured<br /><b>&raquo;</b> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error');
+	add_option('email_template_sentsuccess', '<div id="content" class="narrowcolumn"><p>Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p></div>', 'Template For E-Mail That Is Sent Successfully');
+	add_option('email_template_sentfailed', '<p>An Error Has Occured When Trying To Send The E-Mail<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent');
+	add_option('email_template_error', '<p>An Error Has Occured<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error');
 	add_option('email_interval', 10, 'The Number Of Minutes Before The User Can E-Mail The Next Article');
 	add_option('email_snippet', 100, 'Enable Snippet Feature For Your E-Mail?');
 	add_option('email_multiple', 5, 'Maximum Number Of Multiple E-Mails');
