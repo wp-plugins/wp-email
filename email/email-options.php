@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.07										|
+|	WordPress 2.0 Plugin: WP-EMail 2.08										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -242,7 +242,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('subject');" class="button" />
 					</td>
-					<td align="left"><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo stripslashes(get_settings('email_template_subject')); ?>" size="82" /></td>
+					<td align="left"><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo htmlspecialchars(stripslashes(get_settings('email_template_subject'))); ?>" size="82" /></td>
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
@@ -264,7 +264,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('body');" class="button" />
 					</td>
-					<td align="left"><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo stripslashes(get_settings('email_template_body')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo htmlspecialchars(stripslashes(get_settings('email_template_body'))); ?></textarea></td> 
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
@@ -286,7 +286,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('bodyalt');" class="button" />
 					</td>
-					<td align="left"><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo stripslashes(get_settings('email_template_bodyalt')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo htmlspecialchars(stripslashes(get_settings('email_template_bodyalt'))); ?></textarea></td> 
 				</tr>
 			</table>
 		</fieldset>
@@ -305,7 +305,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('sentsuccess');" class="button" />
 					</td>
-					<td align="left"><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo stripslashes(get_settings('email_template_sentsuccess')); ?></textarea></td>
+					<td align="left"><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo htmlspecialchars(stripslashes(get_settings('email_template_sentsuccess'))); ?></textarea></td>
 				</tr>
 				<tr valign="top"> 
 					<td align="left" width="30%">
@@ -320,7 +320,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('sentfailed');" class="button" />
 					</td>
-					<td align="left"><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo stripslashes(get_settings('email_template_sentfailed')); ?></textarea></td> 
+					<td align="left"><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo htmlspecialchars(stripslashes(get_settings('email_template_sentfailed'))); ?></textarea></td> 
 				</tr>
 			</table>
 		</fieldset>
@@ -337,7 +337,7 @@ if($_POST['Submit']) {
 						- %EMAIL_PERMALINK%<br /><br />
 						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template'); ?>" onclick="javascript: email_default_templates('error');" class="button" />
 					</td>
-					<td align="left"><textarea cols="80" rows="10" id="email_template_error" name="email_template_error"><?php echo stripslashes(get_settings('email_template_error')); ?></textarea></td>
+					<td align="left"><textarea cols="80" rows="10" id="email_template_error" name="email_template_error"><?php echo htmlspecialchars(stripslashes(get_settings('email_template_error'))); ?></textarea></td>
 				</tr>
 			</table>
 		</fieldset>

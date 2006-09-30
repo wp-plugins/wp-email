@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.07										|
+|	WordPress 2.0 Plugin: WP-EMail 2.08										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -30,16 +30,16 @@ $rand = substr(str_shuffle($alphanum), 0, 5);
 $_SESSION['email_verify'] = md5($rand);
 
 ### Create The Image (60x22)
-$image = imagecreate(60, 22);
+$image = imagecreate(55, 15);
 
 ### Use White As The Background Color
-$bgColor = imagecolorallocate ($image, 255, 255, 255);
+$bgColor = imagecolorallocate($image, 255, 255, 255);
 
 ### Use Black As The Text Color
-$textColor = imagecolorallocate ($image, 0, 0, 0);
+$textColor = imagecolorallocate($image, 0, 0, 0);
 
 ### Output The Code To The Image
-imagestring ($image, 5, 5, 8, $rand, $textColor);
+imagestring($image, 5, 5, 1, $rand, $textColor);
 
 ### Date In The Past
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

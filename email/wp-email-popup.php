@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.0 Plugin: WP-EMail 2.07										|
+|	WordPress 2.0 Plugin: WP-EMail 2.08										|
 |	Copyright (c) 2005 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -264,7 +264,7 @@ if(!empty($did_email)) {
 
 			// If There Are Errors
 			} else {			
-				$error = substr($error, 20);
+				$error = substr($error, 21);
 				$template_email_error = stripslashes(get_settings('email_template_error'));
 				$template_email_error = str_replace("%EMAIL_ERROR_MSG%", $error, $template_email_error);
 				$template_email_error = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_email_error);
@@ -312,7 +312,7 @@ if(!empty($did_email)) {
 					<?php if($email_image_verify): ?>
 						<p>
 							<strong><label for="imageverify">Image Verification: *</label></strong><br />
-							<img src="<?php echo get_settings('siteurl'); ?>/wp-content/plugins/email/email-image-verify.php" width="60" height="22" alt="Image Verification" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />
+							<img src="<?php echo get_settings('siteurl'); ?>/wp-content/plugins/email/email-image-verify.php" width="55" height="15" alt="Image Verification" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />
 						</p>
 					<?php endif; ?>
 					<p style="text-align: center">
