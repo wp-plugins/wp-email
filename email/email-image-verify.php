@@ -21,7 +21,7 @@
 session_start();
 
 ### Captial Letters And Numbers
-$alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+$alphanum = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 ### Generate The Verfication Code
 $rand = substr(str_shuffle($alphanum), 0, 5);
