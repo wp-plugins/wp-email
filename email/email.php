@@ -407,7 +407,7 @@ function email_log($email_query = '') {
 function email_multiple() {
 	$email_multiple = intval(get_settings('email_multiple'));
 	if($email_multiple > 1) {
-		echo '<br /><i>'.__("Seperate multiple entries with a comma. Maximum $email_multiple entries.").'</i>';
+		echo '<br /><i>'.__("Separate multiple entries with a comma. Maximum $email_multiple entries.").'</i>';
 	}
 }
 
