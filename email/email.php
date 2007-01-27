@@ -483,7 +483,7 @@ if(!function_exists('get_mostemailed')) {
 		global $wpdb, $post;
 		$where = '';
 		$temp = '';
-		if(!empty($mode) || $mode != 'both') {
+		if(!empty($mode) && $mode != 'both') {
 			$where = "post_type = '$mode'";
 		} else {
 			$where = '1=1';
