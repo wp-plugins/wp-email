@@ -2,7 +2,7 @@
 <html>
 <head>	
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>WP-EMail 2.07 Readme</title>
+	<title>WP-EMail 2.10 Readme</title>
 	<style type="text/css" media="screen">
 		/* Default Style */
 		BODY {
@@ -203,7 +203,7 @@
 <body>
 <div id="Container">
 	<!-- Title -->
-	<div id="Title">WP-EMail 2.07&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
+	<div id="Title">WP-EMail 2.10&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
 
 	<!-- Tabs -->
 	<ul id="Tabs">
@@ -229,7 +229,7 @@
 				<b>&raquo;</b>
 				<script type="text/javascript">
 					/* <![CDATA[*/
-					document.write(' <a href="mailto:gamerz84@hotmail.com?Subject=WP-EMail%202.07%20Support" title="EMail To gamerz84@hotmail.com">gamerz84@hotmail.com</a>');
+					document.write(' <a href="mailto:gamerz84@hotmail.com?Subject=WP-EMail%202.10%20Support" title="EMail To gamerz84@hotmail.com">gamerz84@hotmail.com</a>');
 					/* ]]> */
 				</script>
 			</p>
@@ -243,7 +243,7 @@
 			</p>
 			<p>
 				<b>Download:</b><br />
-				<b>&raquo;</b> <a href="http://www.lesterchan.net/others/downloads.php?id=13" title="http://www.lesterchan.net/others/downloads.php?id=13">WP-EMail 2.07 For WordPress 2.1.x</a><br />
+				<b>&raquo;</b> <a href="http://www.lesterchan.net/others/downloads.php?id=13" title="http://www.lesterchan.net/others/downloads.php?id=13">WP-EMail 2.10 For WordPress 2.1.x</a><br />
 				<b>&raquo;</b> <a href="http://www.lesterchan.net/others/downloads/wp-email207.zip" title="http://www.lesterchan.net/others/downloads/wp-email207.zip">WP-EMail 2.07 For WordPress 2.0.x</a><br />
 				<b>&raquo;</b> <a href="http://www.lesterchan.net/others/downloads/wp-email200b.zip" title="http://www.lesterchan.net/others/downloads/wp-email200b.zip">WP-EMail 2.00b For WordPress 1.5.2</a>
 			</p>
@@ -265,11 +265,12 @@
 			</p>
 			<p>
 				<b>Updated:</b><br />
-				<b>&raquo;</b> 1st October 2006
+				<b>&raquo;</b> 1st Februrary 2007
 			</p>
 			<p>
 				<b>Note:</b><br />
-				<b>&raquo;</b> The <b>Changelog</b>, <b>Installation</b>, <b>Upgrade</b>, <b>Usage</b> Tab at the top of the page.
+				<b>&raquo;</b> The <b>Changelog</b>, <b>Installation</b>, <b>Upgrade</b>, <b>Usage</b> Tab at the top of the page.<br />
+				<b>&raquo;</b> The core code of WP-EMail had been changed to support the ability to integrate the email form within the page instead of doing it manually.
 			</p>
 			<p>
 				<b>Donations:</b><br />
@@ -286,16 +287,22 @@
 		<div id="Changelog" style="display: none;">
 			<div class="SubTitle">&raquo; Changelog</div>
 			<ul>
-				<!--
 				<li>
 					<b>Version 2.10 (01-02-2007)</b>
 					<ul>
+						<li>NEW: Works For WordPress 2.1 Only</li>
+						<li>NEW: Added Fam Fam Fam's E-Mail Icon</li>
+						<li>NEW: Localize WP-EMail</li>
+						<li>NEW: Ability To Configure The Text For E-Mail Links Via 'WP-Admin -> E-Mail -> E-Mail Options'</li>
+						<li>NEW: Ability To Set E-Mail Link Type (Standalone Page Or Popup Page) Via 'WP-Admin -> E-Mail -> E-Mail Options'</li>
+						<li>NEW: The Text For E-Mail Links Can No Longer Be Pass To The Function email_link(), email_link_image(), email_popup() or email_popup_image().</li>
+						<li>NEW: Ability To Select Which Field You Want To Display In The E-Mail Form</li>
+						<li>FIXED: Name Fields No Longer Check For Validity Due To Localization</li>
 						<li>FIXED: Special HTML Characters No Longer Get Converted Into Its Symbolic Form When Displaying In E-Mail -> E-Mail Options</li>
 						<li>FIXED: Extra ; When Displaying Error Message</li>
 						<li>FIXED: Removed 1 0 I O From The Image Verify To Avoid Confusion</li>
 					</ul>
 				</li>
-				-->
 				<li>
 					<b>Version 2.07 (01-10-2006)</b>
 					<ul>
@@ -443,7 +450,7 @@
 		<!-- Upgrade Instructions -->	
 		<div id="Upgrade" style="display: none;">
 			<div class="SubTitle">&raquo; Upgrade Instructions</div>
-			<div class="SubSubTitle">From v2.0x To v2.07</div>
+			<div class="SubSubTitle">From v2.0x To v2.10</div>
 			<ol>
 				<li>
 					<b>Deactivate</b> WP-EMail Plugin
@@ -477,7 +484,7 @@
 			<ol>
 				<li>
 					Open <b>wp-content/themes/&lt;YOUR THEME NAME&gt;/index.php</b>
-					<p>You may place it in <b>single.php</b>, <b>post.php</b> or <b>page.php</b> also.</p>
+					<p>You may place it in <b>single.php</b>, <b>post.php</b>, <b>page.php</b> or <b>theloop.php</b> also.</p>
 				</li>
 				<li>
 					Find:
@@ -490,14 +497,6 @@
 					<blockquote>
 						&lt;?php if(function_exists('wp_email')) { email_link(); } ?&gt;
 					</blockquote>
-					<p>The <b>first value</b> you pass in is the text for emailing post. The <b>second value</b> is the text for emailing page.</p>
-					<p>Default: email_link('EMail This Post', 'EMail This Page')</p>
-					<p>If you want to use an image/icon instead, replace email_link(); with <b>email_link_image();</b></p>
-					<p>If you want to use a popup window, replace email_link(); with <b>email_popup();</b> for normal link or <b>email_popup_image();</b> for image/icon.</p>
-				</li>
-				<li>
-					Tutorial On How To Integrate wp-email.php With Your Theme:
-					<blockquote><a href="http://www.lesterchan.net/wordpress/tutorials/integrating/" target="_blank">http://www.lesterchan.net/wordpress/tutorials/integrating/</a></blockquote>
 				</li>
 			</ol>
 			<div class="SubSubTitle">EMail Stats (Outside WP Loop)</div>
@@ -512,7 +511,11 @@
 						&nbsp;&nbsp;&nbsp;&lt;?php get_mostemailed(); ?&gt;<br />
 						&lt;?php endif; ?&gt;
 					</blockquote>
-					<p>The default limit is 10, you can change the limit by doing this &lt;?php get_mostemailed(&lt;LIMIT&gt;); ?&gt;</p>
+					<p>
+						The <b>first value</b> you pass in is what you want to get, 'post', 'page' or 'both'.<br />
+						The <b>second value</b> you pass in is the maximum number of post you want to get.
+					</p>
+					<p>Default: get_mostemailed('both', 10);</p>
 				</li>
 				<li>
 					To Display <b>Total E-Mails Sent</b>
@@ -548,9 +551,33 @@
 					</blockquote>
 				</li>
 			</ul>
+			<div class="SubSubTitle">Note</div>
+			<ul>
+				<li>
+					To change the background color of the popup window:
+					<ol>
+						<li>
+							Open <b>wp-email-popup.php</b>
+						</li>
+						<li>
+							Find:
+							<blockquote>
+									/* background: #ffffff; */
+							</blockquote>
+						</li>
+						<li>
+							Replace:
+							<blockquote>
+									background-color: #ffffff;
+							</blockquote>
+							<p>Where <b>#ffffff</b> should be your background color for the popup window.</p>
+						</li>
+					</ol>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>
-<p id="Copyright">WP-EMail 2.07<br />Copyright &copy; 2007 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
+<p id="Copyright">WP-EMail 2.10<br />Copyright &copy; 2007 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
 </body>
 </html>
