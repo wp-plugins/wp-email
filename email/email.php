@@ -181,15 +181,24 @@ function email_popup_image() { email_link(); }
 
 
 ### Function: Snippet Text
-function snippet_text($text, $length = 0) {
-	$words = preg_split('/\s+/', ltrim($text), $length + 1);
-	if(count($words) > $length) {
-		return rtrim(substr($text, 0, strlen($text) - strlen(end($words)))).' ...';
-	} else {
-		return $text;
+if(!function_exists('snippet_chars')) {
+	function snippet_chars($text, $length = 0) {
+		$text = htmlspecialchars_decode($text);
+		 if (strlen($text) > $length){       
+			return htmlspecialchars(substr($text,0,$length)).'...';             
+		 } else {
+			return htmlspecialchars($text);
+		 }
 	}
 }
 
+
+### Function: HTML Special Chars Decode
+if (!function_exists('htmlspecialchars_decode')) {
+   function htmlspecialchars_decode($text) {
+       return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS)));
+   }
+}
 
 ### Function: E-Mail Page Title
 function email_pagetitle($page_title) {
@@ -217,7 +226,7 @@ function email_content() {
 	$content = str_replace(']]>', ']]&gt;', $content);
 	$email_snippet = intval(get_option('email_snippet'));
 	if($email_snippet > 0) {
-		return snippet_text($content , $email_snippet);
+		return snippet_chars($content , $email_snippet);
 	} else {
 		return $content;
 	}
@@ -232,7 +241,7 @@ function email_content_alt() {
 	$content = strip_tags($content);
 	$email_snippet = intval(get_option('email_snippet'));
 	if($email_snippet > 0) {
-		return snippet_text($content , $email_snippet);
+		return snippet_chars($content , $email_snippet);
 	} else {
 		return $content;
 	}
@@ -413,14 +422,6 @@ function email_popup_form_header($echo = true) {
 }
 
 
-### Function: Log E-Mail
-function email_log($email_query = '') {
-	global $wpdb;
-	$log_email_sending = $wpdb->query("INSERT INTO $wpdb->email VALUES(".$email_query.')');
-	return $log_email_sending;
-}
-
-
 ### Function: Multiple E-Mails
 function email_multiple($echo = true) {
 	$email_multiple = intval(get_option('email_multiple'));
@@ -547,7 +548,7 @@ function wp_email() {
 
 ### Function: E-Mail Form
 function email_form($popup = false, $echo = true) {
-	global $post_excerpt, $post_content, $post_content_alt;
+	global $post_excerpt, $post_content, $post_content_alt, $wpdb;
 	// Variables
 	$email_fields = get_option('email_fields');
 	$email_image_verify = intval(get_option('email_imageverify'));
@@ -747,7 +748,7 @@ function email_form($popup = false, $echo = true) {
 			$email_yourname = addslashes($yourname);
 			$email_youremail = addslashes($youremail);
 			$email_yourremarks = addslashes($yourremarks);
-			$email_postid = get_the_id();
+			$email_postid = intval(get_the_id());
 			$email_posttitle = addslashes($post_title);
 			$email_timestamp = current_time('timestamp');
 			$email_ip = get_email_ipaddress();
@@ -755,7 +756,7 @@ function email_form($popup = false, $echo = true) {
 			foreach($friends as $friend) {
 				$email_friendname = addslashes($friend['name']);
 				$email_friendemail = addslashes($friend['email']);
-				$log_email_sending = email_log("0, '$email_yourname', '$email_youremail', '$email_yourremarks', '$email_friendname', '$email_friendemail', $email_postid, '$email_posttitle', '$email_timestamp', '$email_ip', '$email_host', '$email_status'");
+				$wpdb->query("INSERT INTO $wpdb->email VALUES (0, '$email_yourname', '$email_youremail', '$email_yourremarks', '$email_friendname', '$email_friendemail', $email_postid, '$email_posttitle', '$email_timestamp', '$email_ip', '$email_host', '$email_status')");
 			}
 		// If There Are Errors
 		} else {
