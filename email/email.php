@@ -320,7 +320,7 @@ if(!function_exists('is_valid_email')) {
 ### Function: Check Valid Remarks (Ensure No E-Mail Injections)
 if(!function_exists('is_valid_remarks')) {
 	function is_valid_remarks($content) { 
-		$injection_strings = array('apparently-to', 'bcc', 'boundary', 'charset', 'content-disposition', 'content-type', 'content-transfer-encoding', 'errors-to', 'in-reply-to', 'message-id', 'mime-version', 'multipart/mixed', 'multipart/alternative', 'multipart/related', 'reply-to', 'x-mailer', 'x-sender', 'x-uidl'); 
+		$injection_strings = array('apparently-to', 'cc', 'bcc', 'boundary', 'charset', 'content-disposition', 'content-type', 'content-transfer-encoding', 'errors-to', 'in-reply-to', 'message-id', 'mime-version', 'multipart/mixed', 'multipart/alternative', 'multipart/related', 'reply-to', 'x-mailer', 'x-sender', 'x-uidl'); 
 		foreach ($injection_strings as $spam) { 
 			$check = strpos(strtolower($content), $spam); 
 			if ($check !== false) {
@@ -558,7 +558,7 @@ function email_form($popup = false, $echo = true) {
 	$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
 	$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 	$output = '<div class="wp-email">'."\n";
-	$output .= '<p style="text-align: center">'.sprintf(__('E-Mail A Copy Of <strong>%s</strong> To A Friend.', 'wp-email'), get_the_title()).'</p>'."\n";
+	$output .= '<p style="text-align: center">'.sprintf(__('Email a copy of <strong>%s</strong> to a Friend.', 'wp-email'), get_the_title()).'</p>'."\n";
 	// If User Click On Mail
 	if(!empty($_POST['wp-email'])) {
 		// SMTP
@@ -631,6 +631,8 @@ function email_form($popup = false, $echo = true) {
 			if(sizeof($friends) > $multiple_max) {
 				$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Maximum %s entries allowed', 'wp-email'), $multiple_max);
 			}
+		}
+		if(intval($email_fields['friendname']) == 1 && intval($email_fields['friendemail']) == 1) {
 			if($friendname_count != $friendemail_count) {
 				$error .= '<br /><strong>&raquo;</strong> '.__('Friends\' name count does not tally with friends\' email count.', 'wp-email');
 			}
