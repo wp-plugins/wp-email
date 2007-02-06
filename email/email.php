@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
-Version: 2.10
+Version: 2.11
 Author: GaMerZ
 Author URI: http://www.lesterchan.net
 */
@@ -337,7 +337,7 @@ function not_spamming() {
 	global $wpdb;
 	$current_time = current_time('timestamp');
 	$email_ip = get_email_ipaddress();
-	$email_host = gethostbyaddr($email_ip);
+	$email_host = @gethostbyaddr($email_ip);
 	$email_status = __('Success', 'wp-email');
 	$last_emailed = $wpdb->get_var("SELECT email_timestamp FROM $wpdb->email WHERE email_ip = '$email_ip' AND email_host = '$email_host' AND email_status = '$email_status' ORDER BY email_timestamp DESC LIMIT 1");
 	$email_allow_interval = intval(get_option('email_interval'))*60;
@@ -754,7 +754,7 @@ function email_form($popup = false, $echo = true) {
 			$email_posttitle = addslashes($post_title);
 			$email_timestamp = current_time('timestamp');
 			$email_ip = get_email_ipaddress();
-			$email_host = gethostbyaddr($email_ip);
+			$email_host = @gethostbyaddr($email_ip);
 			foreach($friends as $friend) {
 				$email_friendname = addslashes($friend['name']);
 				$email_friendemail = addslashes($friend['email']);
