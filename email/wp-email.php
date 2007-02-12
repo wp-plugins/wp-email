@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.1 Plugin: WP-EMail 2.10										|
+|	WordPress 2.1 Plugin: WP-EMail 2.11										|
 |	Copyright (c) 2007 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -29,5 +29,11 @@ add_filter('the_title', 'email_title');
 add_filter('the_content', 'email_form', '', false, false);
 
 ### We Use Page Template
-include(get_page_template());
+if(file_exists(TEMPLATEPATH.'/page.php')) {
+	include(get_page_template());
+} elseif(file_exists(TEMPLATEPATH.'/single.php')) {
+	include(get_single_template());
+} else {
+	include(TEMPLATEPATH.'/index.php');
+}
 ?>

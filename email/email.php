@@ -489,7 +489,7 @@ if(!function_exists('get_mostemailed')) {
 		} else {
 			$where = '1=1';
 		}
-		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS 'email_total' FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' AND post_status = 'publish' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
+		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS email_total FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' AND post_status = 'publish' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
 		if($mostemailed) {
 			if($chars > 0) {
 				foreach ($mostemailed as $post) {
@@ -839,6 +839,43 @@ function email_form($popup = false, $echo = true) {
 		return $output;
 	}
 }
+
+
+### Function: Modify Default WordPress Listing To Make It Sorted By Most E-Mailed
+function email_fields($content) {
+	global $wpdb;
+	$content .= ", COUNT($wpdb->email.email_postid) AS email_total";
+	return $content;
+}
+function email_join($content) {
+	global $wpdb;
+	$content .= " LEFT JOIN $wpdb->email ON $wpdb->email.email_postid = $wpdb->posts.ID";
+	return $content;
+}
+function email_groupby($content) {
+	global $wpdb;
+	$content .= " $wpdb->email.email_postid";
+	return $content;
+}
+function email_orderby($content) {
+	$orderby = trim(addslashes($_GET['orderby']));
+	if(empty($orderby) && ($orderby != 'asc' || $orderby != 'desc')) {
+		$orderby = 'desc';
+	}
+	$content = " email_total $orderby";
+	return $content;
+}
+
+
+### Process The Sorting
+/*
+if($_GET['sortby'] == 'email') {
+	add_filter('posts_fields', 'email_fields');
+	add_filter('posts_join', 'email_join');
+	add_filter('posts_groupby', 'email_groupby');
+	add_filter('posts_orderby', 'email_orderby');
+}
+*/
 
 
 ### Function: Create E-Mail Table

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.10\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-02-01 20:07+0800\n"
+"PO-Revision-Date: 2007-02-12 20:18+0800\n"
 "Last-Translator: Lester 'GaMerZ' Chan <gamerz84@hotmail.com>\n"
 "Language-Team: Lester Chan <gamerz84@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -289,7 +289,7 @@ msgid "No E-Mail Option Updated"
 msgstr ""
 
 #: email-options.php:115
-#: email.php:869
+#: email.php:906
 msgid "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%"
 msgstr ""
 
@@ -317,12 +317,12 @@ msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EM
 msgstr ""
 
 #: email-options.php:127
-#: email.php:881
+#: email.php:918
 msgid "An Error Has Occured When Trying To Send The E-Mail"
 msgstr ""
 
 #: email-options.php:130
-#: email.php:882
+#: email.php:919
 msgid "An Error Has Occured"
 msgstr ""
 
@@ -744,71 +744,71 @@ msgstr ""
 msgid "Please wait for <strong>%s Minutes</strong> before sending the next article."
 msgstr ""
 
-#: email.php:870
+#: email.php:907
 msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remarks:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>"
 msgstr ""
 
-#: email.php:871
+#: email.php:908
 msgid "Hi %EMAIL_FRIEND_NAME%,"
 msgstr ""
 
-#: email.php:871
-#: email.php:873
-#: email.php:875
-#: email.php:876
-#: email.php:877
-#: email.php:878
+#: email.php:908
+#: email.php:910
+#: email.php:912
+#: email.php:913
+#: email.php:914
+#: email.php:915
 msgid "\n"
 msgstr ""
 
-#: email.php:872
+#: email.php:909
 msgid "Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you."
 msgstr ""
 
-#: email.php:872
-#: email.php:874
+#: email.php:909
+#: email.php:911
 msgid ""
 "\n"
 "\n"
 msgstr ""
 
-#: email.php:873
+#: email.php:910
 msgid "Here is his/her remarks:"
 msgstr ""
 
-#: email.php:874
+#: email.php:911
 msgid "%EMAIL_YOUR_REMARKS%"
 msgstr ""
 
-#: email.php:875
+#: email.php:912
 msgid "%EMAIL_POST_TITLE%"
 msgstr ""
 
-#: email.php:876
+#: email.php:913
 msgid "Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%"
 msgstr ""
 
-#: email.php:877
+#: email.php:914
 msgid "%EMAIL_POST_CONTENT%"
 msgstr ""
 
-#: email.php:878
+#: email.php:915
 msgid "Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%"
 msgstr ""
 
-#: email.php:879
+#: email.php:916
 msgid "URL to article: %EMAIL_PERMALINK%"
 msgstr ""
 
-#: email.php:880
+#: email.php:917
 msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p>"
 msgstr ""
 
-#: email.php:889
+#: email.php:926
 msgid "Email This Post"
 msgstr ""
 
-#: email.php:889
+#: email.php:926
 msgid "Email This Page"
 msgstr ""
 
