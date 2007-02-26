@@ -200,10 +200,20 @@ if (!function_exists('htmlspecialchars_decode')) {
    }
 }
 
+
 ### Function: E-Mail Page Title
 function email_pagetitle($page_title) {
 	$page_title = '&raquo; '.__('E-Mail', 'wp-email').$page_title;
 	return $page_title;
+}
+
+
+### Function: E-Mail Post ID
+if(!function_exists('get_the_id')) {
+	function get_the_id() {
+		global $id;
+		return $id;
+	}
 }
 
 
@@ -489,17 +499,17 @@ if(!function_exists('get_mostemailed')) {
 		} else {
 			$where = '1=1';
 		}
-		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.ID, post_title, post_name, post_date, COUNT($wpdb->email.email_postid) AS email_total FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' AND post_status = 'publish' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
+		$mostemailed= $wpdb->get_results("SELECT $wpdb->posts.*, COUNT($wpdb->email.email_postid) AS email_total FROM $wpdb->email LEFT JOIN $wpdb->posts ON $wpdb->email.email_postid = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND $where AND post_password = '' AND post_status = 'publish' GROUP BY $wpdb->email.email_postid ORDER  BY email_total DESC LIMIT $limit");
 		if($mostemailed) {
 			if($chars > 0) {
 				foreach ($mostemailed as $post) {
-						$post_title = htmlspecialchars(stripslashes($post->post_title));
+						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
 						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('Emails', 'wp-email')."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
-						$post_title = htmlspecialchars(stripslashes($post->post_title));
+						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
 						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails', 'wp-email')."</li>\n";
 				}
