@@ -114,6 +114,12 @@ function email_link($deprecated = '', $deprecated2 ='') {
 	$email_link = get_permalink();
 	$email_html = stripslashes($email_options['email_html']);
 	$onclick = '';
+	// Fix For Static Page
+	if(get_option('show_on_front') == page) {		
+		if(intval(get_option('page_on_front')) > 0) {
+			$email_link = _get_page_link();
+		}
+	}
 	switch($email_type) {
 		// E-Mail Standalone Page
 		case 1:
@@ -153,11 +159,11 @@ function email_link($deprecated = '', $deprecated2 ='') {
 	switch($email_style) {
 		// Icon + Text Link
 		case 1:
-			echo '<img src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" border="0" />&nbsp;<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow">'.$email_text.'</a>'."\n";
+			echo '<img class="WP-EmailIcon" src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" style="border: 0px;" />&nbsp;<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow">'.$email_text.'</a>'."\n";
 			break;
 		// Icon Only
 		case 2:
-			echo '<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow"><img src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" border="0" /></a>'."\n";
+			echo '<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow"><img class="WP-EmailIcon" src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" style="border: 0px;" /></a>'."\n";
 			break;
 		// Text Link Only
 		case 3:
@@ -796,40 +802,40 @@ function email_form($popup = false, $echo = true) {
 				$output .= $template_email_sentfailed;
 				$output .= $template_email_error;
 				$output .= '<!-- End Display Error, If There Is Any -->'."\n";
-				$output .= '<p><strong>* Required Field</strong></p>'."\n";
+				$output .= '<p><strong>'.__('* Required Field', 'wp-email').'</strong></p>'."\n";
 				if(intval($email_fields['yourname']) == 1) {
 					$output .= '<p>'."\n";
-					$output .= '<strong><label for="yourname">Your Name: *</label></strong><br />'."\n";
+					$output .= '<strong><label for="yourname">'.__('Your Name: *', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="'.$yourname.'" />'."\n";
 					$output .= '</p>'."\n";
 				}
 				if(intval($email_fields['youremail']) == 1) {
 					$output .= '<p>'."\n";
-					$output .= '<strong><label for="youremail">Your E-Mail: *</label></strong><br />'."\n";
+					$output .= '<strong><label for="youremail">'.__('Your E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="'.$youremail.'" />'."\n";
 					$output .= '</p>'."\n";
 				}
 				if(intval($email_fields['yourremarks']) == 1) {
 					$output .= '<p>'."\n";
-					$output .= '	<strong><label for="yourremarks">Your Remarks:</label></strong><br />'."\n";
+					$output .= '	<strong><label for="yourremarks">'.__('Your Remarks:', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">'.$yourremarks.'</textarea>'."\n";
 					$output .= '</p>'."\n";
 				}
 				if(intval($email_fields['friendname']) == 1) {
 					$output .= '<p>'."\n";
-					$output .= '<strong><label for="friendname">Friend\'s Name: *</label></strong><br />'."\n";
+					$output .= '<strong><label for="friendname">'.__('Friend\'s Name: *', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="'.$friendname.'" />'.email_multiple(false)."\n";
 					$output .= '</p>'."\n";
 				}
 				if(intval($email_fields['friendemail']) == 1) {
 					$output .= '<p>'."\n";
-					$output .= '<strong><label for="friendemail">Friend\'s E-Mail: *</label></strong><br />'."\n";
+					$output .= '<strong><label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$friendemail.'" />'.email_multiple(false)."\n";
 					$output .= '</p>'."\n";
 				}
 				if($email_image_verify) {
 					$output .= '<p>'."\n";
-					$output .= '<strong><label for="imageverify">Image Verification: *</label></strong><br />'."\n";
+					$output .= '<strong><label for="imageverify">'.__('Image Verification: *', 'wp-email').'</label></strong><br />'."\n";
 					$output .= '<img src="'.get_option('siteurl').'/wp-content/plugins/email/email-image-verify.php" width="55" height="15" alt="'.__('E-Mail Image Verification', 'wp-email').'" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />'."\n";
 					$output .= '</p>'."\n";
 				}
