@@ -12,8 +12,6 @@ Allows people to recommand/send your WordPress blog's post/page to a friend.
 All the information (general, changelog, installation, upgrade, usage) you need about this plugin can be found here: [WP-EMail Readme](http://www.lesterchan.net/wordpress/readme/wp-email.html "WP-EMail Readme").
 It is the exact same readme.html is included in the zip package.
 
-There is a problem with WordPress Plugins SVN. It will not zip up sub sub folders, use this WP-EMail direct download link: [WP-EMail 2.10](http://www.lesterchan.net/others/downloads.php?id=13 "WP-EMail 2.10")
-
 == Development Blog ==
 
 [GaMerZ WordPress Plugins Development Blog](http://www.lesterchan.net/wordpress/ "GaMerZ WordPress Plugins Development Blog")
