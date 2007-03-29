@@ -418,6 +418,12 @@ function email_popup_form_header($echo = true) {
 	global $id;
 	$using_permalink = get_option('permalink_structure');
 	$permalink = get_permalink();
+	// Fix For Static Page
+	if(get_option('show_on_front') == 'page' && is_page()) {
+		if(intval(get_option('page_on_front')) > 0) {
+			$permalink = _get_page_link();
+		}
+	}
 	$output = '';
 	if(!empty($using_permalink)) {
 		if(is_page()) {
