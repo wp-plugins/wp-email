@@ -115,7 +115,7 @@ function email_link($deprecated = '', $deprecated2 ='') {
 	$email_html = stripslashes($email_options['email_html']);
 	$onclick = '';
 	// Fix For Static Page
-	if(get_option('show_on_front') == page) {		
+	if(get_option('show_on_front') == 'page' && is_page()) {
 		if(intval(get_option('page_on_front')) > 0) {
 			$email_link = _get_page_link();
 		}
@@ -381,6 +381,12 @@ function email_form_header($echo = true) {
 	global $id;
 	$using_permalink = get_option('permalink_structure');
 	$permalink = get_permalink();
+	// Fix For Static Page
+	if(get_option('show_on_front') == 'page' && is_page()) {
+		if(intval(get_option('page_on_front')) > 0) {
+			$permalink = _get_page_link();
+		}
+	}
 	$output = '';
 	if(!empty($using_permalink)) {
 		if(is_page()) {
