@@ -288,12 +288,16 @@
 			<div class="SubTitle">&raquo; Changelog</div>
 			<ul>
 				<li>
-					<b>Version 2.11 (01-05-2007)</b>
+					<b>Version 2.11 (01-06-2007)</b>
 					<ul>
+						<li>NEW: Added Template For Page Title And Page Subtitle In 'WP-Admin -> E-Mail -> E-Mail Options'</li>
+						<li>NEW: Putting [email_link] In Your Post/Page Content Will Display A Link To The E-Mail Post/Page</li>
 						<li>FIXED: Suppress gethostbyaddr() Error</li>
 						<li>FIXED: If page.php Is Not Found, single.php or index.php Will Be Used</li>
 						<li>FIXED: Wrong URL For Page Under Most E-Mailed Posts Listing</li>
 						<li>FIXED: Wrong URL If Front Page Is A Static Page</li>
+						<li>FIXED: Fixed A Minor Grammer Mistake For Remark (Singular)</li>
+						<li>FIXED: Some Text Not Translated</li>
 					</ul>
 				</li>
 				<li>
@@ -506,6 +510,7 @@
 					<blockquote>
 						&lt;?php if(function_exists('wp_email')) { email_link(); } ?&gt;
 					</blockquote>
+					<p>If you DO NOT want the print link to appear in every post/page, DO NOT use the code above. Just type in <strong>[email_link]</strong> into the selected post/page content and it will embed the email link into that post/page only.</p>
 				</li>
 			</ol>
 			<div class="SubSubTitle">EMail Stats (Outside WP Loop)</div>

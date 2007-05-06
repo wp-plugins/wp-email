@@ -224,7 +224,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="left" width="50%">
 					<?php
 						if($email_page > 1 && ((($email_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_email)) {
-							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).'" title="&laquo; '.__('Previous Page', 'wp-email').'">'.__('Previous Page', 'wp-email').'</a>';
+							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Previous Page', 'wp-email').'">'.__('Previous Page', 'wp-email').'</a>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -233,7 +233,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				<td align="right" width="50%">
 					<?php
 						if($email_page >= 1 && ((($email_page*$email_log_perpage)+1) <=  $total_email)) {
-							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).'" title="'.__('Next Page', 'wp-email').' &raquo;">'.__('Next Page', 'wp-email').'</a> <strong>&raquo;</strong>';
+							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Next Page', 'wp-email').' &raquo;">'.__('Next Page', 'wp-email').'</a> <strong>&raquo;</strong>';
 						} else {
 							echo '&nbsp;';
 						}
@@ -245,7 +245,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 					<?php _e('Pages', 'wp-email'); ?> (<?php echo $total_pages; ?>):
 					<?php
 						if ($email_page >= 4) {
-							echo '<strong><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.$email_sort_url.'" title="'.__('Go to First Page', 'wp-email').'">&laquo; '.__('First', 'wp-email').'</a></strong> ... ';
+							echo '<strong><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.'" title="'.__('Go to First Page', 'wp-email').'">&laquo; '.__('First', 'wp-email').'</a></strong> ... ';
 						}
 						if($email_page > 1) {
 							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page', 'wp-email').' '.($email_page-1).'">&laquo;</a></strong> ';

@@ -53,6 +53,8 @@ if($_POST['Submit']) {
 	$email_interval = intval(trim($_POST['email_interval']));
 	$email_multiple = intval(trim($_POST['email_multiple']));
 	$email_imageverify = intval(trim($_POST['email_imageverify']));
+	$email_template_title = trim($_POST['email_template_title']);
+	$email_template_subtitle = trim($_POST['email_template_subtitle']);
 	$email_template_subject = strip_tags(trim($_POST['email_template_subject']));
 	$email_template_body = trim($_POST['email_template_body']);
 	$email_template_bodyalt = trim($_POST['email_template_bodyalt']);
@@ -70,6 +72,8 @@ if($_POST['Submit']) {
 	$update_email_queries[] = update_option('email_interval', $email_interval);
 	$update_email_queries[] = update_option('email_multiple', $email_multiple);
 	$update_email_queries[] = update_option('email_imageverify', $email_imageverify);
+	$update_email_queries[] = update_option('email_template_title', $email_template_title);
+	$update_email_queries[] = update_option('email_template_subtitle', $email_template_subtitle);
 	$update_email_queries[] = update_option('email_template_subject', $email_template_subject);
 	$update_email_queries[] = update_option('email_template_body', $email_template_body);
 	$update_email_queries[] = update_option('email_template_bodyalt', $email_template_bodyalt);
@@ -85,6 +89,8 @@ if($_POST['Submit']) {
 	$update_email_text[] = __('Interval Option', 'wp-email');
 	$update_email_text[] = __('Multiple E-Mails Option', 'wp-email');
 	$update_email_text[] = __('Image Verification Option', 'wp-email');
+	$update_email_text[] = __('Page Title Template', 'wp-email');
+	$update_email_text[] = __('Page Subtitle Template', 'wp-email');
 	$update_email_text[] = __('Subject Template', 'wp-email');
 	$update_email_text[] = __('Body Template', 'wp-email');
 	$update_email_text[] = __('Alternate Body Template', 'wp-email');
@@ -111,6 +117,12 @@ $email_fields = get_option('email_fields');
 	function email_default_templates(template) {
 		var default_template;
 		switch(template) {
+			case "title":
+				default_template = "<?php _e('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'); ?>";
+				break;
+			case "subtitle":
+				default_template = "<p style=\"text-align: center;\"><?php _e('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email'); ?></p>";
+				break;
 			case "subject":
 				default_template = "<?php _e('Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'wp-email'); ?>";
 				break;
@@ -118,7 +130,7 @@ $email_fields = get_option('email_fields');
 				default_template = "<?php _e('<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remarks:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>', 'wp-email'); ?>";
 				break;
 			case "bodyalt":
-				default_template = "<?php _e('Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.\n\nHere is his/her remarks:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%', 'wp-email'); ?>";
+				default_template = "<?php _e('Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.\n\nHere is his/her remark:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%', 'wp-email'); ?>";
 				break;
 			case "sentsuccess":
 				default_template = "<p><?php _e('Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong>', 'wp-email'); ?></p>";
@@ -342,6 +354,41 @@ $email_fields = get_option('email_fields');
 				</tr>
 			</table>
 		</fieldset>
+	<fieldset class="options">
+			<legend><?php _e('E-Mail Page Templates', 'wp-email'); ?></legend>
+			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
+				 <tr valign="top">
+					<td align="left" width="30%">
+						<strong><?php _e('E-Mail Page Title:', 'wp-email'); ?></strong><br /><br />
+						<?php _e('Allowed Variables:', 'wp-email'); ?><br />
+						- %EMAIL_POST_TITLE%<br />
+						- %EMAIL_POST_AUTHOR%<br />
+						- %EMAIL_POST_DATE%<br />
+						- %EMAIL_POST_CATEGORY%<br />
+						- %EMAIL_BLOG_NAME%<br />
+						- %EMAIL_BLOG_URL%<br />
+						- %EMAIL_PERMALINK%<br /><br />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('title');" class="button" />
+					</td>
+					<td align="left"><input type="text" id="email_template_title" name="email_template_title" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_title'))); ?>" size="82" /></td>
+				</tr>
+				<tr valign="top"> 
+					<td align="left" width="30%">
+						<strong><?php _e('E-Mail Page Subtitle:', 'wp-email'); ?></strong><br /><br />
+						<?php _e('Allowed Variables:', 'wp-email'); ?><br />
+						- %EMAIL_POST_TITLE%<br />
+						- %EMAIL_POST_AUTHOR%<br />
+						- %EMAIL_POST_DATE%<br />
+						- %EMAIL_POST_CATEGORY%<br />
+						- %EMAIL_BLOG_NAME%<br />
+						- %EMAIL_BLOG_URL%<br />
+						- %EMAIL_PERMALINK%<br /><br />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('subtitle');" class="button" />
+					</td>
+					<td align="left"><input type="text" id="email_template_subtitle" name="email_template_subtitle" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subtitle'))); ?>" size="82" /></td> 
+				</tr>
+			</table>
+		</fieldset>
 		<fieldset class="options">
 			<legend><?php _e('E-Mail Templates', 'wp-email'); ?></legend>
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
@@ -460,7 +507,7 @@ $email_fields = get_option('email_fields');
 			</table>
 		</fieldset>
 		<div align="center">
-			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options', 'wp-email'); ?>" />&nbsp;&nbsp;<input type="button" name="cancel" Value="<?php _e('Cancel', 'wp-email'); ?>" class="button" onclick="javascript:history.go(-1)" />
+			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options', 'wp-email'); ?>" />&nbsp;&nbsp;<input type="button" name="cancel" value="<?php _e('Cancel', 'wp-email'); ?>" class="button" onclick="javascript:history.go(-1)" />
 		</div>
 	</form> 
 </div>
