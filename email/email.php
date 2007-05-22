@@ -225,6 +225,13 @@ if (!function_exists('htmlspecialchars_decode')) {
 }
 
 
+### Function: Remove E-Mail Filters
+function email_removefilters() {
+	remove_filter('the_title', 'email_title');
+	remove_filter('wp_title', 'email_pagetitle');
+	remove_filter('the_content', 'email_form');
+}
+
 ### Function: E-Mail Page Title
 function email_pagetitle($page_title) {
 	$page_title = '&raquo; '.__('E-Mail', 'wp-email').$page_title;
@@ -723,8 +730,6 @@ function email_form($popup = false, $echo = true) {
 		if(empty($error) && not_spamming()) {
 			// If Remarks Is Empty, Assign N/A
 			if(empty($yourremarks)) { $yourremarks = __('N/A', 'wp-email'); }
-			// Variables Variables Variables
-			remove_filter('the_content', 'email_form');
 			// Template For E-Mail Subject
 			$template_email_subject = stripslashes(get_option('email_template_subject'));
 			$template_email_subject = str_replace("%EMAIL_YOUR_NAME%", $yourname, $template_email_subject);
@@ -899,6 +904,7 @@ function email_form($popup = false, $echo = true) {
 		} // End if (not_spamming())
 	} // End if($email_status == __('Success', 'wp-email'))
 	$output .= '</div><p>&nbsp;'."\n";
+	email_removefilters();
 	if($echo) {
 		echo $output;
 	} else {

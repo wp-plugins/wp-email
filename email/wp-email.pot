@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.10\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-05-06 16:12+0800\n"
+"PO-Revision-Date: 2007-05-22 21:37+0800\n"
 "Last-Translator: Lester 'GaMerZ' Chan <gamerz84@hotmail.com>\n"
 "Language-Team: Lester Chan <gamerz84@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -91,16 +91,16 @@ msgid "An Error Has Occured While Deleting All E-Mail Logs."
 msgstr ""
 
 #: email-manager.php:126
-#: email.php:387
-#: email.php:515
-#: email.php:792
-#: email.php:840
+#: email.php:394
+#: email.php:522
+#: email.php:797
+#: email.php:845
 msgid "Success"
 msgstr ""
 
 #: email-manager.php:127
-#: email.php:529
-#: email.php:804
+#: email.php:536
+#: email.php:809
 msgid "Failed"
 msgstr ""
 
@@ -297,17 +297,17 @@ msgid "No E-Mail Option Updated"
 msgstr ""
 
 #: email-options.php:121
-#: email.php:997
+#: email.php:1003
 msgid "E-Mail '%EMAIL_POST_TITLE%' To A Friend"
 msgstr ""
 
 #: email-options.php:124
-#: email.php:998
+#: email.php:1004
 msgid "Email a copy of <strong>'%EMAIL_POST_TITLE%'</strong> to a friend"
 msgstr ""
 
 #: email-options.php:127
-#: email.php:972
+#: email.php:978
 msgid "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%"
 msgstr ""
 
@@ -335,12 +335,12 @@ msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EM
 msgstr ""
 
 #: email-options.php:139
-#: email.php:984
+#: email.php:990
 msgid "An Error Has Occured When Trying To Send The E-Mail"
 msgstr ""
 
 #: email-options.php:142
-#: email.php:985
+#: email.php:991
 msgid "An Error Has Occured"
 msgstr ""
 
@@ -689,7 +689,7 @@ msgid "Cancel"
 msgstr ""
 
 #: email.php:43
-#: email.php:230
+#: email.php:237
 msgid "E-Mail"
 msgstr ""
 
@@ -701,171 +701,171 @@ msgstr ""
 msgid "Note: You can email this post by visiting the site."
 msgstr ""
 
-#: email.php:302
+#: email.php:309
 msgid "Password Protected Post"
 msgstr ""
 
-#: email.php:487
+#: email.php:494
 #, php-format
 msgid "Separate multiple entries with a comma. Maximum %s entries."
 msgstr ""
 
-#: email.php:556
-#: email.php:562
+#: email.php:563
+#: email.php:569
 msgid "Emails"
 msgstr ""
 
-#: email.php:566
-#: email.php:725
-#: email.php:803
+#: email.php:573
+#: email.php:732
+#: email.php:808
 msgid "N/A"
 msgstr ""
 
-#: email.php:651
+#: email.php:658
 msgid "Your name is empty."
 msgstr ""
 
-#: email.php:657
+#: email.php:664
 msgid "Your email is invalid or is empty."
 msgstr ""
 
-#: email.php:663
+#: email.php:670
 msgid "Your remark is invalid."
 msgstr ""
 
-#: email.php:672
+#: email.php:679
 #, php-format
 msgid "Friend's name (%s) is empty."
 msgstr ""
 
-#: email.php:689
+#: email.php:696
 #, php-format
 msgid "Friend's email (%s) is invalid or is empty."
 msgstr ""
 
-#: email.php:703
+#: email.php:710
 #, php-format
 msgid "Maximum %s entries allowed"
 msgstr ""
 
-#: email.php:708
+#: email.php:715
 msgid "Friends' name count does not tally with friends' email count."
 msgstr ""
 
-#: email.php:715
+#: email.php:722
 msgid "Image verification is empty."
 msgstr ""
 
-#: email.php:718
+#: email.php:725
 msgid "Image verification failed."
 msgstr ""
 
-#: email.php:855
+#: email.php:860
 msgid "* Required Field"
 msgstr ""
 
-#: email.php:858
+#: email.php:863
 msgid "Your Name: *"
 msgstr ""
 
-#: email.php:864
+#: email.php:869
 msgid "Your E-Mail: *"
 msgstr ""
 
-#: email.php:870
+#: email.php:875
 msgid "Your Remark:"
 msgstr ""
 
-#: email.php:876
+#: email.php:881
 msgid "Friend's Name: *"
 msgstr ""
 
-#: email.php:882
+#: email.php:887
 msgid "Friend's E-Mail: *"
 msgstr ""
 
-#: email.php:888
+#: email.php:893
 msgid "Image Verification: *"
 msgstr ""
 
-#: email.php:889
+#: email.php:894
 msgid "E-Mail Image Verification"
 msgstr ""
 
-#: email.php:892
+#: email.php:897
 msgid "     Mail It!     "
 msgstr ""
 
-#: email.php:898
+#: email.php:903
 #, php-format
 msgid "Please wait for <strong>%s Minutes</strong> before sending the next article."
 msgstr ""
 
-#: email.php:973
+#: email.php:979
 msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>"
 msgstr ""
 
-#: email.php:974
+#: email.php:980
 msgid "Hi %EMAIL_FRIEND_NAME%,"
 msgstr ""
 
-#: email.php:974
-#: email.php:976
-#: email.php:978
-#: email.php:979
 #: email.php:980
-#: email.php:981
+#: email.php:982
+#: email.php:984
+#: email.php:985
+#: email.php:986
+#: email.php:987
 msgid "\n"
 msgstr ""
 
-#: email.php:975
+#: email.php:981
 msgid "Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you."
 msgstr ""
 
-#: email.php:975
-#: email.php:977
+#: email.php:981
+#: email.php:983
 msgid ""
 "\n"
 "\n"
 msgstr ""
 
-#: email.php:976
+#: email.php:982
 msgid "Here is his/her remarks:"
 msgstr ""
 
-#: email.php:977
+#: email.php:983
 msgid "%EMAIL_YOUR_REMARKS%"
 msgstr ""
 
-#: email.php:978
+#: email.php:984
 msgid "%EMAIL_POST_TITLE%"
 msgstr ""
 
-#: email.php:979
+#: email.php:985
 msgid "Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%"
 msgstr ""
 
-#: email.php:980
+#: email.php:986
 msgid "%EMAIL_POST_CONTENT%"
 msgstr ""
 
-#: email.php:981
+#: email.php:987
 msgid "Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%"
 msgstr ""
 
-#: email.php:982
+#: email.php:988
 msgid "URL to article: %EMAIL_PERMALINK%"
 msgstr ""
 
-#: email.php:983
+#: email.php:989
 msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p>"
 msgstr ""
 
-#: email.php:992
+#: email.php:998
 msgid "Email This Post"
 msgstr ""
 
-#: email.php:992
+#: email.php:998
 msgid "Email This Page"
 msgstr ""
 
