@@ -225,12 +225,19 @@ if (!function_exists('htmlspecialchars_decode')) {
 }
 
 
+### Function: Add E-Mail Filters
+function email_addfilters() {
+	add_filter('the_title', 'email_title');
+	add_filter('the_content', 'email_form', '', false, false);
+}
+
+
 ### Function: Remove E-Mail Filters
 function email_removefilters() {
 	remove_filter('the_title', 'email_title');
-	remove_filter('wp_title', 'email_pagetitle');
 	remove_filter('the_content', 'email_form');
 }
+
 
 ### Function: E-Mail Page Title
 function email_pagetitle($page_title) {
@@ -317,7 +324,6 @@ function get_email_content() {
 		$content = $pages[0];
 	}
 	$content = apply_filters('the_content', $content);
-	remove_filter('the_content', 'email_form');
 	return $content;
 }
 
