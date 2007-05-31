@@ -4,7 +4,7 @@ Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
 Version: 2.11
-Author: GaMerZ
+Author: Lester 'GaMerZ' Chan
 Author URI: http://www.lesterchan.net
 */
 
@@ -256,21 +256,26 @@ if(!function_exists('get_the_id')) {
 
 
 ### Function: E-Mail Title
-function email_title() {
-	$post_title = get_the_title();
-	$post_author = the_author('', false);			
-	$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
-	$post_category = email_category();			
-	$post_category_alt = strip_tags($post_category);
-	$template_title = stripslashes(get_option('email_template_title'));
-	$template_title = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_title);
-	$template_title = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_title);
-	$template_title = str_replace("%EMAIL_POST_DATE%", $post_date, $template_title);
-	$template_title = str_replace("%EMAIL_POST_CATEGORY%", $post_category, $template_title);
-	$template_title = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_title);
-	$template_title = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_title);
-	$template_title = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_title);	
-	return $template_title;
+function email_title($page_title) {
+	global $email_title_once;
+	if(in_the_loop()) {
+		$post_title = get_the_title();
+		$post_author = the_author('', false);			
+		$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
+		$post_category = email_category();			
+		$post_category_alt = strip_tags($post_category);
+		$template_title = stripslashes(get_option('email_template_title'));
+		$template_title = str_replace("%EMAIL_POST_TITLE%", $post_title, $template_title);
+		$template_title = str_replace("%EMAIL_POST_AUTHOR%", $post_author, $template_title);
+		$template_title = str_replace("%EMAIL_POST_DATE%", $post_date, $template_title);
+		$template_title = str_replace("%EMAIL_POST_CATEGORY%", $post_category, $template_title);
+		$template_title = str_replace("%EMAIL_BLOG_NAME%", get_bloginfo('name'), $template_title);
+		$template_title = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_title);
+		$template_title = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_title);
+		return $template_title;
+	} else {
+		return $page_title;
+	}
 }
 
 

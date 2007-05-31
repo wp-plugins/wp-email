@@ -55,7 +55,7 @@ $friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 </head>
 <body>
 	<?php email_form(true); ?>
-	<p style="text-align: center; padding-top: 20px;"><a href="#" onclick="window.close();"><?php _e('Close This Window', 'wp-email'); ?></a></p>
+	</p><p style="text-align: center; padding-top: 20px;"><a href="#" onclick="window.close();"><?php _e('Close This Window', 'wp-email'); ?></a></p>
 	<?php wp_footer(); ?>
 </body>
 </html>
