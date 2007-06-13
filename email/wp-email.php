@@ -25,9 +25,6 @@ require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
 
 ### Filters
 add_filter('wp_title', 'email_pagetitle');
-add_action('get_header', 'email_removefilters');
-add_action('get_sidebar', 'email_removefilters');
-add_action('get_footer', 'email_removefilters');
 add_action('loop_start', 'email_addfilters');
 
 ### We Use Page Template

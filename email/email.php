@@ -227,8 +227,12 @@ if (!function_exists('htmlspecialchars_decode')) {
 
 ### Function: Add E-Mail Filters
 function email_addfilters() {
-	add_filter('the_title', 'email_title');
-	add_filter('the_content', 'email_form', '', false, false);
+	global $added_emailfilters;
+	if(!$added_emailfilters) {
+		add_filter('the_title', 'email_title');
+		add_filter('the_content', 'email_form', '', false, false);
+		$added_emailfilters = true;
+	}
 }
 
 
