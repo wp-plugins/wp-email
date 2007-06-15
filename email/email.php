@@ -126,6 +126,9 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 		case 1:
 			if(!empty($using_permalink)) {
 				if(is_page()) {
+					if(substr($email_link, -1, 1) != '/') {
+						$email_link= $email_link.'/';
+					}
 					$email_text = stripslashes($email_options['page_text']);
 					$email_link = $email_link.'emailpage/';
 				} else {
@@ -196,9 +199,9 @@ function email_popup_image() { email_link(); }
 add_filter('the_content', 'place_emaillink', 7);
 function place_emaillink($content){
 	if(!is_feed()) {
-		 $content = preg_replace("/\[email_link\]/ise", "email_link('', '', false)", $content);
+		 $content = str_replace("[email_link]", email_link('', '', false), $content);
 	} else {
-		$content = preg_replace("/\[email_link\]/ise", __('Note: You can email this post by visiting the site.', 'wp-email'), $content);
+		$content = str_replace("[email_link]", __('Note: You can email this post by visiting the site.', 'wp-email'), $content);
 	}   
 	return $content;
 }
