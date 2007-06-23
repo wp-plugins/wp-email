@@ -145,6 +145,9 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 		case 2:
 			if(!empty($using_permalink)) {
 				if(is_page()) {
+					if(substr($email_link, -1, 1) != '/') {
+						$email_link= $email_link.'/';
+					}
 					$email_text = stripslashes($email_options['page_text']);
 					$email_link = $email_link.'emailpopuppage/';
 				} else {
