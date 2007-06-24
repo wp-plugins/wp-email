@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://www.lesterchan.net/portfolio/programming.php
 Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
-Version: 2.11
+Version: 2.20
 Author: Lester 'GaMerZ' Chan
 Author URI: http://www.lesterchan.net
 */
@@ -45,6 +45,7 @@ function email_menu() {
 	if (function_exists('add_submenu_page')) {
 		add_submenu_page('email/email-manager.php', __('Manage E-Mail', 'wp-email'), __('Manage E-Mail', 'wp-email'), 'manage_email', 'email/email-manager.php');
 		add_submenu_page('email/email-manager.php', __('E-Mail Options', 'wp-email'), __('E-Mail Options', 'wp-email'),  'manage_email', 'email/email-options.php');
+		add_submenu_page('email/email-manager.php', __('Uninstall WP-EMail', 'wp-email'), __('Uninstall WP-EMail', 'wp-email'),  'manage_email', 'email/email-uninstall.php');
 	}
 }
 
@@ -166,7 +167,7 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 	switch($email_style) {
 		// Icon + Text Link
 		case 1:
-			$output = '<img class="WP-EmailIcon" src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" style="border: 0px;" />&nbsp;<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow">'.$email_text.'</a>';
+			$output = '<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow"><img class="WP-EmailIcon" src="'.$email_icon.'" alt="'.$email_text.'" title="'.$email_text.'" style="border: 0px;" /></a>&nbsp;<a href="'.$email_link.'"'.$onclick.' title="'.$email_text.'" rel="nofollow">'.$email_text.'</a>';
 			break;
 		// Icon Only
 		case 2:
