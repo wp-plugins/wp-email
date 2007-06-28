@@ -555,7 +555,7 @@ if(!function_exists('get_emails_success')) {
 if(!function_exists('get_emails_failed')) {
 	function get_emails_failed($echo = true) {
 		global $wpdb; 
-		$totalemails_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '". __('Failed', 'wp-email')."'");
+		$totalemails_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Failed', 'wp-email')."'");
 		if($echo) {
 			echo number_format($totalemails_failed);
 		} else {
@@ -970,6 +970,79 @@ if($_GET['sortby'] == 'email') {
 	add_filter('posts_orderby', 'email_orderby');
 }
 */
+
+
+### Function: Plug Into WP-Stats
+if(strpos(get_option('stats_url'), $_SERVER['REQUEST_URI']) || strpos($_SERVER['REQUEST_URI'], 'stats-options.php')) {
+	add_filter('wp_stats_page_admin_plugins', 'email_page_admin_general_stats');
+	add_filter('wp_stats_page_admin_most', 'email_page_admin_most_stats');
+	add_filter('wp_stats_page_plugins', 'email_page_general_stats');
+	add_filter('wp_stats_page_most', 'email_page_most_stats');
+}
+
+
+### Function: Add WP-EMail General Stats To WP-Stats Page Options
+function email_page_admin_general_stats($content) {
+	$stats_display = get_option('stats_display');
+	if($stats_display['email'] == 1) {
+		$content .= '<input type="checkbox" name="stats_display[]" value="email" checked="checked" />&nbsp;&nbsp;'.__('WP-EMail', 'wp-email').'<br />'."\n";
+	} else {
+		$content .= '<input type="checkbox" name="stats_display[]" value="email" />&nbsp;&nbsp;'.__('WP-EMail', 'wp-email').'<br />'."\n";
+	}
+	return $content;
+}
+
+
+### Function: Add WP-EMail Top Most/Highest Stats To WP-Stats Page Options
+function email_page_admin_most_stats($content) {
+	$stats_display = get_option('stats_display');
+	$stats_mostlimit = intval(get_option('stats_mostlimit'));
+	if($stats_display['emailed_most'] == 1) {
+		$content .= '<input type="checkbox" name="stats_display[]" value="emailed_most" checked="checked" />&nbsp;&nbsp;'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'<br />'."\n";
+	} else {
+		$content .= '<input type="checkbox" name="stats_display[]" value="emailed_most" />&nbsp;&nbsp;'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'<br />'."\n";
+	}
+	return $content;
+}
+
+
+### Function: Add WP-EMail General Stats To WP-Stats Page
+function email_page_general_stats($content) {
+	global $wpdb;
+	$stats_display = get_option('stats_display');
+	if($stats_display['email'] == 1) {
+		$email_stats = $wpdb->get_results("SELECT email_status, COUNT(email_id) AS email_total FROM $wpdb->email GROUP BY email_status");
+		if($email_stats) {
+			$email_stats_array = array();
+			$email_stats_array['total'] = 0;
+			foreach($email_stats as $email_stat) {
+				$email_stats_array[$email_stat->email_status] = intval($email_stat->email_total);
+				$email_stats_array['total'] += intval($email_stat->email_total);
+			}
+		}
+		$content .= '<p><strong>'.__('WP-EMail', 'wp-email').'</strong></p>'."\n";
+		$content .= '<ul>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array['total']).'</strong> '.__('Emails Were Sent.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array[__('Success', 'wp-email')]).'</strong> '.__('Emails Were Sent Successfully.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array[__('Failed', 'wp-email')]).'</strong> '.__('Emails Failed To Send.', 'wp-email').'</li>'."\n";
+		$content .= '</ul>'."\n";
+	}
+	return $content;
+}
+
+
+### Function: Add WP-EMail Top Most/Highest Stats To WP-Stats Page
+function email_page_most_stats($content) {
+	$stats_display = get_option('stats_display');
+	$stats_mostlimit = intval(get_option('stats_mostlimit'));
+	if($stats_display['emailed_most'] == 1) {
+		$content .= '<p><strong>'.$stats_mostlimit.' '.__('Most Emailed Post', 'wp-email').'</strong></p>'."\n";
+		$content .= '<ul>'."\n";
+		$content .= get_mostemailed('post', $stats_mostlimit, 0, false);
+		$content .= '</ul>'."\n";
+	}
+	return $content;
+}
 
 
 ### Function: Create E-Mail Table
