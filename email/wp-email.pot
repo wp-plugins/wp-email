@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.20\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-06-28 16:03+0800\n"
+"PO-Revision-Date: 2007-07-04 01:49+0800\n"
 "Last-Translator: Lester 'GaMerZ' Chan <gamerz84@hotmail.com>\n"
 "Language-Team: Lester Chan <gamerz84@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -815,7 +815,7 @@ msgstr ""
 
 #: email.php:585
 #: email.php:591
-msgid "Emails"
+msgid "emails"
 msgstr ""
 
 #: email.php:595
@@ -916,15 +916,15 @@ msgid "Most Emailed Posts"
 msgstr ""
 
 #: email.php:1025
-msgid "Emails Were Sent."
+msgid "emails were sent."
 msgstr ""
 
 #: email.php:1026
-msgid "Emails Were Sent Successfully."
+msgid "emails were sent successfully."
 msgstr ""
 
 #: email.php:1027
-msgid "Emails Failed To Send."
+msgid "emails failed to send."
 msgstr ""
 
 #: email.php:1039

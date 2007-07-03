@@ -582,13 +582,13 @@ if(!function_exists('get_mostemailed')) {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('Emails', 'wp-email')."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('emails', 'wp-email')."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('Emails', 'wp-email')."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - $email_total ".__('emails', 'wp-email')."</li>\n";
 				}
 			}
 		} else {
@@ -1022,9 +1022,9 @@ function email_page_general_stats($content) {
 		}
 		$content .= '<p><strong>'.__('WP-EMail', 'wp-email').'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array['total']).'</strong> '.__('Emails Were Sent.', 'wp-email').'</li>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array[__('Success', 'wp-email')]).'</strong> '.__('Emails Were Sent Successfully.', 'wp-email').'</li>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array[__('Failed', 'wp-email')]).'</strong> '.__('Emails Failed To Send.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array['total']).'</strong> '.__('emails were sent.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array[__('Success', 'wp-email')]).'</strong> '.__('emails were sent successfully.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format($email_stats_array[__('Failed', 'wp-email')]).'</strong> '.__('emails failed to send.', 'wp-email').'</li>'."\n";
 		$content .= '</ul>'."\n";
 	}
 	return $content;
