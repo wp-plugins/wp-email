@@ -255,7 +255,7 @@ $email_fields = get_option('email_fields');
 							<?php echo htmlspecialchars('<a href="%EMAIL_URL%" %EMAIL_POPUP% rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>'); ?><br />
 							%EMAIL_TEXT% - <?php _e('E-Mail text link of the post/page that you have typed in above.', 'wp-email'); ?><br />
 							%EMAIL_ICON_URL% - <?php _e('URL to the email icon you have chosen above.', 'wp-email'); ?><br />
-							<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('html');" class="button" />
+							<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('html');" class="button" />
 						</div>
 					</td>
 				</tr>
@@ -368,7 +368,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('title');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('title');" class="button" />
 					</td>
 					<td align="left"><input type="text" id="email_template_title" name="email_template_title" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_title'))); ?>" size="82" /></td>
 				</tr>
@@ -383,7 +383,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('subtitle');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('subtitle');" class="button" />
 					</td>
 					<td align="left"><input type="text" id="email_template_subtitle" name="email_template_subtitle" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subtitle'))); ?>" size="82" /></td> 
 				</tr>
@@ -405,7 +405,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('subject');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('subject');" class="button" />
 					</td>
 					<td align="left"><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subject'))); ?>" size="82" /></td>
 				</tr>
@@ -427,7 +427,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('body');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('body');" class="button" />
 					</td>
 					<td align="left"><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo htmlspecialchars(stripslashes(get_option('email_template_body'))); ?></textarea></td> 
 				</tr>
@@ -449,7 +449,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('bodyalt');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('bodyalt');" class="button" />
 					</td>
 					<td align="left"><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo htmlspecialchars(stripslashes(get_option('email_template_bodyalt'))); ?></textarea></td> 
 				</tr>
@@ -468,7 +468,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('sentsuccess');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('sentsuccess');" class="button" />
 					</td>
 					<td align="left"><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentsuccess'))); ?></textarea></td>
 				</tr>
@@ -483,7 +483,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('sentfailed');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('sentfailed');" class="button" />
 					</td>
 					<td align="left"><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentfailed'))); ?></textarea></td> 
 				</tr>
@@ -500,7 +500,7 @@ $email_fields = get_option('email_fields');
 						- %EMAIL_BLOG_NAME%<br />
 						- %EMAIL_BLOG_URL%<br />
 						- %EMAIL_PERMALINK%<br /><br />
-						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="javascript: email_default_templates('error');" class="button" />
+						<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('error');" class="button" />
 					</td>
 					<td align="left"><textarea cols="80" rows="10" id="email_template_error" name="email_template_error"><?php echo htmlspecialchars(stripslashes(get_option('email_template_error'))); ?></textarea></td>
 				</tr>
