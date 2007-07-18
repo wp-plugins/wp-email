@@ -663,8 +663,7 @@ function email_form($popup = false, $echo = true) {
 	if(!empty($_POST['wp-email'])) {
 		// SMTP
 		$imageverify = $_POST['imageverify'];
-		$smtp_info = get_option('email_smtp');
-		$smtp_info = explode('|', $smtp_info);
+		$email_smtp = get_option('email_smtp');
 		$error = '';
 		// Multiple Names/Emails
 		$friends = array();
@@ -710,29 +709,27 @@ function email_form($popup = false, $echo = true) {
 			}
 		}
 		// Checking Friend's E-Mail Field For Errors
-		if(intval($email_fields['friendemail']) == 1) {
-			if($multiple_emails) {
-				foreach($multiple_emails as $multiple_email) {
-					$multiple_email = trim($multiple_email);
-					if(!is_valid_email($multiple_email) || empty($multiple_email)) {
-						$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend\'s email (%s) is invalid or is empty.', 'wp-email'), $multiple_email);
-					} else {
-						$friends[$friendemail_count]['email'] = $multiple_email;
-						$friendemail_count++;
-					}
-					if($friendemail_count > $multiple_max) {
-						break;
-					}
+		if($multiple_emails) {
+			foreach($multiple_emails as $multiple_email) {
+				$multiple_email = trim($multiple_email);
+				if(!is_valid_email($multiple_email) || empty($multiple_email)) {
+					$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Friend\'s email (%s) is invalid or is empty.', 'wp-email'), $multiple_email);
+				} else {
+					$friends[$friendemail_count]['email'] = $multiple_email;
+					$friendemail_count++;
+				}
+				if($friendemail_count > $multiple_max) {
+					break;
 				}
 			}
 		}
 		// Checking If The Fields Exceed The Size Of Maximum Entries Allowed
-		if(intval($email_fields['friendname']) == 1 || intval($email_fields['friendemail']) == 1) {
+		if(intval($email_fields['friendname']) == 1) {
 			if(sizeof($friends) > $multiple_max) {
 				$error .= '<br /><strong>&raquo;</strong> '.sprintf(__('Maximum %s entries allowed', 'wp-email'), $multiple_max);
 			}
 		}
-		if(intval($email_fields['friendname']) == 1 && intval($email_fields['friendemail']) == 1) {
+		if(intval($email_fields['friendname']) == 1) {
 			if($friendname_count != $friendemail_count) {
 				$error .= '<br /><strong>&raquo;</strong> '.__('Friends\' name count does not tally with friends\' email count.', 'wp-email');
 			}
@@ -802,9 +799,9 @@ function email_form($popup = false, $echo = true) {
 			foreach($friends as $friend) {
 				$mail->AddAddress($friend['email'], $friend['name']);
 			}
-			$mail->Username = $smtp_info[0]; 
-			$mail->Password = $smtp_info[1];
-			$mail->Host     = $smtp_info[2];
+			$mail->Username = $email_smtp['username']; 
+			$mail->Password = $email_smtp['password'];
+			$mail->Host     = $email_smtp['server'];
 			$mail->Mailer   = get_option('email_mailer');
 			$mail->ContentType =  get_option('email_contenttype');
 			$mail->Subject = $template_email_subject;
@@ -904,12 +901,10 @@ function email_form($popup = false, $echo = true) {
 					$output .= '<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="'.$friendname.'" />'.email_multiple(false)."\n";
 					$output .= '</p>'."\n";
 				}
-				if(intval($email_fields['friendemail']) == 1) {
-					$output .= '<p>'."\n";
-					$output .= '<strong><label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
-					$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$friendemail.'" />'.email_multiple(false)."\n";
-					$output .= '</p>'."\n";
-				}
+				$output .= '<p>'."\n";
+				$output .= '<strong><label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
+				$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$friendemail.'" />'.email_multiple(false)."\n";
+				$output .= '</p>'."\n";
 				if($email_image_verify) {
 					$output .= '<p>'."\n";
 					$output .= '<strong><label for="imageverify">'.__('Image Verification: *', 'wp-email').'</label></strong><br />'."\n";
@@ -1067,7 +1062,7 @@ function create_email_table() {
 							"PRIMARY KEY (email_id));";
 	maybe_create_table($wpdb->email, $create_table);
 	// Add In Options (12 Records)
-	add_option('email_smtp', '', 'Your SMTP Name, Password, Server');
+	add_option('email_smtp', array('username' => '', 'password' => '', 'server' => ''), 'Your SMTP Name, Password, Server');
 	add_option('email_contenttype', 'text/html', 'Your E-Mail Type');
 	add_option('email_mailer', 'php', 'Your Mailer Type');
 	add_option('email_template_subject', __('Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'wp-email'), 'Template For E-Mail Subject');
