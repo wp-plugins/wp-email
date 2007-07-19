@@ -205,7 +205,7 @@ function place_emaillink($content){
 	if(!is_feed()) {
 		 $content = str_replace("[email_link]", email_link('', '', false), $content);
 	} else {
-		$content = str_replace("[email_link]", __('Note: You can email this post by visiting the site.', 'wp-email'), $content);
+		$content = str_replace("[email_link]", __('Note: There is an email link embedded within this post, please visit this post to email it.', 'wp-email'), $content);
 	}   
 	return $content;
 }
@@ -234,12 +234,17 @@ if (!function_exists('htmlspecialchars_decode')) {
 
 ### Function: Add E-Mail Filters
 function email_addfilters() {
-	global $added_emailfilters;
-	if(!$added_emailfilters) {
+	global $emailfilters_count;
+	if(get_option('k2version') === false) {
+		$loop_count = 0;
+	} else {
+		$loop_count = 1;
+	}
+	if(intval($emailfilters_count) == $loop_count) {
 		add_filter('the_title', 'email_title');
 		add_filter('the_content', 'email_form', '', false, false);
-		$added_emailfilters = true;
 	}
+	$emailfilters_count++;
 }
 
 
@@ -268,7 +273,6 @@ if(!function_exists('get_the_id')) {
 
 ### Function: E-Mail Title
 function email_title($page_title) {
-	global $email_title_once;
 	if(in_the_loop()) {
 		$post_title = get_the_title();
 		$post_author = the_author('', false);			

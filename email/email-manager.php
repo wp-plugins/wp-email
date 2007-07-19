@@ -193,8 +193,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$email_friendemail = stripslashes($email_log->email_friendemail);
 				$email_postid = intval($email_log->email_postid);
 				$email_posttitle = htmlspecialchars(stripslashes($email_log->email_posttitle));
-				$email_date = gmdate(get_option('date_format'), $email_log->email_timestamp);
-				$email_time = gmdate(get_option('time_format'), $email_log->email_timestamp);
+				$email_date = gmdate(sprintf(__('%s @ %s', 'wp-email'), get_option('date_format'), get_option('time_format')), $email_log->email_timestamp);
 				$email_ip = $email_log->email_ip;
 				$email_host = $email_log->email_host;
 				$email_status = stripslashes($email_log->email_status);
@@ -202,7 +201,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				echo "<td>$email_id</td>\n";
 				echo "<td>$email_yourname<br />$email_youremail</td>\n";
 				echo "<td>$email_friendname<br />$email_friendemail</td>\n";
-				echo "<td>$email_date<br />$email_time</td>\n";
+				echo "<td>$email_date</td>\n";
 				echo "<td>$email_ip<br />$email_host</td>\n";
 				echo "<td>$email_posttitle</td>\n";
 				echo "<td>$email_status</td>\n";
