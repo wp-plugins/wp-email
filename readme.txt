@@ -22,8 +22,8 @@ It is the exact same readme.html is included in the zip package.
 
 == Screenshots ==
 
-[GaMerZ WordPress Plugins Screenshots](http://www.lesterchan.net/wordpress/screenshots/ "GaMerZ WordPress Plugins Screenshots")
+[WP-EMail Screenshots](http://www.lesterchan.net/wordpress/screenshots/browse/wp-email/ "WP-EMail Screenshots")
 
 == Frequently Asked Questions ==
 
-You will need [GaMerZ WordPress Plugins Support Forums](http://forums.lesterchan.net/ "GaMerZ WordPress Plugins Support Forums")
+[WP-EMail Support Forums](http://forums.lesterchan.net/index.php?board=13.0 "WP-EMail Support Forums")
