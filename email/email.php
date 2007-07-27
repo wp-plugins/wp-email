@@ -53,8 +53,16 @@ function email_menu() {
 ### Function: E-Mail htaccess ReWrite Rules
 add_filter('generate_rewrite_rules', 'email_rewrite');
 function email_rewrite($wp_rewrite) {
+	$email_link = get_permalink();
+	if(substr($email_link, -1, 1) != '/') {
+		$email_link_text = '/email';
+		$email_popup_text = '/emailpopup';
+	} else {
+		$email_link_text = 'email';
+		$email_popup_text = 'emailpopup';
+	}
 	// WP-EMail Rules
-	$rewrite_rules2 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'email');
+	$rewrite_rules2 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_link_text);
 	array_splice($rewrite_rules2, 1);
 	$r_rule = array_keys($rewrite_rules2);
 	$r_rule = array_shift($r_rule);
@@ -65,7 +73,7 @@ function email_rewrite($wp_rewrite) {
     $email_rules = array($r_rule => $r_link, '(.+)/emailpage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&email=1');
 	$wp_rewrite->rules = $email_rules + $wp_rewrite->rules;
 	// WP-EMail PopUp Rules
-	$rewrite_rules3 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.'emailpopup');
+	$rewrite_rules3 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_popup_text);
 	array_splice($rewrite_rules3, 1);
 	$r_rule2 = array_keys($rewrite_rules3);
 	$r_rule2 = array_shift($r_rule2);
@@ -126,10 +134,10 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 		// E-Mail Standalone Page
 		case 1:
 			if(!empty($using_permalink)) {
+				if(substr($email_link, -1, 1) != '/') {
+					$email_link= $email_link.'/';
+				}
 				if(is_page()) {
-					if(substr($email_link, -1, 1) != '/') {
-						$email_link= $email_link.'/';
-					}
 					$email_text = stripslashes($email_options['page_text']);
 					$email_link = $email_link.'emailpage/';
 				} else {
@@ -145,10 +153,10 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 		// E-Mail Popup
 		case 2:
 			if(!empty($using_permalink)) {
+				if(substr($email_link, -1, 1) != '/') {
+					$email_link= $email_link.'/';
+				}
 				if(is_page()) {
-					if(substr($email_link, -1, 1) != '/') {
-						$email_link= $email_link.'/';
-					}
 					$email_text = stripslashes($email_options['page_text']);
 					$email_link = $email_link.'emailpopuppage/';
 				} else {
