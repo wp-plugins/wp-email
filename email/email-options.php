@@ -134,13 +134,13 @@ $emai_smtp = get_option('email_smtp');
 				default_template = "<?php _e('Hi %EMAIL_FRIEND_NAME%,\nYour friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.\n\nHere is his/her remark:\n%EMAIL_YOUR_REMARKS%\n\n%EMAIL_POST_TITLE%\nPosted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%\n%EMAIL_POST_CONTENT%\nArticle taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%\nURL to article: %EMAIL_PERMALINK%', 'wp-email'); ?>";
 				break;
 			case "sentsuccess":
-				default_template = "<p><?php _e('Article: <strong>%EMAIL_POST_TITLE%</strong> Has Been Sent To <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong>', 'wp-email'); ?></p>";
+				default_template = "<p><?php _e('Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong>', 'wp-email'); ?></p><p>&laquo; <a href=\"%EMAIL_PERMALINK%\"><?php _e('Back to %EMAIL_POST_TITLE%', 'wp-email'); ?></a></p>";
 				break;
 			case "sentfailed":
-				default_template = "<p><?php _e('An Error Has Occured When Trying To Send The E-Mail', 'wp-email'); ?><br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
+				default_template = "<p><?php _e('An error has occurred when trying to send this email: ', 'wp-email'); ?><br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
 				break;
 			case "error":
-				default_template = "<p><?php _e('An Error Has Occured', 'wp-email'); ?><br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
+				default_template = "<p><?php _e('An error has occurred: ', 'wp-email'); ?><br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>";
 				break;
 			case "html":
 				default_template = '<a href="%EMAIL_URL%" rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>';
@@ -206,7 +206,7 @@ $emai_smtp = get_option('email_smtp');
 							$email_icon_path = ABSPATH.'/wp-content/plugins/email/images';
 							if($handle = @opendir($email_icon_path)) {     
 								while (false !== ($filename = readdir($handle))) {  
-									if ($filename != '.' && $filename != '..') {
+									if ($filename != '.' && $filename != '..' && $filename != 'loading.gif') {
 										if(is_file($email_icon_path.'/'.$filename)) {
 											if($email_icon == $filename) {
 												echo '<input type="radio" name="email_icon" value="'.$filename.'" checked="checked" />'."\n";										

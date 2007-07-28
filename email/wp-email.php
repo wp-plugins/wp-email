@@ -20,9 +20,6 @@
 ### Session Start
 session_start();
 
-### Require PHP-Mailer Class
-require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
-
 ### Filters
 add_filter('wp_title', 'email_pagetitle');
 add_action('loop_start', 'email_addfilters');
