@@ -635,7 +635,7 @@ function process_email_form() {
 	global $wpdb, $post;
 	// If User Click On Mail
 	if(!empty($_POST['wp-email'])) {
-		session_start();
+		@session_start();
 		header('Content-Type: text/html; charset='.get_option('blog_charset').'');
 		$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
 		$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));

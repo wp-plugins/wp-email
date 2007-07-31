@@ -18,7 +18,7 @@
 
 
 ### Session Start
-session_start();
+@session_start();
 
 ### Include wp-config.php
 @require('../../../wp-config.php');

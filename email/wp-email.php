@@ -18,7 +18,7 @@
 
 
 ### Session Start
-session_start();
+@session_start();
 
 ### Filters
 add_filter('wp_title', 'email_pagetitle');

@@ -18,7 +18,7 @@
 
 
 ### Start Session
-session_start();
+@session_start();
 
 ### Captial Letters And Numbers
 $alphanum = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
