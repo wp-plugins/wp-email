@@ -1167,7 +1167,7 @@ function create_email_table() {
 	add_option('email_template_sentfailed', '<p>'.__('An error has occurred when trying to send this email: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent');
 	add_option('email_template_error', '<p>'.__('An error has occurred: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error');
 	add_option('email_interval', 10, 'The Number Of Minutes Before The User Can E-Mail The Next Article');
-	add_option('email_snippet', 100, 'Enable Snippet Feature For Your E-Mail?');
+	add_option('email_snippet', 0, 'Enable Snippet Feature For Your E-Mail?');
 	add_option('email_multiple', 5, 'Maximum Number Of Multiple E-Mails');
 	// Version 2.05 Options
 	add_option('email_imageverify', 1, 'Enable Image Verification?');
