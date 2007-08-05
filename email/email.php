@@ -854,8 +854,6 @@ function process_email_form() {
 				$mail->Body    = $template_email_body;
 				$mail->AltBody = $template_email_bodyalt;
 			}
-			echo $mail->Body;
-			exit();
 			// Send The Mail if($mail->Send()) {
 			if($mail->Send()) {
 				$email_status = __('Success', 'wp-email');
