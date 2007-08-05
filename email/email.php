@@ -33,6 +33,7 @@ if (!function_exists('add_action')) {
 	require_once('../../../wp-config.php');
 }
 
+
 ### Create Text Domain For Translations
 load_plugin_textdomain('wp-email', 'wp-content/plugins/email');
 
@@ -219,6 +220,15 @@ function place_emaillink($content){
 }
 
 
+### Function: Snippet Words
+if(!function_exists('snippet_words')) {
+	function snippet_words($text, $length = 0) {
+		$words = split(' ', $text); 
+		return join(" ",array_slice($words, 0, $length)).'...';
+	}
+}
+
+
 ### Function: Snippet Text
 if(!function_exists('snippet_chars')) {
 	function snippet_chars($text, $length = 0) {
@@ -311,10 +321,9 @@ function email_category($separator = ', ', $parents='') {
 ### Function: E-Mail Content
 function email_content() {
 	$content = get_email_content();
-	$content = str_replace(']]>', ']]&gt;', $content);
 	$email_snippet = intval(get_option('email_snippet'));
 	if($email_snippet > 0) {
-		return snippet_chars($content , $email_snippet);
+		return snippet_words($content , $email_snippet);
 	} else {
 		return $content;
 	}
@@ -329,7 +338,7 @@ function email_content_alt() {
 	$content = strip_tags($content);
 	$email_snippet = intval(get_option('email_snippet'));
 	if($email_snippet > 0) {
-		return snippet_chars($content , $email_snippet);
+		return snippet_words($content , $email_snippet);
 	} else {
 		return $content;
 	}
@@ -338,13 +347,19 @@ function email_content_alt() {
 
 ### Function: E-Mail Get The Content
 function get_email_content() {
-	global $post;
+	global $pages, $multipage, $numpages, $post;
 	if (!empty($post->post_password)) {
 		if (stripslashes($_COOKIE['wp-postpass_'.COOKIEHASH]) != $post->post_password) {
 			return __('Password Protected Post', 'wp-email');
 		}
 	}
-	$content = $post->post_content;
+	if($multipage) {
+		for($page = 0; $page < $numpages; $page++) {
+			$content .= $pages[$page];
+		}
+	} else {
+		$content = $pages[0];
+	}
 	$content = html_entity_decode($content);
 	$content = htmlspecialchars_decode($content);
 	$content = apply_filters('the_content', $content);
@@ -637,36 +652,45 @@ function process_email_form() {
 	if(!empty($_POST['wp-email'])) {
 		@session_start();
 		header('Content-Type: text/html; charset='.get_option('blog_charset').'');
+		// POST Variables
 		$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
 		$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
 		$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
 		$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
 		$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
 		$email_popup = intval($_POST['popup']);
+		$imageverify = $_POST['imageverify'];
 		$p = intval($_POST['p']);
 		$page_id = intval($_POST['page_id']);
+		// Get Post Information
 		if($p > 0) {
-			$post = get_post($p);
+			$query_post = 'p='.$p;
 			$id = $p;
 		} else {
-			$post = get_post($page_id);
+			$query_post = 'page_id='.$page_id;
 			$id = $page_id;
 		}
+		query_posts($query_post);
+		if(have_posts()) {
+			while(have_posts()) {
+				the_post();
+				$post_title = get_the_title();
+				$post_author = get_the_author();
+				$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
+				$post_category = email_category();			
+				$post_category_alt = strip_tags($post_category);
+				$post_excerpt = get_the_excerpt();
+				$post_content = email_content();
+				$post_content_alt = email_content_alt();
+			}
+		}
+		// Error
 		$error = '';
-		$post_title = get_the_title();
-		$post_author = the_author('', false);			
-		$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
-		$post_category = email_category();			
-		$post_category_alt = strip_tags($post_category);
-		$post_excerpt = get_the_excerpt();
-		$post_content = email_content();
-		$post_content_alt = email_content_alt();
+		$error_field = array('yourname' => $yourname, 'youremail' => $youremail, 'yourremarks' => $yourremarks, 'friendname' => $friendname, 'friendemail' => $friendemail, 'id' => $id);
+		// Get Options
 		$email_fields = get_option('email_fields');
-		$email_image_verify = intval(get_option('email_imageverify'));
-		// SMTP
-		$imageverify = $_POST['imageverify'];
-		$email_smtp = get_option('email_smtp');
-		$error = '';
+		$email_image_verify = intval(get_option('email_imageverify'));		
+		$email_smtp = get_option('email_smtp');		
 		// Multiple Names/Emails
 		$friends = array();
 		$friendname_count = 0;
@@ -830,6 +854,8 @@ function process_email_form() {
 				$mail->Body    = $template_email_body;
 				$mail->AltBody = $template_email_bodyalt;
 			}
+			echo $mail->Body;
+			exit();
 			// Send The Mail if($mail->Send()) {
 			if($mail->Send()) {
 				$email_status = __('Success', 'wp-email');
@@ -886,9 +912,9 @@ function process_email_form() {
 			$template_email_error = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_error);
 			$output = $template_email_error;
 			if(!$email_popup) {
-				$output .= email_form(false, false, false, false, $id);
+				$output .= email_form(false, false, false, false, $error_field);
 			} else {
-				$output .= email_form(true, false, false, false, $id);
+				$output .= email_form(true, false, false, false, $error_field);
 			}
 			echo $output;
 			exit();
@@ -898,7 +924,7 @@ function process_email_form() {
 
 
 ### Function: E-Mail Form
-function email_form($popup = false, $echo = true, $subtitle = true, $div = true, $id = 0) {
+function email_form($popup = false, $echo = true, $subtitle = true, $div = true, $error_field = '') {
 	global $wpdb, $multipage;	
 	// Variables
 	$multipage = false;
@@ -928,9 +954,9 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 	if (not_spamming()) {
 		if(not_password_protected()) {
 			if($popup){
-				$output .= email_popup_form_header(false, $id);
+				$output .= email_popup_form_header(false, $error_field['id']);
 			} else {
-				$output .= email_form_header(false, $id);
+				$output .= email_form_header(false, $error_field['id']);
 			}
 			$output .= '<!-- Display Error, If There Is Any -->'."\n";
 			$output .= $template_email_sentfailed;
@@ -940,30 +966,30 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 			if(intval($email_fields['yourname']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="yourname">'.__('Your Name: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="'.$yourname.'" />'."\n";
+				$output .= '<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="'.$error_field['yourname'].'" />'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['youremail']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="youremail">'.__('Your E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="'.$youremail.'" />'."\n";
+				$output .= '<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="'.$error_field['youremail'].'" />'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['yourremarks']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '	<strong><label for="yourremarks">'.__('Your Remark:', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">'.$yourremarks.'</textarea>'."\n";
+				$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">'.$error_field['yourremarks'].'</textarea>'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['friendname']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="friendname">'.__('Friend\'s Name: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="'.$friendname.'" />'.email_multiple(false)."\n";
+				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="'.$error_field['friendname'].'" />'.email_multiple(false)."\n";
 				$output .= '</p>'."\n";
 			}
 			$output .= '<p>'."\n";
 			$output .= '<strong><label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
-			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$friendemail.'" />'.email_multiple(false)."\n";
+			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$error_field['friendemail'].'" />'.email_multiple(false)."\n";
 			$output .= '</p>'."\n";
 			if($email_image_verify) {
 				$output .= '<p>'."\n";
