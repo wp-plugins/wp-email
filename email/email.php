@@ -210,6 +210,7 @@ function email_popup_image() { email_link(); }
 
 ### Function: Place E-Mail Link
 add_filter('the_content', 'place_emaillink', 7);
+add_filter('the_excerpt', 'place_emaillink', 7);
 function place_emaillink($content){
 	if(!is_feed()) {
 		 $content = str_replace("[email_link]", email_link('', '', false), $content);
