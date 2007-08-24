@@ -499,7 +499,8 @@ function email_form_header($echo = true, $temp_id) {
 
 ### Function: E-Mail Form Header For Popup
 function email_popup_form_header($echo = true, $temp_id) {
-	global $id;
+	global $post;
+	$id = intval($post->ID);
 	if(intval($temp_id) > 0) {
 		$id = $temp_id;
 	}
