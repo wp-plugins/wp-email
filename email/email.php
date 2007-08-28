@@ -1037,7 +1037,7 @@ function email_groupby($content) {
 }
 function email_orderby($content) {
 	$orderby = trim(addslashes($_GET['orderby']));
-	if(empty($orderby) && ($orderby != 'asc' || $orderby != 'desc')) {
+	if(empty($orderby) || ($orderby != 'asc' && $orderby != 'desc')) {
 		$orderby = 'desc';
 	}
 	$content = " email_total $orderby";
@@ -1069,9 +1069,9 @@ if(strpos(get_option('stats_url'), $_SERVER['REQUEST_URI']) || strpos($_SERVER['
 function email_page_admin_general_stats($content) {
 	$stats_display = get_option('stats_display');
 	if($stats_display['email'] == 1) {
-		$content .= '<input type="checkbox" name="stats_display[]" value="email" checked="checked" />&nbsp;&nbsp;'.__('WP-EMail', 'wp-email').'<br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_email" value="email" checked="checked" />&nbsp;&nbsp;<label for="wpstats_email">'.__('WP-EMail', 'wp-email').'</label><br />'."\n";
 	} else {
-		$content .= '<input type="checkbox" name="stats_display[]" value="email" />&nbsp;&nbsp;'.__('WP-EMail', 'wp-email').'<br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_email" value="email" />&nbsp;&nbsp;<label for="wpstats_email">'.__('WP-EMail', 'wp-email').'</label><br />'."\n";
 	}
 	return $content;
 }
@@ -1082,9 +1082,9 @@ function email_page_admin_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
 	if($stats_display['emailed_most'] == 1) {
-		$content .= '<input type="checkbox" name="stats_display[]" value="emailed_most" checked="checked" />&nbsp;&nbsp;'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'<br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most" value="emailed_most" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most">'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'</label><br />'."\n";
 	} else {
-		$content .= '<input type="checkbox" name="stats_display[]" value="emailed_most" />&nbsp;&nbsp;'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'<br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most" value="emailed_most" />&nbsp;&nbsp;<label for="wpstats_emailed_most">'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'</label><br />'."\n";
 	}
 	return $content;
 }
@@ -1133,7 +1133,13 @@ function email_page_most_stats($content) {
 add_action('activate_email/email.php', 'create_email_table');
 function create_email_table() {
 	global $wpdb;
-	include_once(ABSPATH.'wp-admin/upgrade-functions.php');
+	if(@is_file(ABSPATH.'/wp-admin/upgrade-functions.php')) {
+		include_once(ABSPATH.'/wp-admin/upgrade-functions.php');
+	} elseif(@is_file(ABSPATH.'/wp-admin/includes/upgrade.php')) {
+		include_once(ABSPATH.'/wp-admin/includes/upgrade.php');
+	} else {
+		die('We have problem finding your \'/wp-admin/upgrade-functions.php\' and \'/wp-admin/includes/upgrade.php\'');
+	}
 	// Create E-Mail Table
 	$create_table = "CREATE TABLE $wpdb->email (".
 							"email_id int(10) NOT NULL auto_increment,".
