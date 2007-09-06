@@ -305,7 +305,6 @@ function email_get_title() {
 
 ### Function: E-Mail Title
 function email_title($page_title) {
-	global $post;
 	if(in_the_loop()) {
 		$post_title = email_get_title();
 		$post_author = the_author('', false);			
