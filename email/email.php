@@ -60,7 +60,7 @@ function email_menu() {
 add_filter('generate_rewrite_rules', 'email_rewrite');
 function email_rewrite($wp_rewrite) {
 	$email_link = get_permalink();
-	if(substr($email_link, -1, 1) != '/') {
+	if(substr($email_link, -1, 1) != '/' && substr($wp_rewrite->permalink_structure, -1, 1) != '/') {
 		$email_link_text = '/email';
 		$email_popup_text = '/emailpopup';
 	} else {
@@ -290,10 +290,24 @@ if(!function_exists('get_the_id')) {
 }
 
 
+### Function: Get E-Mail Title
+function email_get_title() {
+	global $post;
+	$post_title = $post->post_title;
+	if(!empty($post->post_password)) {
+		$post_title = sprintf(__('Protected: %s', 'wp-email'), $post_title);
+	} elseif($post->post_status == 'private') {
+		$post_title = sprintf(__('Private: %s', 'wp-email'), $post_title);
+	}
+	return $post_title;
+}
+
+
 ### Function: E-Mail Title
 function email_title($page_title) {
+	global $post;
 	if(in_the_loop()) {
-		$post_title = get_the_title();
+		$post_title = email_get_title();
 		$post_author = the_author('', false);			
 		$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
 		$post_category = email_category();			
@@ -676,7 +690,7 @@ function process_email_form() {
 		if(have_posts()) {
 			while(have_posts()) {
 				the_post();
-				$post_title = get_the_title();
+				$post_title = email_get_title();
 				$post_author = get_the_author();
 				$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
 				$post_category = email_category();			
@@ -928,7 +942,7 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 	global $wpdb, $multipage;	
 	// Variables
 	$multipage = false;
-	$post_title = get_the_title();
+	$post_title = email_get_title();
 	$post_author = the_author('', false);			
 	$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
 	$post_category = email_category();			
