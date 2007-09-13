@@ -284,7 +284,7 @@ $emai_smtp = get_option('email_smtp');
 					<th align="left" width="30%"><?php _e('Method Used To Send E-Mail:', 'wp-email'); ?></th>
 					<td align="left">
 						<select name="email_mailer" size="1">
-							<option value="php"<?php selected('php', get_option('email_mailer')); ?>><?php _e('PHP', 'wp-email'); ?></option>
+							<option value="mail"<?php selected('mail', get_option('email_mailer')); ?>><?php _e('PHP', 'wp-email'); ?></option>
 							<option value="sendmail"<?php selected('sendmail', get_option('email_mailer')); ?>><?php _e('SendMail', 'wp-email'); ?></option>
 							<option value="smtp"<?php selected('smtp', get_option('email_mailer')); ?>><?php _e('SMTP', 'wp-email'); ?></option>
 						</select>

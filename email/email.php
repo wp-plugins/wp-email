@@ -850,7 +850,9 @@ function process_email_form() {
 			$template_email_bodyalt = str_replace("%EMAIL_BLOG_URL%", get_bloginfo('url'), $template_email_bodyalt);
 			$template_email_bodyalt = str_replace("%EMAIL_PERMALINK%", get_permalink(), $template_email_bodyalt);
 			// PHP Mailer Variables
-			require(ABSPATH.'wp-content/plugins/email/class-phpmailer.php');
+			if (!class_exists("phpmailer")) {
+				require_once(ABSPATH.'wp-includes/class-phpmailer.php');
+			}		
 			$mail = new PHPMailer();
 			$mail->From     = $youremail;
 			$mail->FromName = $yourname;
@@ -861,6 +863,9 @@ function process_email_form() {
 			$mail->Password = $email_smtp['password'];
 			$mail->Host     = $email_smtp['server'];
 			$mail->Mailer   = get_option('email_mailer');
+			if($mail->IsSMTP()) {
+				$mail->SMTPAuth = true;
+			}
 			$mail->ContentType =  get_option('email_contenttype');
 			$mail->Subject = $template_email_subject;
 			if(get_option('email_contenttype') == 'text/plain') {
@@ -1200,6 +1205,11 @@ function create_email_table() {
 	// Version 2.11 Options
 	add_option('email_template_title', __('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'), 'Template For E-Mail Page Title');
 	add_option('email_template_subtitle', '<p style="text-align: center;">'.__('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email').'</p>', 'Template For E-Mail Page SubTitle');
+	// Version 2.20 Upgrade
+	$email_mailer = get_option('email_mailer');
+	if($email_mailer == 'php') {
+		update_option('email_mailer', 'mail');
+	}
 	// Set 'manage_email' Capabilities To Administrator	
 	$role = get_role('administrator');
 	if(!$role->has_cap('manage_email')) {
