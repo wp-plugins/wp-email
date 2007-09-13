@@ -863,7 +863,7 @@ function process_email_form() {
 			$mail->Password = $email_smtp['password'];
 			$mail->Host     = $email_smtp['server'];
 			$mail->Mailer   = get_option('email_mailer');
-			if($mail->IsSMTP()) {
+			if($mail->Mailer == 'smtp') {
 				$mail->SMTPAuth = true;
 			}
 			$mail->ContentType =  get_option('email_contenttype');
