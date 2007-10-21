@@ -164,6 +164,9 @@ $emai_smtp = get_option('email_smtp');
 <div class="wrap"> 
 	<h2><?php _e('E-Mail Options', 'wp-email'); ?></h2> 
 	<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
+		<p class="submit">
+			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options &raquo;', 'wp-email'); ?>" />
+		</p>
 		<fieldset class="options">
 			<legend><?php _e('SMTP Settings', 'wp-email'); ?></legend>
 			<table width="100%"  border="0" cellspacing="3" cellpadding="3">
@@ -503,8 +506,8 @@ $emai_smtp = get_option('email_smtp');
 				</tr>
 			</table>
 		</fieldset>
-		<div align="center">
-			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options', 'wp-email'); ?>" />&nbsp;&nbsp;<input type="button" name="cancel" value="<?php _e('Cancel', 'wp-email'); ?>" class="button" onclick="javascript:history.go(-1)" />
-		</div>
+		<p class="submit">
+			<input type="submit" name="Submit" class="button" value="<?php _e('Update Options &raquo;', 'wp-email'); ?>" />
+		</p>
 	</form> 
 </div>

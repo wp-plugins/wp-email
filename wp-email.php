@@ -1083,7 +1083,6 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 	if($div) {
 		$output .= '</div>'."\n";
 	}
-	$output .= '<p style="display: none;">&nbsp;'."\n";
 	email_removefilters();
 	if($echo) {
 		echo $output;
