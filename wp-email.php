@@ -37,7 +37,7 @@ if (!function_exists('add_action')) {
 ### Create Text Domain For Translations
 add_action('init', 'email_textdomain');
 function email_textdomain() {
-	load_plugin_textdomain('wp-email', 'wp-content/plugins/email');
+	load_plugin_textdomain('wp-email', 'wp-content/plugins/wp-email');
 }
 
 

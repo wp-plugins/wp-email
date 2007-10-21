@@ -11,7 +11,7 @@
 |																							|
 |	File Information:																	|
 |	- E-Mail Post/Page To A Friend												|
-|	- wp-content/plugins/wp-email/email-postpage.php					|
+|	- wp-content/plugins/wp-email/email-standalone.php					|
 |																							|
 +----------------------------------------------------------------+
 */
