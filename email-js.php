@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.1 Plugin: WP-EMail 2.20										|
+|	WordPress 2.1 Plugin: WP-EMail 2.30										|
 |	Copyright (c) 2007 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -11,7 +11,7 @@
 |																							|
 |	File Information:																	|
 |	- E-Mail Javascript File															|
-|	- wp-content/plugins/email/email-js.php									|
+|	- wp-content/plugins/wp-email/email-js.php								|
 |																							|
 +----------------------------------------------------------------+
 */
@@ -24,7 +24,7 @@
 @require('../../../wp-config.php');
 cache_javascript_headers();
 
-### Determine email.php Path
+### Determine wp-email.php Path
 $email_ajax_url = dirname($_SERVER['PHP_SELF']);
 if(substr($email_ajax_url, -1) == '/') {
 	$email_ajax_url  = substr($email_ajax_url, 0, -1);
@@ -35,7 +35,7 @@ $email_max = intval(get_option('email_multiple'));
 ?>
 
 // Variables
-var email_ajax_url = "<?php echo $email_ajax_url; ?>/email.php";
+var email_ajax_url = "<?php echo $email_ajax_url; ?>/wp-email.php";
 var email = new sack(email_ajax_url);
 var email_max_allowed = '<?php echo $email_max; ?>';
 var email_verify = '<?php echo $_SESSION['email_verify']; ?>';

@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://lesterchan.net/portfolio/programming.php
 Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
-Version: 2.20
+Version: 2.30
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
@@ -49,12 +49,12 @@ $wpdb->email = $table_prefix . 'email';
 add_action('admin_menu', 'email_menu');
 function email_menu() {
 	if (function_exists('add_menu_page')) {
-		add_menu_page(__('E-Mail', 'wp-email'), __('E-Mail', 'wp-email'), 'manage_email', 'email/email-manager.php');
+		add_menu_page(__('E-Mail', 'wp-email'), __('E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php');
 	}
 	if (function_exists('add_submenu_page')) {
-		add_submenu_page('email/email-manager.php', __('Manage E-Mail', 'wp-email'), __('Manage E-Mail', 'wp-email'), 'manage_email', 'email/email-manager.php');
-		add_submenu_page('email/email-manager.php', __('E-Mail Options', 'wp-email'), __('E-Mail Options', 'wp-email'),  'manage_email', 'email/email-options.php');
-		add_submenu_page('email/email-manager.php', __('Uninstall WP-EMail', 'wp-email'), __('Uninstall WP-EMail', 'wp-email'),  'manage_email', 'email/email-uninstall.php');
+		add_submenu_page('wp-email/email-manager.php', __('Manage E-Mail', 'wp-email'), __('Manage E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php');
+		add_submenu_page('wp-email/email-manager.php', __('E-Mail Options', 'wp-email'), __('E-Mail Options', 'wp-email'),  'manage_email', 'wp-email/email-options.php');
+		add_submenu_page('wp-email/email-manager.php', __('Uninstall WP-EMail', 'wp-email'), __('Uninstall WP-EMail', 'wp-email'),  'manage_email', 'wp-email/email-uninstall.php');
 	}
 }
 
@@ -63,6 +63,7 @@ function email_menu() {
 add_filter('generate_rewrite_rules', 'email_rewrite');
 function email_rewrite($wp_rewrite) {
 	$email_link = get_permalink();
+	$uris = get_option('page_uris');
 	if(substr($email_link, -1, 1) != '/' && substr($wp_rewrite->permalink_structure, -1, 1) != '/') {
 		$email_link_text = '/email';
 		$email_popup_text = '/emailpopup';
@@ -70,28 +71,60 @@ function email_rewrite($wp_rewrite) {
 		$email_link_text = 'email';
 		$email_popup_text = 'emailpopup';
 	}
-	// WP-EMail Rules
-	$rewrite_rules2 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_link_text);
-	array_splice($rewrite_rules2, 1);
-	$r_rule = array_keys($rewrite_rules2);
+	// WP-EMail Standalone Post Rules
+	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_link_text, EP_PERMALINK);
+	array_splice($rewrite_rules, 1);
+	$r_rule = array_keys($rewrite_rules);
 	$r_rule = array_shift($r_rule);
 	$r_rule = str_replace('/trackback', '', $r_rule);
-	$r_link = array_values($rewrite_rules2);
+	$r_link = array_values($rewrite_rules);
 	$r_link = array_shift($r_link);
 	$r_link = str_replace('tb=1', 'email=1', $r_link);
-    $email_rules = array($r_rule => $r_link, '(.+)/emailpage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&email=1');
-	$wp_rewrite->rules = $email_rules + $wp_rewrite->rules;
-	// WP-EMail PopUp Rules
-	$rewrite_rules3 = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_popup_text);
-	array_splice($rewrite_rules3, 1);
-	$r_rule2 = array_keys($rewrite_rules3);
-	$r_rule2 = array_shift($r_rule2);
-	$r_rule2 = str_replace('/trackback', '', $r_rule2);
-	$r_link2 = array_values($rewrite_rules3);
-	$r_link2 = array_shift($r_link2);
-	$r_link2 = str_replace('tb=1', 'emailpopup=1', $r_link2);
-	$emailpopup_rules = array($r_rule2 => $r_link2, '(.+)/emailpopuppage/?$' => 'index.php?pagename='.$wp_rewrite->preg_index(1).'&emailpopup=1');
-	$wp_rewrite->rules = $emailpopup_rules + $wp_rewrite->rules;
+	$wp_rewrite->rules = array_merge(array($r_rule => $r_link), $wp_rewrite->rules);
+	// WP-Email Standalone Page Rules	
+	if(is_array($uris)) {
+		$email_page_rules = array();
+		foreach ($uris as $uri => $pagename) {			
+			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
+			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpage', EP_PAGES);
+			array_splice($rewrite_rules, 1);
+			$r_rule = array_keys($rewrite_rules);
+			$r_rule = array_shift($r_rule);
+			$r_rule = str_replace('/trackback', '', $r_rule);
+			$r_link = array_values($rewrite_rules);
+			$r_link = array_shift($r_link);
+			$r_link = str_replace('tb=1', 'email=1', $r_link);
+			$email_page_rules = array_merge($email_page_rules, array($r_rule => $r_link));
+		}
+		$wp_rewrite->rules = array_merge($email_page_rules, $wp_rewrite->rules);
+	}
+
+	// WP-EMail Popup Post Rules
+	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_popup_text, EP_PERMALINK);
+	array_splice($rewrite_rules, 1);
+	$r_rule = array_keys($rewrite_rules);
+	$r_rule = array_shift($r_rule);
+	$r_rule = str_replace('/trackback', '', $r_rule);
+	$r_link = array_values($rewrite_rules);
+	$r_link = array_shift($r_link);
+	$r_link = str_replace('tb=1', 'emailpopup=1', $r_link);
+	$wp_rewrite->rules = array_merge(array($r_rule => $r_link), $wp_rewrite->rules);
+	if(is_array($uris)) {
+		$email_page_rules = array();
+		foreach ($uris as $uri => $pagename) {			
+			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
+			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpopuppage', EP_PAGES);
+			array_splice($rewrite_rules, 1);
+			$r_rule = array_keys($rewrite_rules);
+			$r_rule = array_shift($r_rule);
+			$r_rule = str_replace('/trackback', '', $r_rule);
+			$r_link = array_values($rewrite_rules);
+			$r_link = array_shift($r_link);
+			$r_link = str_replace('tb=1', 'emailpopup=1', $r_link);
+			$email_page_rules = array_merge($email_page_rules, array($r_rule => $r_link));
+		}
+		$wp_rewrite->rules = array_merge($email_page_rules, $wp_rewrite->rules);
+	}
 }
 
 
@@ -107,24 +140,28 @@ function email_variables($public_query_vars) {
 ### Function: E-Mail Javascript
 add_action('wp_head', 'email_js');
 function email_js() {
-	echo "\n".'<!-- Start Of Script Generated By WP-EMail 2.20 -->'."\n";
-	wp_register_script('wp-email', '/wp-content/plugins/email/email-js.php', false, '2.20');
+	echo "\n".'<!-- Start Of Script Generated By WP-EMail 2.30 -->'."\n";
+	wp_register_script('wp-email', '/wp-content/plugins/wp-email/email-js.php', false, '2.30');
 	wp_print_scripts(array('sack', 'wp-email'));
-	echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/email/email-css.css" type="text/css" media="screen" />'."\n";
-	echo '<!-- End Of Script Generated By WP-EMail 2.20 -->'."\n";
+	echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/wp-email/email-css.css" type="text/css" media="screen" />'."\n";
+	echo '<!-- End Of Script Generated By WP-EMail 2.30 -->'."\n";
 }
 
 
 ### Function: Display E-Mail Link
-function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
+function email_link($email_post_text = '', $email_page_text = '', $echo = true) {
 	global $id;
 	$output = '';
 	$using_permalink = get_option('permalink_structure');
 	$email_options = get_option('email_options');
 	$email_style = intval($email_options['email_style']);
 	$email_type = intval($email_options['email_type']);
-	$email_text = stripslashes($email_options['post_text']);
-	$email_icon = get_option('siteurl').'/wp-content/plugins/email/images/'.$email_options['email_icon'];
+	if(empty($email_post_text)) {
+		$email_text = stripslashes($email_options['post_text']);
+	} else {
+		$email_text = $email_post_text;
+	}
+	$email_icon = get_option('siteurl').'/wp-content/plugins/wp-email/images/'.$email_options['email_icon'];
 	$email_link = get_permalink();
 	$email_html = stripslashes($email_options['email_html']);
 	$onclick = '';
@@ -142,14 +179,22 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 					$email_link= $email_link.'/';
 				}
 				if(is_page()) {
-					$email_text = stripslashes($email_options['page_text']);
+					if(empty($email_page_text)) {
+						$email_text = stripslashes($email_options['page_text']);
+					} else {
+						$email_text = $email_page_text;
+					}
 					$email_link = $email_link.'emailpage/';
 				} else {
 					$email_link = $email_link.'email/';
 				}
 			} else {
 				if(is_page()) {
-					$email_text = stripslashes($email_options['page_text']);
+					if(empty($email_page_text)) {
+						$email_text = stripslashes($email_options['page_text']);
+					} else {
+						$email_text = $email_page_text;
+					}
 				}
 				$email_link = $email_link.'&amp;email=1';
 			}
@@ -161,14 +206,22 @@ function email_link($deprecated = '', $deprecated2 ='', $echo = true) {
 					$email_link= $email_link.'/';
 				}
 				if(is_page()) {
-					$email_text = stripslashes($email_options['page_text']);
+					if(empty($email_page_text)) {
+						$email_text = stripslashes($email_options['page_text']);
+					} else {
+						$email_text = $email_page_text;
+					}
 					$email_link = $email_link.'emailpopuppage/';
 				} else {
 					$email_link = $email_link.'emailpopup/';
 				}
 			} else {
 				if(is_page()) {
-					$email_text = stripslashes($email_options['page_text']);
+					if(empty($email_page_text)) {
+						$email_text = stripslashes($email_options['page_text']);
+					} else {
+						$email_text = $email_page_text;
+					}
 				}
 				$email_link = $email_link.'&amp;emailpopup=1';
 			}
@@ -575,9 +628,9 @@ if(!function_exists('get_emails')) {
 		global $wpdb;
 		$totalemails = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email");
 		if($echo) {
-			echo number_format($totalemails);
+			echo number_format_i18n($totalemails);
 		} else {
-			return number_format($totalemails);
+			return number_format_i18n($totalemails);
 		}
 	}
 }
@@ -589,9 +642,9 @@ if(!function_exists('get_emails_success')) {
 		global $wpdb; 
 		$totalemails_success = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Success', 'wp-email')."'");
 		if($echo) {
-			echo number_format($totalemails_success);
+			echo number_format_i18n($totalemails_success);
 		} else {
-			return number_format($totalemails_success);
+			return number_format_i18n($totalemails_success);
 		}
 	}
 }
@@ -603,9 +656,9 @@ if(!function_exists('get_emails_failed')) {
 		global $wpdb; 
 		$totalemails_failed = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_status = '".__('Failed', 'wp-email')."'");
 		if($echo) {
-			echo number_format($totalemails_failed);
+			echo number_format_i18n($totalemails_failed);
 		} else {
-			return number_format($totalemails_failed);
+			return number_format_i18n($totalemails_failed);
 		}
 	}
 }
@@ -653,10 +706,10 @@ if(!function_exists('get_mostemailed')) {
 add_action('template_redirect', 'wp_email');
 function wp_email() {
 	if(intval(get_query_var('email')) == 1) {
-		include(ABSPATH . 'wp-content/plugins/email/wp-email.php');
+		include(ABSPATH . 'wp-content/plugins/wp-email/email-standalone.php');
 		exit;
 	} elseif(intval(get_query_var('emailpopup')) == 1) {
-		include(ABSPATH . 'wp-content/plugins/email/wp-email-popup.php');
+		include(ABSPATH . 'wp-content/plugins/wp-email/email-popup.php');
 		exit;
 	}
 }
@@ -1015,7 +1068,7 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 			if($email_image_verify) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="imageverify">'.__('Image Verification: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<img src="'.get_option('siteurl').'/wp-content/plugins/email/email-image-verify.php" width="55" height="15" alt="'.__('E-Mail Image Verification', 'wp-email').'" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />'."\n";
+				$output .= '<img src="'.get_option('siteurl').'/wp-content/plugins/wp-email/email-image-verify.php" width="55" height="15" alt="'.__('E-Mail Image Verification', 'wp-email').'" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />'."\n";
 				$output .= '</p>'."\n";
 			}
 			$output .= '<p style="text-align: center"><input type="button" value="'.__('     Mail It!     ', 'wp-email').'" id="wp-email-submit" class="Buttons" onclick="email_form();" onkeypress="email_form();" /></p>'."\n";
@@ -1026,7 +1079,7 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 	} else {
 		$output .= '<p>'.sprintf(__('Please wait for <strong>%s Minutes</strong> before sending the next article.', 'wp-email'), email_flood_interval(false)).'</p>'."\n";
 	} // End if (not_spamming())
-	$output .= '<div id="wp-email-loading" class="wp-email-loading"><img src="'.get_option('siteurl').'/wp-content/plugins/email/images/loading.gif" width="16" height="16" alt="'.__('Loading', 'wp-email').' ..." title="'.__('Loading', 'wp-email').' ..." class="wp-email-image" />&nbsp;'.__('Loading', 'wp-email').' ...</div>'."\n";
+	$output .= '<div id="wp-email-loading" class="wp-email-loading"><img src="'.get_option('siteurl').'/wp-content/plugins/wp-email/images/loading.gif" width="16" height="16" alt="'.__('Loading', 'wp-email').' ..." title="'.__('Loading', 'wp-email').' ..." class="wp-email-image" />&nbsp;'.__('Loading', 'wp-email').' ...</div>'."\n";
 	if($div) {
 		$output .= '</div>'."\n";
 	}
@@ -1127,9 +1180,9 @@ function email_page_general_stats($content) {
 		}
 		$content .= '<p><strong>'.__('WP-EMail', 'wp-email').'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array['total']).'</strong> '.__('emails were sent.', 'wp-email').'</li>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array[__('Success', 'wp-email')]).'</strong> '.__('emails were sent successfully.', 'wp-email').'</li>'."\n";
-		$content .= '<li><strong>'.number_format($email_stats_array[__('Failed', 'wp-email')]).'</strong> '.__('emails failed to send.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format_i18n($email_stats_array['total']).'</strong> '.__('emails were sent.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format_i18n($email_stats_array[__('Success', 'wp-email')]).'</strong> '.__('emails were sent successfully.', 'wp-email').'</li>'."\n";
+		$content .= '<li><strong>'.number_format_i18n($email_stats_array[__('Failed', 'wp-email')]).'</strong> '.__('emails failed to send.', 'wp-email').'</li>'."\n";
 		$content .= '</ul>'."\n";
 	}
 	return $content;
@@ -1151,7 +1204,7 @@ function email_page_most_stats($content) {
 
 
 ### Function: Create E-Mail Table
-add_action('activate_email/email.php', 'create_email_table');
+add_action('activate_wp-email/wp-email.php', 'create_email_table');
 function create_email_table() {
 	global $wpdb;
 	if(@is_file(ABSPATH.'/wp-admin/upgrade-functions.php')) {

@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.1 Plugin: WP-EMail 2.20										|
+|	WordPress 2.1 Plugin: WP-EMail 2.30										|
 |	Copyright (c) 2007 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -11,7 +11,7 @@
 |																							|
 |	File Information:																	|
 |	- Uninstall WP-EMail																|
-|	- wp-content/plugins/email/email-uninstall.php							|
+|	- wp-content/plugins/wp-email/email-uninstall.php						|
 |																							|
 +----------------------------------------------------------------+
 */
@@ -24,7 +24,7 @@ if(!current_user_can('manage_email')) {
 
 
 ### Variables Variables Variables
-$base_name = plugin_basename('email/email-manager.php');
+$base_name = plugin_basename('wp-email/email-manager.php');
 $base_page = 'admin.php?page='.$base_name;
 $mode = trim($_GET['mode']);
 $email_tables = array($wpdb->email);
@@ -73,9 +73,9 @@ if(!empty($_POST['do'])) {
 switch($mode) {
 		//  Deactivating WP-EMail
 		case 'end-UNINSTALL':
-			$deactivate_url = 'plugins.php?action=deactivate&amp;plugin=email/email.php';
+			$deactivate_url = 'plugins.php?action=deactivate&amp;plugin=wp-email/wp-email.php';
 			if(function_exists('wp_nonce_url')) { 
-				$deactivate_url = wp_nonce_url($deactivate_url, 'deactivate-plugin_email/email.php');
+				$deactivate_url = wp_nonce_url($deactivate_url, 'deactivate-plugin_wp-email/wp-email.php');
 			}
 			echo '<div class="wrap">';
 			echo '<h2>'.__('Uninstall WP-EMail', 'wp-email').'</h2>';

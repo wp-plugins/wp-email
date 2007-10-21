@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.1 Plugin: WP-EMail 2.20										|
+|	WordPress 2.1 Plugin: WP-EMail 2.30										|
 |	Copyright (c) 2007 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -11,7 +11,7 @@
 |																							|
 |	File Information:																	|
 |	- Configure E-Mail Options														|
-|	- wp-content/plugins/email/email-options.php							|
+|	- wp-content/plugins/wp-email/email-options.php						|
 |																							|
 +----------------------------------------------------------------+
 */
@@ -24,7 +24,7 @@ if(!current_user_can('manage_email')) {
 
 
 ### E-Mail Variables
-$base_name = plugin_basename('email/email-options.php');
+$base_name = plugin_basename('wp-email/email-options.php');
 $base_page = 'admin.php?page='.$base_name;
 
 
@@ -202,8 +202,8 @@ $emai_smtp = get_option('email_smtp');
 					<td align="left">
 						<?php
 							$email_icon = $email_options['email_icon'];
-							$email_icon_url = get_option('siteurl').'/wp-content/plugins/email/images';
-							$email_icon_path = ABSPATH.'/wp-content/plugins/email/images';
+							$email_icon_url = get_option('siteurl').'/wp-content/plugins/wp-email/images';
+							$email_icon_path = ABSPATH.'/wp-content/plugins/wp-email/images';
 							if($handle = @opendir($email_icon_path)) {     
 								while (false !== ($filename = readdir($handle))) {  
 									if ($filename != '.' && $filename != '..' && $filename != 'loading.gif') {

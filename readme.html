@@ -2,7 +2,7 @@
 <html>
 <head>	
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>WP-EMail 2.21 Readme</title>
+	<title>WP-EMail 2.30 Readme</title>
 	<style type="text/css" media="screen">
 		/* Default Style */
 		BODY {
@@ -203,7 +203,7 @@
 <body>
 <div id="Container">
 	<!-- Title -->
-	<div id="Title">WP-EMail 2.21&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
+	<div id="Title">WP-EMail 2.30&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
 
 	<!-- Tabs -->
 	<ul id="Tabs">
@@ -234,7 +234,7 @@
 			</p>
 			<p>
 				<strong>Download:</strong><br />
-				<strong>&raquo;</strong> <a href="http://lesterchan.net/others/downloads.php?id=13" title="http://lesterchan.net/others/downloads.php?id=13">WP-EMail 2.21 For WordPress 2.3.x</a><br />
+				<strong>&raquo;</strong> <a href="http://lesterchan.net/others/downloads.php?id=13" title="http://lesterchan.net/others/downloads.php?id=13">WP-EMail 2.30 For WordPress 2.3.x</a><br />
 				<strong>&raquo;</strong> <a href="http://lesterchan.net/others/downloads/wp-email211.zip" title="http://lesterchan.net/others/downloads/wp-email211.zip">WP-EMail 2.11 For WordPress 2.1.x And 2.2.x</a><br />
 				<strong>&raquo;</strong> <a href="http://lesterchan.net/others/downloads/wp-email207.zip" title="http://lesterchan.net/others/downloads/wp-email207.zip">WP-EMail 2.07 For WordPress 2.0.x</a><br />
 				<strong>&raquo;</strong> <a href="http://lesterchan.net/others/downloads/wp-email200b.zip" title="http://lesterchan.net/others/downloads/wp-email200b.zip">WP-EMail 2.00b For WordPress 1.5.2</a>
@@ -261,12 +261,11 @@
 			</p>
 			<p>
 				<strong>Updated:</strong><br />
-				<strong>&raquo;</strong> 1st October 2007
+				<strong>&raquo;</strong> 1st January 2008
 			</p>
 			<p>
 				<strong>Note:</strong><br />
 				<strong>&raquo;</strong> The <strong>Changelog</strong>, <strong>Installation</strong>, <strong>Upgrade</strong>, <strong>Usage</strong> Tab at the top of the page.<br />
-				<strong>&raquo;</strong> The core code of WP-EMail had been changed to support AJAX, please let me know if you found any bugs. Thank you.
 			</p>
 			<p>
 				<strong>Donations:</strong><br />
@@ -283,6 +282,17 @@
 		<div id="Changelog" style="display: none;">
 			<div class="SubTitle">&raquo; Changelog</div>
 			<ul>
+				<li>
+					<strong>Version 2.30 (01-01-2008)</strong>
+					<ul>
+						<li>NEW: Uses /wp-email/ Folder Instead Of /email/</li>
+						<li>NEW: Uses wp-email.php Instead Of email.php</li>
+						<li>NEW: Uses wp-email-widget.php Instead Of email-widget.php</li>
+						<li>NEW: Changed wp-email.php To email-standalone.php</li>
+						<li>NEW: Changed wp-email-popup.php To email-popup.php</li>
+						<li>NEW: Use number_format_i18n() Instead</li>
+					</ul>
+				</li>
 				<li>
 					<strong>Version 2.20 (01-10-2007)</strong>
 					<ul>
@@ -453,7 +463,7 @@
 				</li>
 				<li>
 					Put:
-					<blockquote>Folder: email</blockquote>
+					<blockquote>Folder: wp-email</blockquote>
 				</li>
 				<li>
 					<strong>Activate</strong> WP-EMail Plugin
@@ -476,7 +486,7 @@
 		<!-- Upgrade Instructions -->	
 		<div id="Upgrade" style="display: none;">
 			<div class="SubTitle">&raquo; Upgrade Instructions</div>
-			<div class="SubSubTitle">From v2.0x To v2.21</div>
+			<div class="SubSubTitle">From v2.0x To v2.30</div>
 			<ol>
 				<li>
 					<strong>Deactivate</strong> WP-EMail Plugin
@@ -485,8 +495,14 @@
 					Open <strong>wp-content/plugins</strong> Folder
 				</li>
 				<li>
-					Overwrite:
-					<blockquote>Folder: email</blockquote>
+					Put/Overwrite:
+					<blockquote>Folder: wp-email</blockquote>
+				</li>
+				<li>
+					Delete this folder if exists:
+					<blockquote>
+						Folder: email
+					</blockquote>
 				</li>
 				<li>
 					<strong>Activate</strong> WP-EMail Plugin
@@ -524,6 +540,10 @@
 						&lt;?php if(function_exists('wp_email')) { email_link(); } ?&gt;
 					</blockquote>
 					<p>If you DO NOT want the print link to appear in every post/page, DO NOT use the code above. Just type in <strong>[email_link]</strong> into the selected post/page content and it will embed the email link into that post/page only.</p>
+					<p>The <b>first value</b> is the text for emailing post.</p>
+					<p>The <b>second value</b> is the text for emailing page.</p>					
+					<p>Default: email_link('', '')</p>
+					<p>Alternatively, you can set the text in 'WP-Admin -> E-Mail -> E-Mail Options'.</p>
 				</li>
 			</ol>
 			<div class="SubSubTitle">EMail Stats (Outside WP Loop)</div>
@@ -605,6 +625,6 @@
 		</div>
 	</div>
 </div>
-<p id="Copyright">WP-EMail 2.21<br />Copyright &copy; 2007 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
+<p id="Copyright">WP-EMail 2.30<br />Copyright &copy; 2008 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
 </body>
 </html>
