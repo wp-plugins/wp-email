@@ -287,23 +287,15 @@ if(!function_exists('snippet_words')) {
 
 
 ### Function: Snippet Text
-if(!function_exists('snippet_chars')) {
-	function snippet_chars($text, $length = 0) {
-		$text = htmlspecialchars_decode($text);
+if(!function_exists('snippet_text')) {
+	function snippet_text($text, $length = 0) {
+		$text = html_entity_decode($text, ENT_QUOTES);
 		 if (strlen($text) > $length){       
-			return htmlspecialchars(substr($text,0,$length)).'...';             
+			return substr($text,0,$length).'...';             
 		 } else {
-			return htmlspecialchars($text);
+			return $text;
 		 }
 	}
-}
-
-
-### Function: HTML Special Chars Decode
-if (!function_exists('htmlspecialchars_decode')) {
-   function htmlspecialchars_decode($text) {
-       return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS)));
-   }
 }
 
 
@@ -681,7 +673,7 @@ if(!function_exists('get_mostemailed')) {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_chars($post_title, $chars)."</a> - $email_total ".__('emails', 'wp-email')."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_text($post_title, $chars)."</a> - $email_total ".__('emails', 'wp-email')."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
@@ -722,6 +714,7 @@ function process_email_form() {
 	// If User Click On Mail
 	if(!empty($_POST['wp-email'])) {
 		@session_start();
+		load_plugin_textdomain('wp-email', 'wp-content/plugins/wp-email');
 		header('Content-Type: text/html; charset='.get_option('blog_charset').'');
 		// POST Variables
 		$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
