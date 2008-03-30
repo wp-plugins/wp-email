@@ -167,24 +167,26 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<h2><?php _e('E-Mail Logs', 'wp-email'); ?></h2>
 	<p><?php printf(__('Dispaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs', 'wp-email'), $display_on_page, $max_on_page, $total_email); ?></p>
 	<p><?php printf(__('Sorted By <strong>%s</strong> In <strong>%s</strong> Order', 'wp-email'), $email_sortby_text, $email_sortorder_text); ?></p>
-	<table width="100%"  border="0" cellspacing="3" cellpadding="3">
-	<tr class="thead">
-		<th width="5%"><?php _e('ID', 'wp-email'); ?></th>
-		<th width="17%"><?php _e('From', 'wp-email'); ?></th>
-		<th width="17%"><?php _e('To', 'wp-email'); ?></th>
-		<th width="17%"><?php _e('Date / Time', 'wp-email'); ?></th>
-		<th width="17%"><?php _e('IP / Host', 'wp-email'); ?></th>
-		<th width="17%"><?php _e('Post Title', 'wp-email'); ?></th>
-		<th width="10%"><?php _e('Status', 'wp-email'); ?></th>
-	</tr>
+	<table class="widefat">
+		<thead>
+		<tr>
+			<th width="5%"><?php _e('ID', 'wp-email'); ?></th>
+			<th width="17%"><?php _e('From', 'wp-email'); ?></th>
+			<th width="17%"><?php _e('To', 'wp-email'); ?></th>
+			<th width="17%"><?php _e('Date / Time', 'wp-email'); ?></th>
+			<th width="17%"><?php _e('IP / Host', 'wp-email'); ?></th>
+			<th width="17%"><?php _e('Post Title', 'wp-email'); ?></th>
+			<th width="10%"><?php _e('Status', 'wp-email'); ?></th>
+		</tr>
+	</thead>
 	<?php
 		if($email_logs) {
 			$i = 0;
 			foreach($email_logs as $email_log) {
 				if($i%2 == 0) {
-					$style = 'style=\'background: none\'';					
+					$style = '';					
 				}  else {
-					$style = 'style=\'background-color: #eee\'';
+					$style = 'class="alternate"';
 				}
 				$email_id = intval($email_log->email_id);
 				$email_yourname = stripslashes($email_log->email_yourname);
@@ -309,29 +311,33 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		<input type="submit" value="<?php _e('Sort', 'wp-email'); ?>" class="button" />
 	</form>
 </div>
+<p>&nbsp;</p>
 
 <!-- E-Mail Stats -->
 <div class="wrap">
 	<h2><?php _e('E-Mail Logs Stats', 'wp-email'); ?></h2>
-	<table border="0" cellspacing="3" cellpadding="3">
+	<br style="clear" />
+	<table class="widefat">
 	<tr>
-		<th align="left"><?php _e('Total E-Mails:', 'wp-email'); ?></th>
-		<td align="left"><?php echo number_format_i18n($total_email); ?></td>
+		<th><?php _e('Total E-Mails:', 'wp-email'); ?></th>
+		<td><?php echo number_format_i18n($total_email); ?></td>
+	</tr>
+	<tr class="alternate">
+		<th><?php _e('Total E-Mail Sent:', 'wp-email'); ?></th>
+		<td><?php echo number_format_i18n($total_email_success); ?></td>
 	</tr>
 	<tr>
-		<th align="left"><?php _e('Total E-Mail Sent:', 'wp-email'); ?></th>
-		<td align="left"><?php echo number_format_i18n($total_email_success); ?></td>
-	</tr>
-	<tr>
-		<th align="left"><?php _e('Total E-Mail Failed:', 'wp-email'); ?></th>
-		<td align="left"><?php echo number_format_i18n($total_email_failed); ?></td>
+		<th><?php _e('Total E-Mail Failed:', 'wp-email'); ?></th>
+		<td><?php echo number_format_i18n($total_email_failed); ?></td>
 	</tr>
 	</table>
 </div>
+<p>&nbsp;</p>
 
 <!-- Delete E-Mail Logs -->
 <div class="wrap">
 	<h2><?php _e('Delete E-Mail Logs', 'wp-email'); ?></h2>
+	<br style="clear" />
 	<div align="center">
 		<form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
 			<strong><?php _e('Are You Sure You Want To Delete All E-Mail Logs?', 'wp-email'); ?></strong><br /><br />

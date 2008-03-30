@@ -99,13 +99,15 @@ switch($mode) {
 	<p style="text-align: left; color: red">
 		<strong><?php _e('The following WordPress Options/Tables will be DELETED:', 'wp-email'); ?></strong><br />
 	</p>
-	<table width="50%"  border="0" cellspacing="3" cellpadding="3">
-		<tr class="thead">
-			<td align="center"><strong><?php _e('WordPress Options', 'wp-email'); ?></strong></td>
-			<td align="center"><strong><?php _e('WordPress Tables', 'wp-email'); ?></strong></td>
-		</tr>
+	<table class="widefat">
+		<thead>
+			<tr>
+				<th><?php _e('WordPress Options', 'wp-email'); ?></th>
+				<th><?php _e('WordPress Tables', 'wp-email'); ?></th>
+			</tr>
+		</thead>
 		<tr>
-			<td valign="top" style="background-color: #eee;">
+			<td valign="top">
 				<ol>
 				<?php
 					foreach($email_settings as $settings) {
@@ -114,7 +116,7 @@ switch($mode) {
 				?>
 				</ol>
 			</td>
-			<td valign="top" style="background-color: #eee;">
+			<td valign="top" class="alternate">
 				<ol>
 				<?php
 					foreach($email_tables as $tables) {

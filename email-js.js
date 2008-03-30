@@ -1,4 +1,3 @@
-<?php
 /*
 +----------------------------------------------------------------+
 |																							|
@@ -11,34 +10,14 @@
 |																							|
 |	File Information:																	|
 |	- E-Mail Javascript File															|
-|	- wp-content/plugins/wp-email/email-js.php								|
+|	- wp-content/plugins/wp-email/email-js.js	 								|
 |																							|
 +----------------------------------------------------------------+
 */
 
 
-### Session Start
-@session_start();
-
-### Include wp-config.php
-@require('../../../wp-config.php');
-cache_javascript_headers();
-
-### Determine wp-email.php Path
-$email_ajax_url = dirname($_SERVER['PHP_SELF']);
-if(substr($email_ajax_url, -1) == '/') {
-	$email_ajax_url  = substr($email_ajax_url, 0, -1);
-}
-
-### Get Email Options
-$email_max = intval(get_option('email_multiple'));
-?>
-
 // Variables
-var email_ajax_url = "<?php echo $email_ajax_url; ?>/wp-email.php";
 var email = new sack(email_ajax_url);
-var email_max_allowed = '<?php echo $email_max; ?>';
-var email_verify = '<?php echo $_SESSION['email_verify']; ?>';
 var email_p = 0;
 var email_pageid = 0;
 var email_yourname = '';
@@ -54,28 +33,20 @@ var email_imageverify = '';
 function validate_email_form() {
 	// Variables
 	var errFlag = false;
-	var errMsg = "<?php _e('The Following Error Occurs:', 'wp-email'); ?>\n";	
+	var errMsg = email_text_error + "\n";	
 	errMsg = errMsg + "__________________________________\n\n";
 
 	// Your Name Validation
 	if(document.getElementById('yourname')) {
-		if(isEmpty(email_yourname)) {
-			errMsg = errMsg + "<?php _e('- Your Name is empty', 'wp-email'); ?>\n";
-			errFlag = true;
-		}
-		if(!is_valid_name(email_yourname)) {
-			errMsg = errMsg + "<?php _e('- Your Name is invalid', 'wp-email'); ?>\n";
+		if(isEmpty(email_yourname) || !is_valid_name(email_yourname)) {
+			errMsg = errMsg + email_text_name_invalid + "\n";
 			errFlag = true;
 		}
 	}
 	// Your Email Validation
 	if(document.getElementById('youremail')) {
-		if(isEmpty(email_youremail)) {
-			errMsg = errMsg + "<?php _e('- Your Email is empty', 'wp-email'); ?>\n";
-			errFlag = true;
-		}
-		if(!is_valid_email(email_youremail)) {
-			errMsg = errMsg + "<?php _e('- Your Email is invalid', 'wp-email'); ?>\n";
+		if(isEmpty(email_youremail) || !is_valid_email(email_youremail)) {
+			errMsg = errMsg + email_text_email_invalid + "\n";
 			errFlag = true;
 		}
 	}
@@ -83,7 +54,7 @@ function validate_email_form() {
 	if(document.getElementById('yourremarks')) {
 		if(!isEmpty(email_yourremarks)) {
 			if(!is_valid_remarks(email_yourremarks)) {
-				errMsg = errMsg + "<?php _e('- Your Remarks is invalid', 'wp-email'); ?>\n";
+				errMsg = errMsg + email_text_remarks_invalid + "\n";
 				errFlag = true;
 			}
 		}
@@ -91,55 +62,47 @@ function validate_email_form() {
 	// Friend Name(s) Validation
 	if(document.getElementById('friendname')) {
 		if(isEmpty(email_friendname)) {
-			errMsg = errMsg + "<?php _e('- Friend Name(s) is empty', 'wp-email'); ?>\n";
+			errMsg = errMsg + email_text_friend_names_empty + "\n";
 			errFlag = true;
 		} else {
 			for(i = 0; i < email_friendnames.length; i++) {
-				if(isEmpty(email_friendnames[i])) {
-					errMsg = errMsg + "<?php _e('- Friend Name is empty: ', 'wp-email'); ?>" + email_friendnames[i] + "\n";
-					errFlag = true;
-				}
-				if(!is_valid_name(email_friendnames[i])) {
-					errMsg = errMsg + "<?php _e('- Friend Name is invalid: ', 'wp-email'); ?>" + email_friendnames[i] + "\n";
+				if(isEmpty(email_friendnames[i]) || !is_valid_name(email_friendnames[i])) {
+					errMsg = errMsg + email_text_friend_name_invalid + email_friendnames[i] + "\n";
 					errFlag = true;
 				}
 			}
 		}
 		if(email_friendnames.length > email_max_allowed) {
-			errMsg = errMsg + "<?php printf(__('- Maximum %s Friend Name(s) allowed', 'wp-email'), $email_max); ?>\n";
+			errMsg = errMsg + email_text_max_friend_names_allowed + "\n";
 			errFlag = true;
 		}
 	}
 	// Friend Email(s) Validation
 	if(isEmpty(email_friendemail)) {
-		errMsg = errMsg + "<?php _e('- Friend Email(s) is empty', 'wp-email'); ?>\n";
+		errMsg = errMsg + email_text_friend_emails_empty + "\n";
 		errFlag = true;
 	} else {
 		for(i = 0; i < email_friendemails.length; i++) {
-			if(isEmpty(email_friendemails[i])) {
-				errMsg = errMsg + "<?php _e('- Friend Email is empty: ', 'wp-email'); ?>" + email_friendemails[i] + "\n";
-				errFlag = true;
-			}
-			if(!is_valid_email(email_friendemails[i])) {
-				errMsg = errMsg + "<?php _e('- Friend Email is invalid: ', 'wp-email'); ?>" + email_friendemails[i] + "\n";
+			if(isEmpty(email_friendemails[i]) || !is_valid_email(email_friendemails[i])) {
+				errMsg = errMsg + email_text_friend_email_invalid + "\n";
 				errFlag = true;
 			}
 		}
 	}
 	if(email_friendemails.length > email_max_allowed) {
-		errMsg = errMsg + "<?php printf(__('- Maximum %s Friend Email(s) allowed', 'wp-email'), $email_max); ?>\n";
+		errMsg = errMsg +  email_text_max_friend_emails_allowed + "\n";
 		errFlag = true;
 	}
 	// Friend Name(s) And Email(s) Validation
 	if(document.getElementById('friendname')) {
 		if(email_friendnames.length != email_friendemails.length) {
-			errMsg = errMsg + "<?php _e('- Friend Name(s) count does not tally with Friend Email(s) count', 'wp-email'); ?>\n";
+			errMsg = errMsg + email_text_friends_tally + "\n";
 			errFlag = true;
 		}
 	}
 	if(document.getElementById('imageverify')) {
 		if(isEmpty(email_imageverify)) {
-			errMsg = errMsg + "<?php _e('- Image Verification is empty', 'wp-email'); ?>\n";
+			errMsg = errMsg + email_text_image_verify_empty + "\n";
 			errFlag = true;
 		}
 	}
