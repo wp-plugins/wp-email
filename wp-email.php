@@ -469,6 +469,18 @@ function not_password_protected() {
 }
 
 
+### Function: There Are Still Many PHP 4.x Users
+if(!function_exists('htmlspecialchars_decode')) {
+	function htmlspecialchars_decode($string, $style = ENT_COMPAT) {
+		$translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS,$style));
+		if($style === ENT_QUOTES) {
+			$translation['&#039;'] = '\'';
+		}
+		return strtr($string, $translation);
+	}
+}
+
+
 ### Function: Check Vaild Name (AlphaNumeric With Spaces Allowed Only)
 if(!function_exists('is_valid_name')) {
 	function is_valid_name($name) {
