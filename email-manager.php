@@ -167,16 +167,27 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<h2><?php _e('E-Mail Logs', 'wp-email'); ?></h2>
 	<p><?php printf(__('Dispaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs', 'wp-email'), $display_on_page, $max_on_page, $total_email); ?></p>
 	<p><?php printf(__('Sorted By <strong>%s</strong> In <strong>%s</strong> Order', 'wp-email'), $email_sortby_text, $email_sortorder_text); ?></p>
+	<?php
+		$colspan = 7;
+		if(EMAIL_SHOW_REMARKS) {
+			$colspan++;
+		}
+	?>	
 	<table class="widefat">
 		<thead>
 		<tr>
-			<th width="5%"><?php _e('ID', 'wp-email'); ?></th>
-			<th width="17%"><?php _e('From', 'wp-email'); ?></th>
-			<th width="17%"><?php _e('To', 'wp-email'); ?></th>
-			<th width="17%"><?php _e('Date / Time', 'wp-email'); ?></th>
-			<th width="17%"><?php _e('IP / Host', 'wp-email'); ?></th>
-			<th width="17%"><?php _e('Post Title', 'wp-email'); ?></th>
-			<th width="10%"><?php _e('Status', 'wp-email'); ?></th>
+			<th><?php _e('ID', 'wp-email'); ?></th>
+			<th><?php _e('From', 'wp-email'); ?></th>
+			<th><?php _e('To', 'wp-email'); ?></th>
+			<th><?php _e('Date / Time', 'wp-email'); ?></th>
+			<th><?php _e('IP / Host', 'wp-email'); ?></th>
+			<?php
+				if(EMAIL_SHOW_REMARKS) {
+					echo '<th>'.__('Remarks', 'wp-email').'</th>';
+				}
+			?>
+			<th><?php _e('Post Title', 'wp-email'); ?></th>
+			<th><?php _e('Status', 'wp-email'); ?></th>
 		</tr>
 	</thead>
 	<?php
@@ -194,6 +205,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$email_friendname = stripslashes($email_log->email_friendname);
 				$email_friendemail = stripslashes($email_log->email_friendemail);
 				$email_postid = intval($email_log->email_postid);
+				$email_remarks = htmlspecialchars(stripslashes($email_log->email_yourremarks));
 				$email_posttitle = htmlspecialchars(stripslashes($email_log->email_posttitle));
 				$email_date = mysql2date(sprintf(__('%s @ %s', 'wp-email'), get_option('date_format'), get_option('time_format')), gmdate('Y-m-d H:i:s', $email_log->email_timestamp));
 				$email_ip = $email_log->email_ip;
@@ -205,13 +217,16 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				echo "<td>$email_friendname<br />$email_friendemail</td>\n";
 				echo "<td>$email_date</td>\n";
 				echo "<td>$email_ip<br />$email_host</td>\n";
+				if(EMAIL_SHOW_REMARKS) {
+					echo '<td>'.$email_remarks.'</td>';
+				}
 				echo "<td>$email_posttitle</td>\n";
 				echo "<td>$email_status</td>\n";
 				echo '</tr>';
 				$i++;
 			}
 		} else {
-			echo '<tr><td colspan="7" align="center"><strong>'.__('No E-Mail Logs Found', 'wp-email').'</strong></td></tr>';
+			echo '<tr><td colspan="'.$colspan.'" align="center"><strong>'.__('No E-Mail Logs Found', 'wp-email').'</strong></td></tr>';
 		}
 	?>
 	</table>

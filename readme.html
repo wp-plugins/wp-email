@@ -291,6 +291,7 @@
 						<li>NEW: Changed wp-email.php To email-standalone.php</li>
 						<li>NEW: Changed wp-email-popup.php To email-popup.php</li>
 						<li>NEW: Use number_format_i18n() Instead</li>
+						<li>NEW: Show 'Remarks' In 'WP-Admin -> E-Mail -> E-Mail Logs' Page By Default. See Usage Tab On How To Hide It.</li>
 					</ul>
 				</li>
 				<li>
@@ -598,6 +599,24 @@
 					</blockquote>
 				</li>
 			</ul>
+			<div class="SubSubTitle">To Hide Remarks When Viewing Email Logs In WP-Admin</div>
+			<ol>
+				<li>
+					Open <strong>wp-email.php</strong>
+				</li>
+				<li>
+					Find:
+					<blockquote>
+							define('EMAIL_SHOW_REMARKS', true);
+					</blockquote>
+				</li>
+				<li>
+					Replace:
+					<blockquote>
+							define('EMAIL_SHOW_REMARKS', false);
+					</blockquote>
+				</li>
+			</ol>
 			<div class="SubSubTitle">Note</div>
 			<ul>
 				<li>

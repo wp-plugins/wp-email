@@ -28,6 +28,10 @@ Author URI: http://lesterchan.net
 */
 
 
+### Define: Show Email Remarks In Logs?
+define('EMAIL_SHOW_REMARKS', true);
+
+
 ### Load WP-Config File If This File Is Called Directly
 if (!function_exists('add_action')) {
 	require_once('../../../wp-config.php');
