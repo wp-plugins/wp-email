@@ -68,7 +68,8 @@ function email_menu() {
 add_filter('generate_rewrite_rules', 'email_rewrite');
 function email_rewrite($wp_rewrite) {
 	$email_link = get_permalink();
-	$uris = get_option('page_uris');
+	$page_uris = $wp_rewrite->page_uri_index();
+	$uris = $page_uris[0];
 	if(substr($email_link, -1, 1) != '/' && substr($wp_rewrite->permalink_structure, -1, 1) != '/') {
 		$email_link_text = '/email';
 		$email_popup_text = '/emailpopup';
@@ -689,6 +690,7 @@ if(!function_exists('get_emails_failed')) {
 if(!function_exists('get_mostemailed')) {
 	function get_mostemailed($mode = '', $limit = 10, $chars = 0, $echo = true) {
 		global $wpdb, $post;
+		$temp_post = $post;
 		$where = '';
 		$temp = '';
 		if(!empty($mode) && $mode != 'both') {
@@ -714,6 +716,7 @@ if(!function_exists('get_mostemailed')) {
 		} else {
 			$temp = '<li>'.__('N/A', 'wp-email').'</li>'."\n";
 		}
+		$post = $temp_post;
 		if($echo) {
 			echo $temp;
 		} else {
