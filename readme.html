@@ -283,6 +283,7 @@
 					<strong>Version 2.30 (01-06-2008)</strong>
 					<ul>
 						<li>NEW: Works For WordPress 2.5 Only</li>
+						<li>NEW: WP-Email Will Load 'email-css.css' Inside Your Theme Directory If It Exists. If Not, It Will Just Load The Default 'email-css.css' By WP-Email</li>
 						<li>NEW: Renamed email-js.php To email-js.js and Move The Dynamic Javascript Variables To The PHP Pages</li>
 						<li>NEW: Uses email-js-packed.js</li>
 						<li>NEW: Uses /wp-email/ Folder Instead Of /email/</li>
@@ -540,7 +541,7 @@
 					<blockquote>
 						&lt;?php if(function_exists('wp_email')) { email_link(); } ?&gt;
 					</blockquote>
-					<p>If you DO NOT want the print link to appear in every post/page, DO NOT use the code above. Just type in <strong>[email_link]</strong> into the selected post/page content and it will embed the email link into that post/page only.</p>
+					<p>If you DO NOT want the email link to appear in every post/page, DO NOT use the code above. Just type in <strong>[email_link]</strong> into the selected post/page content and it will embed the email link into that post/page only.</p>
 					<p>The <b>first value</b> is the text for emailing post.</p>
 					<p>The <b>second value</b> is the text for emailing page.</p>					
 					<p>Default: email_link('', '')</p>
@@ -619,6 +620,13 @@
 			</ol>
 			<div class="SubSubTitle">Note</div>
 			<ul>
+				<li>
+					WP-Email will load '<strong>email-css.css</strong>' from your theme's directory if it exists.
+					<ul>
+						<li>If it doesn't exists, it will just load the default 'email-css.css' that comes with WP-Email.</li>
+						<li>This will allow you to upgrade WP-Email without worrying about overwriting your email styles that you have created.</li>
+					</ul>
+				</li>
 				<li>
 					To change the background color of the popup window:
 					<ol>
