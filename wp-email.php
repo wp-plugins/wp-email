@@ -169,7 +169,7 @@ function email_js() {
 	echo '</script>'."\n";
 	wp_register_script('wp-email', '/wp-content/plugins/wp-email/email-js-packed.js', false, '2.30');
 	wp_print_scripts(array('sack', 'wp-email'));
-	if(@file_exists(get_template_directory().'/email-css.css')) {
+	if(@file_exists(TEMPLATEPATH.'/email-css.css')) {
 		echo '<link rel="stylesheet" href="'.get_stylesheet_directory_uri().'/email-css.css" type="text/css" media="screen" />'."\n";	
 	} else {
 		echo '<link rel="stylesheet" href="'.get_option('siteurl').'/wp-content/plugins/wp-email/email-css.css" type="text/css" media="screen" />'."\n";
@@ -1069,13 +1069,13 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 			if(intval($email_fields['yourname']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="yourname">'.__('Your Name: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="yourname" name="yourname" class="Forms" value="'.$error_field['yourname'].'" />'."\n";
+				$output .= '<input type="text" size="50" id="yourname" name="yourname" class="TextField" value="'.$error_field['yourname'].'" />'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['youremail']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="youremail">'.__('Your E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="youremail" name="youremail" class="Forms" value="'.$error_field['youremail'].'" />'."\n";
+				$output .= '<input type="text" size="50" id="youremail" name="youremail" class="TextField" value="'.$error_field['youremail'].'" />'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['yourremarks']) == 1) {
@@ -1087,20 +1087,20 @@ function email_form($popup = false, $echo = true, $subtitle = true, $div = true,
 			if(intval($email_fields['friendname']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="friendname">'.__('Friend\'s Name: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="Forms" value="'.$error_field['friendname'].'" />'.email_multiple(false)."\n";
+				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="TextField" value="'.$error_field['friendname'].'" />'.email_multiple(false)."\n";
 				$output .= '</p>'."\n";
 			}
 			$output .= '<p>'."\n";
 			$output .= '<strong><label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label></strong><br />'."\n";
-			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="Forms" value="'.$error_field['friendemail'].'" />'.email_multiple(false)."\n";
+			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="TextField" value="'.$error_field['friendemail'].'" />'.email_multiple(false)."\n";
 			$output .= '</p>'."\n";
 			if($email_image_verify) {
 				$output .= '<p>'."\n";
 				$output .= '<strong><label for="imageverify">'.__('Image Verification: *', 'wp-email').'</label></strong><br />'."\n";
-				$output .= '<img src="'.get_option('siteurl').'/wp-content/plugins/wp-email/email-image-verify.php" width="55" height="15" alt="'.__('E-Mail Image Verification', 'wp-email').'" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="Forms" />'."\n";
+				$output .= '<img src="'.get_option('siteurl').'/wp-content/plugins/wp-email/email-image-verify.php" width="55" height="15" alt="'.__('E-Mail Image Verification', 'wp-email').'" /><input type="text" size="5" maxlength="5" id="imageverify" name="imageverify" class="TextField" />'."\n";
 				$output .= '</p>'."\n";
 			}
-			$output .= '<p style="text-align: center"><input type="button" value="'.__('     Mail It!     ', 'wp-email').'" id="wp-email-submit" class="Buttons" onclick="email_form();" onkeypress="email_form();" /></p>'."\n";
+			$output .= '<p style="text-align: center"><input type="button" value="'.__('     Mail It!     ', 'wp-email').'" id="wp-email-submit" class="Button" onclick="email_form();" onkeypress="email_form();" /></p>'."\n";
 			$output .= '</form>'."\n";
 		} else { 
 			$output .= get_the_password_form();
