@@ -235,7 +235,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			if($total_pages > 1) {
 		?>
 		<br />
-		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<table class="widefat">
 			<tr>
 				<td align="left" width="50%">
 					<?php
@@ -256,7 +256,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 					?>
 				</td>
 			</tr>
-			<tr>
+			<tr class="alternate">
 				<td colspan="2" align="center">
 					<?php _e('Pages', 'wp-email'); ?> (<?php echo $total_pages; ?>):
 					<?php
@@ -291,39 +291,45 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		?>
 	<br />
 	<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
-		<input type="hidden" name="page" value="<?php echo $base_name; ?>" />
-		<?php _e('Sort Options:', 'wp-email'); ?>&nbsp;&nbsp;&nbsp;
-		<select name="by" size="1">
-			<option value="id"<?php if($email_sortby == 'email_id') { echo ' selected="selected"'; }?>><?php _e('ID', 'wp-email'); ?></option>
-			<option value="fromname"<?php if($email_sortby == 'email_yourname') { echo ' selected="selected"'; }?>><?php _e('From Name', 'wp-email'); ?></option>
-			<option value="fromemail"<?php if($email_sortby == 'email_youremail') { echo ' selected="selected"'; }?>><?php _e('From E-Mail', 'wp-email'); ?></option>
-			<option value="toname"<?php if($email_sortby == 'email_friendname') { echo ' selected="selected"'; }?>><?php _e('To Name', 'wp-email'); ?></option>
-			<option value="toemail"<?php if($email_sortby == 'email_friendemail') { echo ' selected="selected"'; }?>><?php _e('To E-Mail', 'wp-email'); ?></option>
-			<option value="date"<?php if($email_sortby == 'email_timestamp') { echo ' selected="selected"'; }?>><?php _e('Date', 'wp-email'); ?></option>
-			<option value="postid"<?php if($email_sortby == 'email_postid') { echo ' selected="selected"'; }?>><?php _e('Post ID', 'wp-email'); ?></option>
-			<option value="posttitle"<?php if($email_sortby == 'email_posttitle') { echo ' selected="selected"'; }?>><?php _e('Post Title', 'wp-email'); ?></option>
-			<option value="ip"<?php if($email_sortby == 'email_ip') { echo ' selected="selected"'; }?>><?php _e('IP', 'wp-email'); ?></option>
-			<option value="host"<?php if($email_sortby == 'email_host') { echo ' selected="selected"'; }?>><?php _e('Host', 'wp-email'); ?></option>
-			<option value="status"<?php if($email_sortby == 'email_status') { echo ' selected="selected"'; }?>><?php _e('Status', 'wp-email'); ?></option>	
-		</select>
-		&nbsp;&nbsp;&nbsp;
-		<select name="order" size="1">
-			<option value="asc"<?php if($email_sortorder == 'ASC') { echo ' selected="selected"'; }?>><?php _e('Ascending', 'wp-email'); ?></option>
-			<option value="desc"<?php if($email_sortorder == 'DESC') { echo ' selected="selected"'; } ?>><?php _e('Descending', 'wp-email'); ?></option>
-		</select>
-		&nbsp;&nbsp;&nbsp;
-		<select name="perpage" size="1">
-		<?php
-			for($i=10; $i <= 100; $i+=10) {
-				if($email_log_perpage == $i) {
-					echo "<option value=\"$i\" selected=\"selected\">".__('Per Page', 'wp-email').": $i</option>\n";
-				} else {
-					echo "<option value=\"$i\">".__('Per Page', 'wp-email').": $i</option>\n";
-				}
-			}
-		?>
-		</select>
-		<input type="submit" value="<?php _e('Sort', 'wp-email'); ?>" class="button" />
+		<table class="widefat">
+			<tr>
+				<td>
+					<input type="hidden" name="page" value="<?php echo $base_name; ?>" />
+					<?php _e('Sort Options:', 'wp-email'); ?>&nbsp;&nbsp;&nbsp;
+					<select name="by" size="1">
+						<option value="id"<?php if($email_sortby == 'email_id') { echo ' selected="selected"'; }?>><?php _e('ID', 'wp-email'); ?></option>
+						<option value="fromname"<?php if($email_sortby == 'email_yourname') { echo ' selected="selected"'; }?>><?php _e('From Name', 'wp-email'); ?></option>
+						<option value="fromemail"<?php if($email_sortby == 'email_youremail') { echo ' selected="selected"'; }?>><?php _e('From E-Mail', 'wp-email'); ?></option>
+						<option value="toname"<?php if($email_sortby == 'email_friendname') { echo ' selected="selected"'; }?>><?php _e('To Name', 'wp-email'); ?></option>
+						<option value="toemail"<?php if($email_sortby == 'email_friendemail') { echo ' selected="selected"'; }?>><?php _e('To E-Mail', 'wp-email'); ?></option>
+						<option value="date"<?php if($email_sortby == 'email_timestamp') { echo ' selected="selected"'; }?>><?php _e('Date', 'wp-email'); ?></option>
+						<option value="postid"<?php if($email_sortby == 'email_postid') { echo ' selected="selected"'; }?>><?php _e('Post ID', 'wp-email'); ?></option>
+						<option value="posttitle"<?php if($email_sortby == 'email_posttitle') { echo ' selected="selected"'; }?>><?php _e('Post Title', 'wp-email'); ?></option>
+						<option value="ip"<?php if($email_sortby == 'email_ip') { echo ' selected="selected"'; }?>><?php _e('IP', 'wp-email'); ?></option>
+						<option value="host"<?php if($email_sortby == 'email_host') { echo ' selected="selected"'; }?>><?php _e('Host', 'wp-email'); ?></option>
+						<option value="status"<?php if($email_sortby == 'email_status') { echo ' selected="selected"'; }?>><?php _e('Status', 'wp-email'); ?></option>	
+					</select>
+					&nbsp;&nbsp;&nbsp;
+					<select name="order" size="1">
+						<option value="asc"<?php if($email_sortorder == 'ASC') { echo ' selected="selected"'; }?>><?php _e('Ascending', 'wp-email'); ?></option>
+						<option value="desc"<?php if($email_sortorder == 'DESC') { echo ' selected="selected"'; } ?>><?php _e('Descending', 'wp-email'); ?></option>
+					</select>
+					&nbsp;&nbsp;&nbsp;
+					<select name="perpage" size="1">
+					<?php
+						for($i=10; $i <= 100; $i+=10) {
+							if($email_log_perpage == $i) {
+								echo "<option value=\"$i\" selected=\"selected\">".__('Per Page', 'wp-email').": $i</option>\n";
+							} else {
+								echo "<option value=\"$i\">".__('Per Page', 'wp-email').": $i</option>\n";
+							}
+						}
+					?>
+					</select>
+					<input type="submit" value="<?php _e('Sort', 'wp-email'); ?>" class="button" />
+				</td>
+			</tr>
+		</table>
 	</form>
 </div>
 <p>&nbsp;</p>
