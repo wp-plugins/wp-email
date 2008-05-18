@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.30\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-13 01:22+0800\n"
-"PO-Revision-Date: 2008-05-13 01:22+0800\n"
+"POT-Creation-Date: 2008-05-18 12:24+0800\n"
+"PO-Revision-Date: 2008-05-18 12:24+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,69 +17,69 @@ msgstr ""
 
 #: email-manager.php:54
 #: email-manager.php:179
-#: email-manager.php:297
+#: email-manager.php:300
 msgid "ID"
 msgstr ""
 
 #: email-manager.php:58
-#: email-manager.php:298
+#: email-manager.php:301
 msgid "From Name"
 msgstr ""
 
 #: email-manager.php:62
-#: email-manager.php:299
+#: email-manager.php:302
 msgid "From E-Mail"
 msgstr ""
 
 #: email-manager.php:66
-#: email-manager.php:300
+#: email-manager.php:303
 msgid "To Name"
 msgstr ""
 
 #: email-manager.php:70
-#: email-manager.php:301
+#: email-manager.php:304
 msgid "To E-Mail"
 msgstr ""
 
 #: email-manager.php:74
-#: email-manager.php:303
+#: email-manager.php:306
 msgid "Post ID"
 msgstr ""
 
 #: email-manager.php:78
 #: email-manager.php:189
-#: email-manager.php:304
+#: email-manager.php:307
 msgid "Post Title"
 msgstr ""
 
 #: email-manager.php:82
-#: email-manager.php:305
+#: email-manager.php:308
 msgid "IP"
 msgstr ""
 
 #: email-manager.php:86
-#: email-manager.php:306
+#: email-manager.php:309
 msgid "Host"
 msgstr ""
 
 #: email-manager.php:90
 #: email-manager.php:190
-#: email-manager.php:307
+#: email-manager.php:310
 msgid "Status"
 msgstr ""
 
 #: email-manager.php:95
-#: email-manager.php:302
+#: email-manager.php:305
 msgid "Date"
 msgstr ""
 
 #: email-manager.php:103
-#: email-manager.php:311
+#: email-manager.php:314
 msgid "Ascending"
 msgstr ""
 
 #: email-manager.php:108
-#: email-manager.php:312
+#: email-manager.php:315
 msgid "Descending"
 msgstr ""
 
@@ -188,44 +188,44 @@ msgstr ""
 msgid "Last"
 msgstr ""
 
-#: email-manager.php:295
+#: email-manager.php:298
 msgid "Sort Options:"
 msgstr ""
 
-#: email-manager.php:319
-#: email-manager.php:321
+#: email-manager.php:322
+#: email-manager.php:324
 msgid "Per Page"
 msgstr ""
 
-#: email-manager.php:326
+#: email-manager.php:329
 msgid "Sort"
 msgstr ""
 
-#: email-manager.php:333
+#: email-manager.php:339
 msgid "E-Mail Logs Stats"
 msgstr ""
 
-#: email-manager.php:337
+#: email-manager.php:343
 msgid "Total E-Mails:"
 msgstr ""
 
-#: email-manager.php:341
+#: email-manager.php:347
 msgid "Total E-Mail Sent:"
 msgstr ""
 
-#: email-manager.php:345
+#: email-manager.php:351
 msgid "Total E-Mail Failed:"
 msgstr ""
 
-#: email-manager.php:354
+#: email-manager.php:360
 msgid "Delete E-Mail Logs"
 msgstr ""
 
-#: email-manager.php:358
+#: email-manager.php:364
 msgid "Are You Sure You Want To Delete All E-Mail Logs?"
 msgstr ""
 
-#: email-manager.php:360
+#: email-manager.php:366
 msgid ""
 "You Are About To Delete All E-Mail Logs\\n"
 "This Action Is Not Reversible.\\n"
