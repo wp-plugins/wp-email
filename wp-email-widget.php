@@ -38,7 +38,7 @@ function widget_email_init() {
 	function widget_email_most_emailed($args) {
 		extract($args);
 		$options = get_option('widget_email_most_emailed');
-		$title = htmlspecialchars($options['title']);		
+		$title = htmlspecialchars(stripslashes($options['title']));		
 		if (function_exists('get_mostemailed')) {
 			echo $before_widget.$before_title.$title.$after_title;
 			echo '<ul>'."\n";
@@ -55,8 +55,8 @@ function widget_email_init() {
 			$options = array('title' => __('Most Emailed', 'wp-email'), 'mode' => 'post', 'limit' => 10, 'chars' => 200);
 		}
 		if ($_POST['most_emailed-submit']) {
-			$options['title'] = strip_tags(addslashes($_POST['most_emailed-title']));
-			$options['mode'] = strip_tags(addslashes($_POST['most_emailed-mode']));
+			$options['title'] = strip_tags($_POST['most_emailed-title']);
+			$options['mode'] = strip_tags($_POST['most_emailed-mode']);
 			$options['limit'] = intval($_POST['most_emailed-limit']);
 			$options['chars'] = intval($_POST['most_emailed-chars']);
 			update_option('widget_email_most_emailed', $options);
