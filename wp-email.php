@@ -3,7 +3,7 @@
 Plugin Name: WP-EMail
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
-Version: 2.30
+Version: 2.31
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
@@ -1242,6 +1242,15 @@ function create_email_table() {
 	} else {
 		die('We have problem finding your \'/wp-admin/upgrade-functions.php\' and \'/wp-admin/includes/upgrade.php\'');
 	}
+	$charset_collate = '';
+	if($wpdb->supports_collation()) {
+		if(!empty($wpdb->charset)) {
+			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+		}
+		if(!empty($wpdb->collate)) {
+			$charset_collate .= " COLLATE $wpdb->collate";
+		}
+	}
 	// Create E-Mail Table
 	$create_table = "CREATE TABLE $wpdb->email (".
 							"email_id int(10) NOT NULL auto_increment,".
@@ -1256,7 +1265,7 @@ function create_email_table() {
 							"email_ip varchar(100) NOT NULL default '',".
 							"email_host varchar(200) NOT NULL default '',".
 							"email_status varchar(20) NOT NULL default '',".
-							"PRIMARY KEY (email_id));";
+							"PRIMARY KEY (email_id)) $charset_collate;";
 	maybe_create_table($wpdb->email, $create_table);
 	// Add In Options (12 Records)
 	add_option('email_smtp', array('username' => '', 'password' => '', 'server' => ''), 'Your SMTP Name, Password, Server');
