@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.30\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-18 12:24+0800\n"
-"PO-Revision-Date: 2008-05-18 12:24+0800\n"
+"POT-Creation-Date: 2008-06-25 14:18+0800\n"
+"PO-Revision-Date: 2008-06-25 14:18+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -159,6 +159,7 @@ msgid "Next Page"
 msgstr ""
 
 #: email-manager.php:261
+#: wp-email-widget.php:84
 msgid "Pages"
 msgstr ""
 
@@ -176,7 +177,6 @@ msgid "Go to Page"
 msgstr ""
 
 #: email-manager.php:274
-#: wp-email-widget.php:84
 msgid "Page"
 msgstr ""
 
@@ -310,17 +310,17 @@ msgid "No E-Mail Option Updated"
 msgstr ""
 
 #: email-options.php:122
-#: wp-email.php:1290
+#: wp-email.php:1299
 msgid "E-Mail '%EMAIL_POST_TITLE%' To A Friend"
 msgstr ""
 
 #: email-options.php:125
-#: wp-email.php:1291
+#: wp-email.php:1300
 msgid "Email a copy of <strong>'%EMAIL_POST_TITLE%'</strong> to a friend"
 msgstr ""
 
 #: email-options.php:128
-#: wp-email.php:1265
+#: wp-email.php:1274
 msgid "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%"
 msgstr ""
 
@@ -348,17 +348,17 @@ msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EM
 msgstr ""
 
 #: email-options.php:137
-#: wp-email.php:1276
+#: wp-email.php:1285
 msgid "Back to %EMAIL_POST_TITLE%"
 msgstr ""
 
 #: email-options.php:140
-#: wp-email.php:1277
+#: wp-email.php:1286
 msgid "An error has occurred when trying to send this email: "
 msgstr ""
 
 #: email-options.php:143
-#: wp-email.php:1278
+#: wp-email.php:1287
 msgid "An error has occurred: "
 msgstr ""
 
@@ -787,11 +787,11 @@ msgid "Show Views For: "
 msgstr ""
 
 #: wp-email-widget.php:74
-msgid "Post &amp Page"
+msgid "Posts &amp; Pages"
 msgstr ""
 
 #: wp-email-widget.php:79
-msgid "Post"
+msgid "Posts"
 msgstr ""
 
 #: wp-email-widget.php:87
@@ -1040,11 +1040,11 @@ msgstr ""
 msgid "Most Emailed Post"
 msgstr ""
 
-#: wp-email.php:1266
+#: wp-email.php:1275
 msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>"
 msgstr ""
 
-#: wp-email.php:1267
+#: wp-email.php:1276
 msgid ""
 "Hi %EMAIL_FRIEND_NAME%,\n"
 "Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n"
@@ -1059,15 +1059,15 @@ msgid ""
 "URL to article: %EMAIL_PERMALINK%"
 msgstr ""
 
-#: wp-email.php:1276
+#: wp-email.php:1285
 msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p><p>&laquo; <a href=\"%EMAIL_PERMALINK%\">"
 msgstr ""
 
-#: wp-email.php:1285
+#: wp-email.php:1294
 msgid "Email This Post"
 msgstr ""
 
-#: wp-email.php:1285
+#: wp-email.php:1294
 msgid "Email This Page"
 msgstr ""
 
