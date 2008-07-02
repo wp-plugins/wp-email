@@ -198,8 +198,8 @@ $emai_smtp = get_option('email_smtp');
 			<td>
 				<?php
 					$email_icon = $email_options['email_icon'];
-					$email_icon_url = get_option('siteurl').'/wp-content/plugins/wp-email/images';
-					$email_icon_path = ABSPATH.'/wp-content/plugins/wp-email/images';
+					$email_icon_url = WP_PLUGIN_URL.'/wp-email/images';
+					$email_icon_path = WP_PLUGIN_DIR.'/wp-email/images';
 					if($handle = @opendir($email_icon_path)) {     
 						while (false !== ($filename = readdir($handle))) {  
 							if ($filename != '.' && $filename != '..' && $filename != 'loading.gif') {
