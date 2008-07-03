@@ -1246,7 +1246,7 @@ function email_page_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
 	if($stats_display['emailed_most'] == 1) {
-		$content .= '<p><strong>'.$stats_mostlimit.' '.__('Most Emailed Post', 'wp-email').'</strong></p>'."\n";
+		$content .= '<p><strong>'.$stats_mostlimit.' '.__('Most Emailed Posts', 'wp-email').'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
 		$content .= get_mostemailed('post', $stats_mostlimit, 0, false);
 		$content .= '</ul>'."\n";

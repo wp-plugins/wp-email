@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.31\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-03 16:19+0800\n"
-"PO-Revision-Date: 2008-07-03 16:19+0800\n"
+"POT-Creation-Date: 2008-07-04 01:09+0800\n"
+"PO-Revision-Date: 2008-07-04 01:09+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1021,6 +1021,7 @@ msgstr ""
 
 #: wp-email.php:1211
 #: wp-email.php:1213
+#: wp-email.php:1249
 msgid "Most Emailed Posts"
 msgstr ""
 
@@ -1034,10 +1035,6 @@ msgstr ""
 
 #: wp-email.php:1237
 msgid "emails failed to send."
-msgstr ""
-
-#: wp-email.php:1249
-msgid "Most Emailed Post"
 msgstr ""
 
 #: wp-email.php:1299
