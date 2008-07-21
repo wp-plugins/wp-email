@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.5 Plugin: WP-EMail 2.31										|
+|	WordPress 2.6 Plugin: WP-EMail 2.40										|
 |	Copyright (c) 2008 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -198,7 +198,7 @@ $emai_smtp = get_option('email_smtp');
 			<td>
 				<?php
 					$email_icon = $email_options['email_icon'];
-					$email_icon_url = WP_PLUGIN_URL.'/wp-email/images';
+					$email_icon_url = plugins_url('wp-email/images');
 					$email_icon_path = WP_PLUGIN_DIR.'/wp-email/images';
 					if($handle = @opendir($email_icon_path)) {     
 						while (false !== ($filename = readdir($handle))) {  
@@ -448,7 +448,7 @@ $emai_smtp = get_option('email_smtp');
 		 <tr>
 			<td align="left" width="30%">
 				<strong><?php _e('Sent Successfully:', 'wp-email'); ?></strong><br /><br />
-				<?php _e('Allowed Variables:'); ?><br />
+				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
 				- %EMAIL_FRIEND_NAME%<br />
 				- %EMAIL_FRIEND_EMAIL%<br />
 				- %EMAIL_POST_TITLE%<br />

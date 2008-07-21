@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.5 Plugin: WP-EMail 2.31										|
+|	WordPress 2.6 Plugin: WP-EMail 2.40										|
 |	Copyright (c) 2008 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -258,7 +258,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			</tr>
 			<tr class="alternate">
 				<td colspan="2" align="center">
-					<?php _e('Pages', 'wp-email'); ?> (<?php echo $total_pages; ?>):
+					<?php printf(__('Pages (%s): ', 'wp-postratings'), $total_pages); ?>
 					<?php
 						if ($email_page >= 4) {
 							echo '<strong><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.'" title="'.__('Go to First Page', 'wp-email').'">&laquo; '.__('First', 'wp-email').'</a></strong> ... ';
@@ -362,8 +362,8 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<div align="center">
 		<form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
 			<strong><?php _e('Are You Sure You Want To Delete All E-Mail Logs?', 'wp-email'); ?></strong><br /><br />
-			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;Yes<br /><br />
-			<input type="submit" name="delete_logs" value="Delete" class="button" onclick="return confirm('<?php _e('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose [Cancel] to stop, [OK] to delete.', 'wp-email'); ?>')" />
+			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;<?php _e('Yes', 'wp-email'); ?><br /><br />
+			<input type="submit" name="delete_logs" value="<?php _e('Delete', 'wp-email'); ?>" class="button" onclick="return confirm('<?php _e('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose [Cancel] to stop, [OK] to delete.', 'wp-email'); ?>')" />
 		</form>
 	</div>
 </div>
