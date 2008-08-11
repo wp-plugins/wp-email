@@ -714,13 +714,13 @@ if(!function_exists('get_mostemailed')) {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_text($post_title, $chars)."</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), $email_total)."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_text($post_title, $chars)."</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), $email_total)."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
 				}
 			}
 		} else {
@@ -1214,9 +1214,9 @@ function email_page_general_stats($content) {
 		}
 		$content .= '<p><strong>'.__('WP-EMail', 'wp-email').'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent.', '<strong>%s</strong> emails were sent.', number_format_i18n($email_stats_array['total']), 'wp-email'), number_format_i18n($email_stats_array['total'])).'</li>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent successfully.', '<strong>%s</strong> emails were sent successfully.', number_format_i18n($email_stats_array[__('Success', 'wp-email')]), 'wp-email'), number_format_i18n($email_stats_array[__('Success', 'wp-email')])).'</li>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email failed to send.', '<strong>%s</strong> emails failed to send.', number_format_i18n($email_stats_array[__('Failed', 'wp-email')]), 'wp-email'), number_format_i18n($email_stats_array[__('Failed', 'wp-email')])).'</li>'."\n";
+		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent.', '<strong>%s</strong> emails were sent.', $email_stats_array['total'], 'wp-email'), number_format_i18n($email_stats_array['total'])).'</li>'."\n";
+		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent successfully.', '<strong>%s</strong> emails were sent successfully.', $email_stats_array[__('Success', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Success', 'wp-email')])).'</li>'."\n";
+		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email failed to send.', '<strong>%s</strong> emails failed to send.', $email_stats_array[__('Failed', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Failed', 'wp-email')])).'</li>'."\n";
 		$content .= '</ul>'."\n";
 	}
 	return $content;
