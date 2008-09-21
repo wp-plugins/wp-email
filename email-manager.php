@@ -153,7 +153,6 @@ if (($offset + 1) > ($total_email)) {
 	$display_on_page = ($offset + 1); 
 }
 
-
 ### Determing Total Amount Of Pages
 $total_pages = ceil($total_email / $email_log_perpage);
 
@@ -165,7 +164,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 <!-- Manage E-Mail -->
 <div class="wrap">
 	<h2><?php _e('E-Mail Logs', 'wp-email'); ?></h2>
-	<p><?php printf(__('Dispaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs', 'wp-email'), $display_on_page, $max_on_page, $total_email); ?></p>
+	<p><?php printf(__('Dispaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs', 'wp-email'), number_format_i18n($display_on_page), number_format_i18n($max_on_page), number_format_i18n($total_email)); ?></p>
 	<p><?php printf(__('Sorted By <strong>%s</strong> In <strong>%s</strong> Order', 'wp-email'), $email_sortby_text, $email_sortorder_text); ?></p>
 	<?php
 		$colspan = 7;
@@ -212,7 +211,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 				$email_host = $email_log->email_host;
 				$email_status = stripslashes($email_log->email_status);
 				echo "<tr $style>\n";
-				echo "<td>$email_id</td>\n";
+				echo "<td>".number_format_i18n($email_id)."</td>\n";
 				echo "<td>$email_yourname<br />$email_youremail</td>\n";
 				echo "<td>$email_friendname<br />$email_friendemail</td>\n";
 				echo "<td>$email_date</td>\n";
@@ -237,7 +236,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		<br />
 		<table class="widefat">
 			<tr>
-				<td align="left" width="50%">
+				<td align="<?php echo ('rtl' == $text_direction) ? 'right' : 'left'; ?>" width="50%">
 					<?php
 						if($email_page > 1 && ((($email_page*$email_log_perpage)-($email_log_perpage-1)) <= $total_email)) {
 							echo '<strong>&laquo;</strong> <a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Previous Page', 'wp-email').'">'.__('Previous Page', 'wp-email').'</a>';
@@ -246,7 +245,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 						}
 					?>
 				</td>
-				<td align="right" width="50%">
+				<td align="<?php echo ('rtl' == $text_direction) ? 'left' : 'right'; ?>" width="50%">
 					<?php
 						if($email_page >= 1 && ((($email_page*$email_log_perpage)+1) <=  $total_email)) {
 							echo '<a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Next Page', 'wp-email').' &raquo;">'.__('Next Page', 'wp-email').'</a> <strong>&raquo;</strong>';
@@ -258,25 +257,25 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			</tr>
 			<tr class="alternate">
 				<td colspan="2" align="center">
-					<?php printf(__('Pages (%s): ', 'wp-postratings'), $total_pages); ?>
+					<?php printf(__('Pages (%s): ', 'wp-postratings'), number_format_i18n($total_pages)); ?>
 					<?php
 						if ($email_page >= 4) {
 							echo '<strong><a href="'.$base_page.'&amp;emailpage=1'.$email_sort_url.'" title="'.__('Go to First Page', 'wp-email').'">&laquo; '.__('First', 'wp-email').'</a></strong> ... ';
 						}
 						if($email_page > 1) {
-							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page', 'wp-email').' '.($email_page-1).'">&laquo;</a></strong> ';
+							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page-1).$email_sort_url.'" title="&laquo; '.__('Go to Page', 'wp-email').' '.number_format_i18n($email_page-1).'">&laquo;</a></strong> ';
 						}
 						for($i = $email_page - 2 ; $i  <= $email_page +2; $i++) {
 							if ($i >= 1 && $i <= $total_pages) {
 								if($i == $email_page) {
-									echo "<strong>[$i]</strong> ";
+									echo '<strong>['.number_format_i18n($i).']</strong> ';
 								} else {
-									echo '<a href="'.$base_page.'&amp;emailpage='.($i).$email_sort_url.'" title="'.__('Page', 'wp-email').' '.$i.'">'.$i.'</a> ';
+									echo '<a href="'.$base_page.'&amp;emailpage='.($i).$email_sort_url.'" title="'.__('Page', 'wp-email').' '.number_format_i18n($i).'">'.number_format_i18n($i).'</a> ';
 								}
 							}
 						}
 						if($email_page < $total_pages) {
-							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Go to Page', 'wp-email').' '.($email_page+1).' &raquo;">&raquo;</a></strong> ';
+							echo ' <strong><a href="'.$base_page.'&amp;emailpage='.($email_page+1).$email_sort_url.'" title="'.__('Go to Page', 'wp-email').' '.number_format_i18n($email_page+1).' &raquo;">&raquo;</a></strong> ';
 						}
 						if (($email_page+2) < $total_pages) {
 							echo ' ... <strong><a href="'.$base_page.'&amp;emailpage='.($total_pages).$email_sort_url.'" title="'.__('Go to Last Page', 'wp-email'), 'wp-email'.'">'.__('Last', 'wp-email').' &raquo;</a></strong>';
@@ -319,9 +318,9 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 					<?php
 						for($i=10; $i <= 100; $i+=10) {
 							if($email_log_perpage == $i) {
-								echo "<option value=\"$i\" selected=\"selected\">".__('Per Page', 'wp-email').": $i</option>\n";
+								echo "<option value=\"$i\" selected=\"selected\">".__('Per Page', 'wp-email').": ".number_format_i18n($i)."</option>\n";
 							} else {
-								echo "<option value=\"$i\">".__('Per Page', 'wp-email').": $i</option>\n";
+								echo "<option value=\"$i\">".__('Per Page', 'wp-email').": ".number_format_i18n($i)."</option>\n";
 							}
 						}
 					?>

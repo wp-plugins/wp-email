@@ -167,16 +167,16 @@ $emai_smtp = get_option('email_smtp');
 	<h3><?php _e('SMTP Settings', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
-			<th align="left" width="20%"><?php _e('SMTP Username:', 'wp-email'); ?></th>
-			<td><input type="text" name="email_smtp_name" value="<?php echo $emai_smtp['username']; ?>" size="30" /></td>
+			<th width="20%"><?php _e('SMTP Username:', 'wp-email'); ?></th>
+			<td><input type="text" name="email_smtp_name" value="<?php echo $emai_smtp['username']; ?>" size="30" dir="ltr" /></td>
 		</tr>
 		<tr>
-			<th align="left" width="20%"><?php _e('SMTP Password:', 'wp-email'); ?></th>
-			<td><input type="password" name="email_smtp_password" value="<?php echo $emai_smtp['password']; ?>" size="30" /></td>
+			<th width="20%"><?php _e('SMTP Password:', 'wp-email'); ?></th>
+			<td><input type="password" name="email_smtp_password" value="<?php echo $emai_smtp['password']; ?>" size="30" dir="ltr" /></td>
 		</tr>
 		<tr>
-			<th align="left" width="20%"><?php _e('SMTP Server:', 'wp-email'); ?></th>
-			<td><input type="text" name="email_smtp_server" value="<?php echo $emai_smtp['server']; ?>" size="30" /><br /><?php _e('You may leave the above fields blank if you do not use a SMTP server.', 'wp-email'); ?></td>
+			<th width="20%"><?php _e('SMTP Server:', 'wp-email'); ?></th>
+			<td><input type="text" name="email_smtp_server" value="<?php echo $emai_smtp['server']; ?>" size="30" dir="ltr" /><br /><?php _e('You may leave the above fields blank if you do not use a SMTP server.', 'wp-email'); ?></td>
 		</tr>
 	</table>
 	<h3><?php _e('E-Mail Styles', 'wp-email'); ?></h3>
@@ -204,6 +204,7 @@ $emai_smtp = get_option('email_smtp');
 						while (false !== ($filename = readdir($handle))) {  
 							if ($filename != '.' && $filename != '..' && $filename != 'loading.gif') {
 								if(is_file($email_icon_path.'/'.$filename)) {
+									echo '<p>';
 									if($email_icon == $filename) {
 										echo '<input type="radio" name="email_icon" value="'.$filename.'" checked="checked" />'."\n";										
 									} else {
@@ -212,7 +213,7 @@ $emai_smtp = get_option('email_smtp');
 									echo '&nbsp;&nbsp;&nbsp;';
 									echo '<img src="'.$email_icon_url.'/'.$filename.'" alt="'.$filename.'" />'."\n";
 									echo '&nbsp;&nbsp;&nbsp;('.$filename.')';
-									echo '<br /><br />'."\n";
+									echo '</p>'."\n";
 								}
 							} 
 						} 
@@ -245,7 +246,7 @@ $emai_smtp = get_option('email_smtp');
 					%EMAIL_URL% - <?php _e('URL to the email post/page.', 'wp-email'); ?><br />
 					%EMAIL_POPUP% - <?php _e('It will produce the onclick html code which is nescassary for popup.', 'wp-email'); ?><br />
 					<?php _e('Example Popup Template:', 'wp-email'); ?><br />
-					<?php echo htmlspecialchars('<a href="%EMAIL_URL%" %EMAIL_POPUP% rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>'); ?><br />
+					<span dir="ltr"><?php echo htmlspecialchars('<a href="%EMAIL_URL%" %EMAIL_POPUP% rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>'); ?></span><br />
 					%EMAIL_TEXT% - <?php _e('E-Mail text link of the post/page that you have typed in above.', 'wp-email'); ?><br />
 					%EMAIL_ICON_URL% - <?php _e('URL to the email icon you have chosen above.', 'wp-email'); ?><br />
 					<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('html');" class="button" />
@@ -347,31 +348,31 @@ $emai_smtp = get_option('email_smtp');
 	<h3><?php _e('E-Mail Page Templates', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Page Title:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_POST_AUTHOR%<br />
-				- %EMAIL_POST_DATE%<br />
-				- %EMAIL_POST_CATEGORY%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_AUTHOR%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_DATE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CATEGORY%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('title');" class="button" />
 			</td>
 			<td><input type="text" id="email_template_title" name="email_template_title" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_title'))); ?>" size="82" /></td>
 		</tr>
 		<tr> 
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Page Subtitle:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_POST_AUTHOR%<br />
-				- %EMAIL_POST_DATE%<br />
-				- %EMAIL_POST_CATEGORY%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_AUTHOR%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_DATE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CATEGORY%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('subtitle');" class="button" />
 			</td>
 			<td><input type="text" id="email_template_subtitle" name="email_template_subtitle" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subtitle'))); ?>" size="82" /></td> 
@@ -381,62 +382,62 @@ $emai_smtp = get_option('email_smtp');
 	<h3><?php _e('E-Mail Templates', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Subject:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_YOUR_NAME%<br />
-				- %EMAIL_YOUR_EMAIL%<br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_POST_AUTHOR%<br />
-				- %EMAIL_POST_DATE%<br />
-				- %EMAIL_POST_CATEGORY%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_AUTHOR%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_DATE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CATEGORY%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('subject');" class="button" />
 			</td>
 			<td><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subject'))); ?>" size="82" /></td>
 		</tr>
 		<tr> 
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Body:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_YOUR_NAME%<br />
-				- %EMAIL_YOUR_EMAIL%<br />
-				- %EMAIL_YOUR_REMARKS%<br />
-				- %EMAIL_FRIEND_NAME%<br />
-				- %EMAIL_FRIEND_EMAIL%<br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_POST_AUTHOR%<br />
-				- %EMAIL_POST_DATE%<br />
-				- %EMAIL_POST_CATEGORY%<br />
-				- %EMAIL_POST_EXCERPT%<br />
-				- %EMAIL_POST_CONTENT%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_REMARKS%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_AUTHOR%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_DATE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CATEGORY%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_EXCERPT%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CONTENT%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('body');" class="button" />
 			</td>
 			<td><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo htmlspecialchars(stripslashes(get_option('email_template_body'))); ?></textarea></td> 
 		</tr>
 		<tr> 
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Alternate Body:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_YOUR_NAME%<br />
-				- %EMAIL_YOUR_EMAIL%<br />
-				- %EMAIL_YOUR_REMARKS%<br />
-				- %EMAIL_FRIEND_NAME%<br />
-				- %EMAIL_FRIEND_EMAIL%<br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_POST_AUTHOR%<br />
-				- %EMAIL_POST_DATE%<br />
-				- %EMAIL_POST_CATEGORY%<br />
-				- %EMAIL_POST_EXCERPT%<br />
-				- %EMAIL_POST_CONTENT%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_YOUR_REMARKS%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_AUTHOR%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_DATE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CATEGORY%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_EXCERPT%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_CONTENT%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('bodyalt');" class="button" />
 			</td>
 			<td><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo htmlspecialchars(stripslashes(get_option('email_template_bodyalt'))); ?></textarea></td> 
@@ -446,30 +447,30 @@ $emai_smtp = get_option('email_smtp');
 	<h3><?php _e('After Sending E-Mail Templates', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('Sent Successfully:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_FRIEND_NAME%<br />
-				- %EMAIL_FRIEND_EMAIL%<br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('sentsuccess');" class="button" />
 			</td>
 			<td><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentsuccess'))); ?></textarea></td>
 		</tr>
 		<tr> 
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('Sent Failed:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_FRIEND_NAME%<br />
-				- %EMAIL_FRIEND_EMAIL%<br />
-				- %EMAIL_ERROR_MSG%<br />
-				- %EMAIL_POST_TITLE%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_FRIEND_EMAIL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_ERROR_MSG%</p>
+				<p style="margin: 2px 0;">- %EMAIL_POST_TITLE%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('sentfailed');" class="button" />
 			</td>
 			<td><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentfailed'))); ?></textarea></td> 
@@ -478,13 +479,13 @@ $emai_smtp = get_option('email_smtp');
 	<h3><?php _e('E-Mail Misc Templates', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
-			<td align="left" width="30%">
+			<td width="30%">
 				<strong><?php _e('E-Mail Error:', 'wp-email'); ?></strong><br /><br />
-				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
-				- %EMAIL_ERROR_MSG%<br />
-				- %EMAIL_BLOG_NAME%<br />
-				- %EMAIL_BLOG_URL%<br />
-				- %EMAIL_PERMALINK%<br /><br />
+				<?php _e('Allowed Variables:', 'wp-email'); ?>
+				<p style="margin: 2px 0;">- %EMAIL_ERROR_MSG%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_NAME%</p>
+				<p style="margin: 2px 0;">- %EMAIL_BLOG_URL%</p>
+				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('error');" class="button" />
 			</td>
 			<td><textarea cols="80" rows="10" id="email_template_error" name="email_template_error"><?php echo htmlspecialchars(stripslashes(get_option('email_template_error'))); ?></textarea></td>

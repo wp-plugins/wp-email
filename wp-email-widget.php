@@ -61,10 +61,10 @@ function widget_email_init() {
 			$options['chars'] = intval($_POST['most_emailed-chars']);
 			update_option('widget_email_most_emailed', $options);
 		}
-		echo '<p style="text-align: left;"><label for="most_emailed-title">';
+		echo '<p><label for="most_emailed-title">';
 		_e('Title', 'wp-email');
 		echo ': </label><input type="text" id="most_emailed-title" name="most_emailed-title" value="'.htmlspecialchars(stripslashes($options['title'])).'" /></p>'."\n";
-		echo '<p style="text-align: left;"><label for="most_emailed-mode">';
+		echo '<p><label for="most_emailed-mode">';
 		_e('Show Views For: ', 'wp-email');
 		echo ' </label>'."\n";
 		echo '<select id="most_emailed-mode" name="most_emailed-mode" size="1">'."\n";
@@ -86,10 +86,10 @@ function widget_email_init() {
 		echo '</select>&nbsp;&nbsp;';
 		_e('Only', 'wp-email');
 		echo '</p>'."\n";
-		echo '<p style="text-align: left;"><label for="most_emailed-limit">';
+		echo '<p><label for="most_emailed-limit">';
 		_e('Limit', 'wp-email');
 		echo ': </label><input type="text" id="most_emailed-limit" name="most_emailed-limit" value="'.intval($options['limit']).'" size="3" /></p>'."\n";
-		echo '<p style="text-align: left;"><label for="most_emailed-chars">';
+		echo '<p><label for="most_emailed-chars">';
 		_e('Post Title Length (Characters)', 'wp-email');
 		echo ': </label><input type="text" id="most_emailed-chars" name="most_emailed-chars" value="'.intval($options['chars']).'" size="5" />&nbsp;&nbsp;'."\n";
 		_e('(<strong>0</strong> to disable)', 'wp-email');
