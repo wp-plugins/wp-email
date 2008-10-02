@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-23 19:47+0800\n"
-"PO-Revision-Date: 2008-09-23 19:47+0800\n"
+"POT-Creation-Date: 2008-10-02 22:46+0800\n"
+"PO-Revision-Date: 2008-10-02 22:46+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: email-manager.php:167
 #, php-format
-msgid "Dispaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs"
+msgid "Displaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs"
 msgstr ""
 
 #: email-manager.php:168
