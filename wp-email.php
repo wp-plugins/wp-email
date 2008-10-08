@@ -363,7 +363,7 @@ function email_addfilters() {
 ### Function: Remove E-Mail Filters
 function email_removefilters() {
 	remove_filter('the_title', 'email_title');
-	remove_filter('the_content', 'email_form');
+	remove_filter('the_content', 'email_form', '');
 }
 
 
