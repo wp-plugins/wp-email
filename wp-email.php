@@ -354,7 +354,7 @@ function email_addfilters() {
 	}
 	if(intval($emailfilters_count) == $loop_count) {
 		add_filter('the_title', 'email_title');
-		add_filter('the_content', 'email_form', '', false, false);
+		add_filter('the_content', 'email_form');
 	}
 	$emailfilters_count++;
 }
@@ -363,7 +363,7 @@ function email_addfilters() {
 ### Function: Remove E-Mail Filters
 function email_removefilters() {
 	remove_filter('the_title', 'email_title');
-	remove_filter('the_content', 'email_form', '');
+	remove_filter('the_content', 'email_form');
 }
 
 
