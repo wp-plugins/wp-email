@@ -84,7 +84,7 @@ function validate_email_form() {
 	} else {
 		for(i = 0; i < email_friendemails.length; i++) {
 			if(isEmpty(email_friendemails[i]) || !is_valid_email(email_friendemails[i])) {
-				errMsg = errMsg + email_text_friend_email_invalid + "\n";
+				errMsg = errMsg + email_text_friend_email_invalid + email_friendemails[i] + "\n";
 				errFlag = true;
 			}
 		}
