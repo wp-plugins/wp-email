@@ -59,7 +59,7 @@ $wpdb->email = $wpdb->prefix.'email';
 add_action('admin_menu', 'email_menu');
 function email_menu() {
 	if (function_exists('add_menu_page')) {
-		add_menu_page(__('E-Mail', 'wp-email'), __('E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php');
+		add_menu_page(__('E-Mail', 'wp-email'), __('E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php', '', plugins_url('wp-email/images/email_famfamfam.gif'));
 	}
 	if (function_exists('add_submenu_page')) {
 		add_submenu_page('wp-email/email-manager.php', __('Manage E-Mail', 'wp-email'), __('Manage E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php');
@@ -84,7 +84,7 @@ function email_rewrite($wp_rewrite) {
 	}
 	// WP-EMail Standalone Post Rules
 	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_link_text, EP_PERMALINK);
-	$rewrite_rules = array_slice($rewrite_rules, 4, 1);
+	$rewrite_rules = array_slice($rewrite_rules, 5, 1);
 	$r_rule = array_keys($rewrite_rules);
 	$r_rule = array_shift($r_rule);
 	$r_rule = str_replace('/trackback', '', $r_rule);
@@ -98,7 +98,7 @@ function email_rewrite($wp_rewrite) {
 		foreach ($uris as $uri => $pagename) {			
 			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
 			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpage', EP_PAGES);
-			$rewrite_rules = array_slice($rewrite_rules, 4, 1);
+			$rewrite_rules = array_slice($rewrite_rules, 5, 1);
 			$r_rule = array_keys($rewrite_rules);
 			$r_rule = array_shift($r_rule);
 			$r_rule = str_replace('/trackback', '', $r_rule);
@@ -112,7 +112,7 @@ function email_rewrite($wp_rewrite) {
 
 	// WP-EMail Popup Post Rules
 	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_popup_text, EP_PERMALINK);
-	$rewrite_rules = array_slice($rewrite_rules, 4, 1);
+	$rewrite_rules = array_slice($rewrite_rules, 5, 1);
 	$r_rule = array_keys($rewrite_rules);
 	$r_rule = array_shift($r_rule);
 	$r_rule = str_replace('/trackback', '', $r_rule);
@@ -125,7 +125,7 @@ function email_rewrite($wp_rewrite) {
 		foreach ($uris as $uri => $pagename) {			
 			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
 			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpopuppage', EP_PAGES);
-			$rewrite_rules = array_slice($rewrite_rules, 4, 1);
+			$rewrite_rules = array_slice($rewrite_rules, 5, 1);
 			$r_rule = array_keys($rewrite_rules);
 			$r_rule = array_shift($r_rule);
 			$r_rule = str_replace('/trackback', '', $r_rule);
@@ -754,7 +754,7 @@ if(!function_exists('get_mostemailed')) {
 
 
 ### Function: Load WP-EMail
-add_action('template_redirect', 'wp_email');
+add_action('template_redirect', 'wp_email', 5);
 function wp_email() {
 	if(intval(get_query_var('email')) == 1) {
 		include(WP_PLUGIN_DIR.'/wp-email/email-standalone.php');
