@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.6 Plugin: WP-EMail 2.40										|
+|	WordPress 2.7 Plugin: WP-EMail 2.40										|
 |	Copyright (c) 2008 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -88,6 +88,7 @@ switch($mode) {
 <!-- Uninstall WP-EMail -->
 <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
 <div class="wrap">
+	<div id="icon-wp-email" class="icon32"><br /></div>
 	<h2><?php _e('Uninstall WP-EMail', 'wp-email'); ?></h2>
 	<p>
 		<?php _e('Deactivating WP-EMail plugin does not remove any data that may have been created, such as the email options and the email logs. To completely remove this plugin, you can uninstall it here.', 'wp-email'); ?>

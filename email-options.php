@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.6 Plugin: WP-EMail 2.40										|
+|	WordPress 2.7 Plugin: WP-EMail 2.40										|
 |	Copyright (c) 2008 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -162,7 +162,8 @@ $emai_smtp = get_option('email_smtp');
 </script>
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
-<div class="wrap"> 
+<div class="wrap">
+	<div id="icon-wp-email" class="icon32"><br /></div>
 	<h2><?php _e('E-Mail Options', 'wp-email'); ?></h2>	
 	<h3><?php _e('SMTP Settings', 'wp-email'); ?></h3>
 	<table class="form-table">

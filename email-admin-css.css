@@ -9,13 +9,13 @@
 |	- http://lesterchan.net															|
 |																							|
 |	File Information:																	|
-|	- E-Mail CSS Style (RTL)														|
-|	- wp-content/plugins/wp-email/email-css-rtl.css						|
+|	- E-Mail Admin CSS Style														|
+|	- wp-content/plugins/wp-email/email-admin-css.css					|
 |																							|
 +----------------------------------------------------------------+
 */
 
 
-.wp-email P {
-	text-align: right;
+#icon-wp-email {
+	background: transparent url(images/email_admin_icon.png) no-repeat;
 }

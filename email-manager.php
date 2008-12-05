@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.6 Plugin: WP-EMail 2.40										|
+|	WordPress 2.7 Plugin: WP-EMail 2.40										|
 |	Copyright (c) 2008 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -163,7 +163,9 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
 <!-- Manage E-Mail -->
 <div class="wrap">
-	<h2><?php _e('E-Mail Logs', 'wp-email'); ?></h2>
+	<div id="icon-wp-email" class="icon32"><br /></div>
+	<h2><?php _e('Manage E-Mail', 'wp-email'); ?></h2>
+	<h3><?php _e('E-Mail Logs', 'wp-email'); ?></h3>
 	<p><?php printf(__('Displaying <strong>%s</strong> To <strong>%s</strong> Of <strong>%s</strong> E-Mail Logs', 'wp-email'), number_format_i18n($display_on_page), number_format_i18n($max_on_page), number_format_i18n($total_email)); ?></p>
 	<p><?php printf(__('Sorted By <strong>%s</strong> In <strong>%s</strong> Order', 'wp-email'), $email_sortby_text, $email_sortorder_text); ?></p>
 	<?php
@@ -335,7 +337,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 
 <!-- E-Mail Stats -->
 <div class="wrap">
-	<h2><?php _e('E-Mail Logs Stats', 'wp-email'); ?></h2>
+	<h3><?php _e('E-Mail Logs Stats', 'wp-email'); ?></h3>
 	<br style="clear" />
 	<table class="widefat">
 	<tr>
@@ -356,7 +358,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 
 <!-- Delete E-Mail Logs -->
 <div class="wrap">
-	<h2><?php _e('Delete E-Mail Logs', 'wp-email'); ?></h2>
+	<h3><?php _e('Delete E-Mail Logs', 'wp-email'); ?></h3>
 	<br style="clear" />
 	<div align="center">
 		<form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
