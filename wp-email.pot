@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-EMail 2.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 00:45+0800\n"
-"PO-Revision-Date: 2008-12-10 00:45+0800\n"
+"POT-Creation-Date: 2008-12-10 15:13+0800\n"
+"PO-Revision-Date: 2008-12-10 15:13+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -93,18 +93,18 @@ msgid "An Error Has Occured While Deleting All E-Mail Logs."
 msgstr ""
 
 #: email-manager.php:126
-#: wp-email.php:565
-#: wp-email.php:702
-#: wp-email.php:1000
-#: wp-email.php:1037
-#: wp-email.php:1248
+#: wp-email.php:567
+#: wp-email.php:704
+#: wp-email.php:1002
+#: wp-email.php:1039
+#: wp-email.php:1250
 msgid "Success"
 msgstr ""
 
 #: email-manager.php:127
-#: wp-email.php:716
-#: wp-email.php:1012
-#: wp-email.php:1249
+#: wp-email.php:718
+#: wp-email.php:1014
+#: wp-email.php:1251
 msgid "Failed"
 msgstr ""
 
@@ -326,17 +326,17 @@ msgid "No E-Mail Option Updated"
 msgstr ""
 
 #: email-options.php:122
-#: wp-email.php:1336
+#: wp-email.php:1338
 msgid "E-Mail '%EMAIL_POST_TITLE%' To A Friend"
 msgstr ""
 
 #: email-options.php:125
-#: wp-email.php:1337
+#: wp-email.php:1339
 msgid "Email a copy of <strong>'%EMAIL_POST_TITLE%'</strong> to a friend"
 msgstr ""
 
 #: email-options.php:128
-#: wp-email.php:1311
+#: wp-email.php:1313
 msgid "Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%"
 msgstr ""
 
@@ -364,17 +364,17 @@ msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EM
 msgstr ""
 
 #: email-options.php:137
-#: wp-email.php:1322
+#: wp-email.php:1324
 msgid "Back to %EMAIL_POST_TITLE%"
 msgstr ""
 
 #: email-options.php:140
-#: wp-email.php:1323
+#: wp-email.php:1325
 msgid "An error has occurred when trying to send this email: "
 msgstr ""
 
 #: email-options.php:143
-#: wp-email.php:1324
+#: wp-email.php:1326
 msgid "An error has occurred: "
 msgstr ""
 
@@ -826,7 +826,7 @@ msgid "(<strong>0</strong> to disable)"
 msgstr ""
 
 #: wp-email.php:62
-#: wp-email.php:382
+#: wp-email.php:384
 msgid "E-Mail"
 msgstr ""
 
@@ -884,206 +884,206 @@ msgstr ""
 msgid "- Image Verification is empty"
 msgstr ""
 
-#: wp-email.php:321
+#: wp-email.php:323
 msgid "Note: There is an email link embedded within this post, please visit this post to email it."
-msgstr ""
-
-#: wp-email.php:401
-#, php-format
-msgid "Protected: %s"
 msgstr ""
 
 #: wp-email.php:403
 #, php-format
+msgid "Protected: %s"
+msgstr ""
+
+#: wp-email.php:405
+#, php-format
 msgid "Private: %s"
 msgstr ""
 
-#: wp-email.php:415
-#: wp-email.php:813
-#: wp-email.php:1073
+#: wp-email.php:417
+#: wp-email.php:815
+#: wp-email.php:1075
 msgid ","
 msgstr ""
 
-#: wp-email.php:470
+#: wp-email.php:472
 msgid "Password Protected Post"
 msgstr ""
 
-#: wp-email.php:674
+#: wp-email.php:676
 #, php-format
 msgid "Separate multiple entries with a comma. Maximum %s entry."
 msgid_plural "Separate multiple entries with a comma. Maximum %s entries."
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:744
-#: wp-email.php:750
+#: wp-email.php:746
+#: wp-email.php:752
 #, php-format
 msgid "%s email"
 msgid_plural "%s emails"
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:754
-#: wp-email.php:926
-#: wp-email.php:1011
+#: wp-email.php:756
+#: wp-email.php:928
+#: wp-email.php:1013
 msgid "N/A"
 msgstr ""
 
-#: wp-email.php:838
+#: wp-email.php:840
 msgid "Your Name is empty"
 msgstr ""
 
-#: wp-email.php:841
+#: wp-email.php:843
 msgid "Your Name is invalid"
 msgstr ""
 
-#: wp-email.php:847
+#: wp-email.php:849
 msgid "Your Email is empty"
 msgstr ""
 
-#: wp-email.php:850
+#: wp-email.php:852
 msgid "Your Email is invalid"
 msgstr ""
 
-#: wp-email.php:856
+#: wp-email.php:858
 msgid "Your Remarks is invalid"
 msgstr ""
 
-#: wp-email.php:862
+#: wp-email.php:864
 msgid "Friend Name(s) is empty"
-msgstr ""
-
-#: wp-email.php:868
-#, php-format
-msgid "Friend Name is empty: %s"
 msgstr ""
 
 #: wp-email.php:870
 #, php-format
+msgid "Friend Name is empty: %s"
+msgstr ""
+
+#: wp-email.php:872
+#, php-format
 msgid "Friend Name is invalid: %s"
 msgstr ""
 
-#: wp-email.php:884
+#: wp-email.php:886
 msgid "Friend Email(s) is empty"
-msgstr ""
-
-#: wp-email.php:890
-#, php-format
-msgid "Friend Email is empty: %s"
 msgstr ""
 
 #: wp-email.php:892
 #, php-format
+msgid "Friend Email is empty: %s"
+msgstr ""
+
+#: wp-email.php:894
+#, php-format
 msgid "Friend Email is invalid: %s"
 msgstr ""
 
-#: wp-email.php:905
+#: wp-email.php:907
 #, php-format
 msgid "Maximum %s Friend allowed"
 msgid_plural "Maximum %s Friend(s) allowed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:909
+#: wp-email.php:911
 msgid "Friend Name(s) count does not tally with Friend Email(s) count"
 msgstr ""
 
-#: wp-email.php:916
+#: wp-email.php:918
 msgid "Image Verification is empty"
 msgstr ""
 
-#: wp-email.php:919
+#: wp-email.php:921
 msgid "Image Verification failed"
 msgstr ""
 
-#: wp-email.php:1104
+#: wp-email.php:1106
 msgid "* Required Field"
 msgstr ""
 
-#: wp-email.php:1107
+#: wp-email.php:1109
 msgid "Your Name: *"
 msgstr ""
 
-#: wp-email.php:1113
+#: wp-email.php:1115
 msgid "Your E-Mail: *"
 msgstr ""
 
-#: wp-email.php:1119
+#: wp-email.php:1121
 msgid "Your Remark:"
 msgstr ""
 
-#: wp-email.php:1125
+#: wp-email.php:1127
 msgid "Friend's Name: *"
 msgstr ""
 
-#: wp-email.php:1130
+#: wp-email.php:1132
 msgid "Friend's E-Mail: *"
 msgstr ""
 
-#: wp-email.php:1135
+#: wp-email.php:1137
 msgid "Image Verification: *"
 msgstr ""
 
-#: wp-email.php:1136
+#: wp-email.php:1138
 msgid "E-Mail Image Verification"
 msgstr ""
 
-#: wp-email.php:1139
+#: wp-email.php:1141
 msgid "     Mail It!     "
 msgstr ""
 
-#: wp-email.php:1145
+#: wp-email.php:1147
 #, php-format
 msgid "Please wait for <strong>%s Minute</strong> before sending the next article."
 msgid_plural "Please wait for <strong>%s Minutes</strong> before sending the next article."
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:1147
+#: wp-email.php:1149
 msgid "Loading"
 msgstr ""
 
-#: wp-email.php:1210
 #: wp-email.php:1212
-#: wp-email.php:1245
+#: wp-email.php:1214
+#: wp-email.php:1247
 msgid "WP-EMail"
 msgstr ""
 
-#: wp-email.php:1223
 #: wp-email.php:1225
-#: wp-email.php:1261
+#: wp-email.php:1227
+#: wp-email.php:1263
 #, php-format
 msgid "%s Most Emailed Post"
 msgid_plural "%s Most Emailed Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:1247
+#: wp-email.php:1249
 #, php-format
 msgid "<strong>%s</strong> email was sent."
 msgid_plural "<strong>%s</strong> emails were sent."
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:1248
+#: wp-email.php:1250
 #, php-format
 msgid "<strong>%s</strong> email was sent successfully."
 msgid_plural "<strong>%s</strong> emails were sent successfully."
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:1249
+#: wp-email.php:1251
 #, php-format
 msgid "<strong>%s</strong> email failed to send."
 msgid_plural "<strong>%s</strong> emails failed to send."
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-email.php:1312
+#: wp-email.php:1314
 msgid "<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled '<strong>%EMAIL_POST_TITLE%</strong>' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href=\"%EMAIL_BLOG_URL%\">%EMAIL_BLOG_URL%</a><br />URL to article: <a href=\"%EMAIL_PERMALINK%\">%EMAIL_PERMALINK%</a></p>"
 msgstr ""
 
-#: wp-email.php:1313
+#: wp-email.php:1315
 msgid ""
 "Hi %EMAIL_FRIEND_NAME%,\n"
 "Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled '%EMAIL_POST_TITLE%' to you.\n"
@@ -1098,15 +1098,15 @@ msgid ""
 "URL to article: %EMAIL_PERMALINK%"
 msgstr ""
 
-#: wp-email.php:1322
+#: wp-email.php:1324
 msgid "Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p><p>&laquo; <a href=\"%EMAIL_PERMALINK%\">"
 msgstr ""
 
-#: wp-email.php:1331
+#: wp-email.php:1333
 msgid "Email This Post"
 msgstr ""
 
-#: wp-email.php:1331
+#: wp-email.php:1333
 msgid "Email This Page"
 msgstr ""
 
