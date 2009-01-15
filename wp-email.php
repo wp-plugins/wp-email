@@ -586,6 +586,18 @@ function email_flood_interval($echo = true) {
 }
 
 
+### Function: Fill In Email Fills If Logged In (By Aaron Campbell)
+add_filter('email_form-fieldvalues', 'email_fill_fields');
+function email_fill_fields($email_fields) {
+    global $current_user;
+    if ($current_user->ID > 0) {
+        $email_fields['yourname'] = attribute_escape($current_user->first_name.' '.$current_user->last_name);
+        $email_fields['youremail'] = attribute_escape($current_user->user_email);
+    }
+    return $email_fields;
+}
+
+
 ### Function: E-Mail Form Header
 function email_form_header($echo = true, $temp_id) {
 	global $id;
@@ -1072,6 +1084,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 	$email_image_verify = intval(get_option('email_imageverify'));
 	$email_options = get_option('email_options');
 	$email_type = intval($email_options['email_type']);
+	$error_field = apply_filters('email_form-fieldvalues', $error_field);
 	// Template - Subtitle
 	if($subtitle) {
 		$template_subtitle = stripslashes(get_option('email_template_subtitle'));
