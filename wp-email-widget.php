@@ -3,14 +3,14 @@
 Plugin Name: WP-EMail Widget
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Adds a EMail Widget to display most emailed posts and/or pages on your sidebar. You will need to activate WP-EMail first.
-Version: 2.40
+Version: 2.50
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
 
 
 /*  
-	Copyright 2008  Lester Chan  (email : lesterchan@gmail.com)
+	Copyright 2009  Lester Chan  (email : lesterchan@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
