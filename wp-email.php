@@ -174,7 +174,6 @@ function email_javascripts() {
 	wp_localize_script('wp-email', 'emailL10n', array(
 		'ajax_url' => plugins_url('wp-email/wp-email.php'),
 		'max_allowed' => $email_max,
-		'verify' => $_SESSION['email_verify'],
 		'text_error' => __('The Following Error Occurs:', 'wp-email'),
 		'text_name_invalid' => __('- Your Name is empty/invalid', 'wp-email'),
 		'text_email_invalid' => __('- Your Email is empty/invalid', 'wp-email'),

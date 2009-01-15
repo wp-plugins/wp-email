@@ -38,7 +38,6 @@ function validate_email_form() {
 
 	// Your Name Validation
 	if(jQuery('#yourname').length) {
-		alert('test');
 		if(isEmpty(email_yourname) || !is_valid_name(email_yourname)) {
 			errMsg = errMsg + emailL10n.text_name_invalid + "\n";
 			errFlag = true;
