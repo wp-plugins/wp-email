@@ -166,11 +166,18 @@ function email_stylesheets() {
 }
 
 
+### Function: Print Out jQuery Script At The Top
+add_action('wp_head', 'email_javascripts_header');
+function email_javascripts_header() {
+	wp_print_scripts('jquery');
+}
+
+
 ### Function: Enqueue E-Mail Javascripts
 add_action('wp_footer', 'email_javascripts');
 function email_javascripts() {
 	$email_max = intval(get_option('email_multiple'));
-	wp_register_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.50');
+	wp_register_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.50', true);
 	wp_localize_script('wp-email', 'emailL10n', array(
 		'ajax_url' => plugins_url('wp-email/wp-email.php'),
 		'max_allowed' => $email_max,
