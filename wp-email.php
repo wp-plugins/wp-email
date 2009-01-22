@@ -786,10 +786,10 @@ add_action('template_redirect', 'wp_email', 5);
 function wp_email() {
 	if(intval(get_query_var('email')) == 1) {
 		include(WP_PLUGIN_DIR.'/wp-email/email-standalone.php');
-		exit;
+		exit();
 	} elseif(intval(get_query_var('emailpopup')) == 1) {
 		include(WP_PLUGIN_DIR.'/wp-email/email-popup.php');
-		exit;
+		exit();
 	}
 }
 
