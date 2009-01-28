@@ -111,7 +111,7 @@ if($_POST['Submit']) {
 }
 $email_options = get_option('email_options');
 $email_fields = get_option('email_fields');
-$emai_smtp = get_option('email_smtp');
+$email_smtp = get_option('email_smtp');
 ?>
 <script type="text/javascript">
 /* <![CDATA[*/
@@ -169,15 +169,15 @@ $emai_smtp = get_option('email_smtp');
 	<table class="form-table">
 		 <tr>
 			<th width="20%"><?php _e('SMTP Username:', 'wp-email'); ?></th>
-			<td><input type="text" name="email_smtp_name" value="<?php echo $emai_smtp['username']; ?>" size="30" dir="ltr" /></td>
+			<td><input type="text" name="email_smtp_name" value="<?php echo stripslashes($email_smtp['username']); ?>" size="30" dir="ltr" /></td>
 		</tr>
 		<tr>
 			<th width="20%"><?php _e('SMTP Password:', 'wp-email'); ?></th>
-			<td><input type="password" name="email_smtp_password" value="<?php echo $emai_smtp['password']; ?>" size="30" dir="ltr" /></td>
+			<td><input type="password" name="email_smtp_password" value="<?php echo stripslashes($email_smtp['password']); ?>" size="30" dir="ltr" /></td>
 		</tr>
 		<tr>
 			<th width="20%"><?php _e('SMTP Server:', 'wp-email'); ?></th>
-			<td><input type="text" name="email_smtp_server" value="<?php echo $emai_smtp['server']; ?>" size="30" dir="ltr" /><br /><?php _e('You may leave the above fields blank if you do not use a SMTP server.', 'wp-email'); ?></td>
+			<td><input type="text" name="email_smtp_server" value="<?php echo stripslashes($email_smtp['server']); ?>" size="30" dir="ltr" /><br /><?php _e('You may leave the above fields blank if you do not use a SMTP server.', 'wp-email'); ?></td>
 		</tr>
 	</table>
 	<h3><?php _e('E-Mail Styles', 'wp-email'); ?></h3>
