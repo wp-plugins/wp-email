@@ -146,15 +146,14 @@ $email_smtp = get_option('email_smtp');
 				default_template = '<a href="%EMAIL_URL%" rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>';
 				break;
 		}
-		document.getElementById("email_template_" + template).value = default_template;
+		jQuery("#email_template_" + template).val(default_template);
 	}
 	function check_email_style() {
-		email_style_options = document.getElementById("email_style").value;
-		if (email_style_options == 4) {
-				document.getElementById("email_style_custom").style.display = 'block';
+		if (parseInt(jQuery("#email_style").val()) == 4) {
+				jQuery("#email_style_custom").show();
 		} else {
-			if(document.getElementById("email_style_custom").style.display == 'block') {
-				document.getElementById("email_style_custom").style.display = 'none';
+			if(jQuery("#email_style_custom").is(":visible")) {
+				jQuery("#email_style_custom").hide();
 			}
 		}
 	}
