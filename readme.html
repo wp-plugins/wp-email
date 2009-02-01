@@ -298,6 +298,7 @@
 						<li>NEW: Renamed email-js.js To email-js.dev.js</li>
 						<li>NEW: Translate Javascript Variables Using wp_localize_script()</li>
 						<li>NEW: Fill In "Your Name" And "Your Email" Fields If User Is Logged In (By Aaron Campbell)</li>
+						<li>NEW: Added [donotemail][/donotemail] Short Code (Refer To Usage Tab)</li>
 						<li>FIXED: Double Slashes In SMTP Username</li>
 					</ul>
 				</li>
@@ -670,6 +671,15 @@
 			</ol>
 			<div class="SubSubTitle">Note</div>
 			<ul>
+				<li>
+					If you do not want to email a portion of your post's content, do the following:
+					<blockquote>
+						[donotemail]Text within this tag will not be displayed when emailed[/donotemail]
+					</blockquote>
+					<p>The text within [donotemail][/donotemail] will not be displayed when you are emailing a post or page.</p>					
+					<p>However, it will still be displayed as normal on a normal post or page view.</p>
+					<p>Do note that if you are using WP-Print, any text within [donotemail][/donotemail] will not be printed as well.</p>
+				</li>
 				<li>
 					WP-Email will load '<strong>email-css.css</strong>' from your theme's directory if it exists.
 					<ul>

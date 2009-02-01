@@ -321,6 +321,19 @@ function email_link_shortcode($atts) {
 		return __('Note: There is an email link embedded within this post, please visit this post to email it.', 'wp-email');
 	}
 }
+function email_link_shortcode2($atts) {
+	return;
+}
+
+
+### Function: Short Code For DO NOT EMAIL Content
+add_shortcode('donotemail', 'email_donotemail_shortcode');
+function email_donotemail_shortcode($atts, $content = null) {
+	return $content;
+}
+function email_donotemail_shortcode2($atts, $content = null) {
+	return;
+}
 
 
 ### Function: Snippet Words
@@ -479,6 +492,14 @@ function get_email_content() {
 	}
 	$content = html_entity_decode($content);
 	$content = htmlspecialchars_decode($content);
+	if(function_exists('print_rewrite')) {
+		remove_shortcode('donotprint');
+		add_shortcode('donotprint', 'print_donotprint_shortcode2');
+	}
+	remove_shortcode('donotemail');
+	add_shortcode('donotemail', 'email_donotemail_shortcode2');
+	remove_shortcode('email_link');
+	add_shortcode('email_link', 'email_link_shortcode2');
 	$content = apply_filters('the_content', $content);
 	return $content;
 }
