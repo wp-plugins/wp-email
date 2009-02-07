@@ -2,7 +2,7 @@
 Contributors: GamerZ
 Donate link: http://lesterchan.net/wordpress
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend
-Requires at least: 2.7.0
+Requires at least: 2.7
 Stable tag: 2.40
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
