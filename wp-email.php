@@ -329,7 +329,7 @@ function email_link_shortcode2($atts) {
 ### Function: Short Code For DO NOT EMAIL Content
 add_shortcode('donotemail', 'email_donotemail_shortcode');
 function email_donotemail_shortcode($atts, $content = null) {
-	return $content;
+	return do_shortcode($content);
 }
 function email_donotemail_shortcode2($atts, $content = null) {
 	return;
