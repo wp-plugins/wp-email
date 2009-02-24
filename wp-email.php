@@ -1249,10 +1249,15 @@ function email_page_admin_general_stats($content) {
 function email_page_admin_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
-	if($stats_display['emailed_most'] == 1) {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most" value="emailed_most" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+	if($stats_display['emailed_most_post'] == 1) {
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	} else {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most" value="emailed_most" />&nbsp;&nbsp;<label for="wpstats_emailed_most">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+	}
+	if($stats_display['emailed_most_page'] == 1) {
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+	} else {
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	}
 	return $content;
 }
@@ -1287,10 +1292,16 @@ function email_page_general_stats($content) {
 function email_page_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
-	if($stats_display['emailed_most'] == 1) {
+	if($stats_display['emailed_most_post'] == 1) {
 		$content .= '<p><strong>'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
 		$content .= get_mostemailed('post', $stats_mostlimit, 0, false);
+		$content .= '</ul>'."\n";
+	}
+	if($stats_display['emailed_most_page'] == 1) {
+		$content .= '<p><strong>'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
+		$content .= '<ul>'."\n";
+		$content .= get_mostemailed('page', $stats_mostlimit, 0, false);
 		$content .= '</ul>'."\n";
 	}
 	return $content;
