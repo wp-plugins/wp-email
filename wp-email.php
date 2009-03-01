@@ -182,10 +182,10 @@ function email_scripts() {
 		'text_remarks_invalid' => __('- Your Remarks is invalid', 'wp-email'),
 		'text_friend_names_empty' => __('- Friend Name(s) is empty', 'wp-email'),
 		'text_friend_name_invalid' => __('- Friend Name is empty/invalid: ', 'wp-email'),
-		'text_max_friend_names_allowed' => sprintf(__ngettext('- Maximum %s Friend Name allowed', '- Maximum %s Friend Names allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
+		'text_max_friend_names_allowed' => sprintf(_n('- Maximum %s Friend Name allowed', '- Maximum %s Friend Names allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
 		'text_friend_emails_empty' => __('- Friend Email(s) is empty', 'wp-email'),
 		'text_friend_email_invalid' => __('- Friend Email is invalid: ', 'wp-email'),
-		'text_max_friend_emails_allowed' => sprintf(__ngettext('- Maximum %s Friend Email allowed', '- Maximum %s Friend Emails allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
+		'text_max_friend_emails_allowed' => sprintf(_n('- Maximum %s Friend Email allowed', '- Maximum %s Friend Emails allowed', $email_max, 'wp-email'), number_format_i18n($email_max)),
 		'text_friends_tally' => __('- Friend Name(s) count does not tally with Friend Email(s) count', 'wp-email'),
 		'text_image_verify_empty' => __('- Image Verification is empty', 'wp-email')
 	));
@@ -702,7 +702,7 @@ function email_popup_form_header($echo = true, $temp_id) {
 function email_multiple($echo = true) {
 	$email_multiple = intval(get_option('email_multiple'));
 	if($email_multiple > 1) {
-		$output = '<br /><em>'.sprintf(__ngettext('Separate multiple entries with a comma. Maximum %s entry.', 'Separate multiple entries with a comma. Maximum %s entries.', $email_multiple, 'wp-email'), number_format_i18n($email_multiple)).'</em>';
+		$output = '<br /><em>'.sprintf(_n('Separate multiple entries with a comma. Maximum %s entry.', 'Separate multiple entries with a comma. Maximum %s entries.', $email_multiple, 'wp-email'), number_format_i18n($email_multiple)).'</em>';
 		if($echo) {
 			echo $outut;
 		} else {
@@ -772,13 +772,13 @@ if(!function_exists('get_mostemailed')) {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_text($post_title, $chars)."</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">".snippet_text($post_title, $chars)."</a> - ".sprintf(_n('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
 				}
 			} else {
 				foreach ($mostemailed as $post) {
 						$post_title = get_the_title();
 						$email_total = intval($post->email_total);
-						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - ".sprintf(__ngettext('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
+						$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a> - ".sprintf(_n('%s email', '%s emails', $email_total, 'wp-email'), number_format_i18n($email_total))."</li>\n";
 				}
 			}
 		} else {
@@ -932,7 +932,7 @@ function process_email_form() {
 		}
 		// Checking If The Fields Exceed The Size Of Maximum Entries Allowed
 		if(sizeof($friends) > $multiple_max) {
-			$error .= '<br /><strong>&raquo;</strong> '.sprintf(__ngettext('Maximum %s Friend allowed', 'Maximum %s Friend(s) allowed', $multiple_max, 'wp-email'), number_format_i18n($multiple_max));
+			$error .= '<br /><strong>&raquo;</strong> '.sprintf(_n('Maximum %s Friend allowed', 'Maximum %s Friend(s) allowed', $multiple_max, 'wp-email'), number_format_i18n($multiple_max));
 		}
 		if(intval($email_fields['friendname']) == 1) {
 			if($friendname_count != $friendemail_count) {
@@ -1172,7 +1172,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			$output .= get_the_password_form();
 		} // End if(not_password_protected())
 	} else {
-		$output .= '<p>'.sprintf(__ngettext('Please wait for <strong>%s Minute</strong> before sending the next article.', 'Please wait for <strong>%s Minutes</strong> before sending the next article.', email_flood_interval(false), 'wp-email'), email_flood_interval(false)).'</p>'."\n";
+		$output .= '<p>'.sprintf(_n('Please wait for <strong>%s Minute</strong> before sending the next article.', 'Please wait for <strong>%s Minutes</strong> before sending the next article.', email_flood_interval(false), 'wp-email'), email_flood_interval(false)).'</p>'."\n";
 	} // End if (not_spamming())
 	$output .= '<div id="wp-email-loading" class="wp-email-loading"><img src="'.plugins_url('wp-email/images/loading.gif').'" width="16" height="16" alt="'.__('Loading', 'wp-email').' ..." title="'.__('Loading', 'wp-email').' ..." class="wp-email-image" />&nbsp;'.__('Loading', 'wp-email').' ...</div>'."\n";
 	if($div) {
@@ -1250,14 +1250,14 @@ function email_page_admin_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
 	if($stats_display['emailed_most_post'] == 1) {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(_n('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	} else {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_post" value="emailed_most_post" />&nbsp;&nbsp;<label for="wpstats_emailed_most_post">'.sprintf(_n('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	}
 	if($stats_display['emailed_most_page'] == 1) {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" checked="checked" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(_n('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	} else {
-		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
+		$content .= '<input type="checkbox" name="stats_display[]" id="wpstats_emailed_most_page" value="emailed_most_page" />&nbsp;&nbsp;<label for="wpstats_emailed_most_page">'.sprintf(_n('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</label><br />'."\n";
 	}
 	return $content;
 }
@@ -1279,9 +1279,9 @@ function email_page_general_stats($content) {
 		}
 		$content .= '<p><strong>'.__('WP-EMail', 'wp-email').'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent.', '<strong>%s</strong> emails were sent.', $email_stats_array['total'], 'wp-email'), number_format_i18n($email_stats_array['total'])).'</li>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email was sent successfully.', '<strong>%s</strong> emails were sent successfully.', $email_stats_array[__('Success', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Success', 'wp-email')])).'</li>'."\n";
-		$content .= '<li>'.sprintf(__ngettext('<strong>%s</strong> email failed to send.', '<strong>%s</strong> emails failed to send.', $email_stats_array[__('Failed', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Failed', 'wp-email')])).'</li>'."\n";
+		$content .= '<li>'.sprintf(_n('<strong>%s</strong> email was sent.', '<strong>%s</strong> emails were sent.', $email_stats_array['total'], 'wp-email'), number_format_i18n($email_stats_array['total'])).'</li>'."\n";
+		$content .= '<li>'.sprintf(_n('<strong>%s</strong> email was sent successfully.', '<strong>%s</strong> emails were sent successfully.', $email_stats_array[__('Success', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Success', 'wp-email')])).'</li>'."\n";
+		$content .= '<li>'.sprintf(_n('<strong>%s</strong> email failed to send.', '<strong>%s</strong> emails failed to send.', $email_stats_array[__('Failed', 'wp-email')], 'wp-email'), number_format_i18n($email_stats_array[__('Failed', 'wp-email')])).'</li>'."\n";
 		$content .= '</ul>'."\n";
 	}
 	return $content;
@@ -1293,13 +1293,13 @@ function email_page_most_stats($content) {
 	$stats_display = get_option('stats_display');
 	$stats_mostlimit = intval(get_option('stats_mostlimit'));
 	if($stats_display['emailed_most_post'] == 1) {
-		$content .= '<p><strong>'.sprintf(__ngettext('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
+		$content .= '<p><strong>'.sprintf(_n('%s Most Emailed Post', '%s Most Emailed Posts', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
 		$content .= get_mostemailed('post', $stats_mostlimit, 0, false);
 		$content .= '</ul>'."\n";
 	}
 	if($stats_display['emailed_most_page'] == 1) {
-		$content .= '<p><strong>'.sprintf(__ngettext('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
+		$content .= '<p><strong>'.sprintf(_n('%s Most Emailed Page', '%s Most Emailed Pages', $stats_mostlimit, 'wp-email'), number_format_i18n($stats_mostlimit)).'</strong></p>'."\n";
 		$content .= '<ul>'."\n";
 		$content .= get_mostemailed('page', $stats_mostlimit, 0, false);
 		$content .= '</ul>'."\n";

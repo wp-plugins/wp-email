@@ -361,7 +361,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 	<h3><?php _e('Delete E-Mail Logs', 'wp-email'); ?></h3>
 	<br style="clear" />
 	<div align="center">
-		<form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
+		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__); ?>">
 			<strong><?php _e('Are You Sure You Want To Delete All E-Mail Logs?', 'wp-email'); ?></strong><br /><br />
 			<input type="checkbox" name="delete_logs_yes" value="yes" />&nbsp;<?php _e('Yes', 'wp-email'); ?><br /><br />
 			<input type="submit" name="delete_logs" value="<?php _e('Delete', 'wp-email'); ?>" class="button" onclick="return confirm('<?php _e('You Are About To Delete All E-Mail Logs\nThis Action Is Not Reversible.\n\n Choose [Cancel] to stop, [OK] to delete.', 'wp-email'); ?>')" />

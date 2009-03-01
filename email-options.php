@@ -160,7 +160,7 @@ $email_smtp = get_option('email_smtp');
 /* ]]> */
 </script>
 <?php if(!empty($text)) { echo '<!-- Last Action --><div id="message" class="updated fade"><p>'.$text.'</p></div>'; } ?>
-<form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>"> 
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__); ?>">
 <div class="wrap">
 	<div id="icon-wp-email" class="icon32"><br /></div>
 	<h2><?php _e('E-Mail Options', 'wp-email'); ?></h2>	
