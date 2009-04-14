@@ -301,6 +301,8 @@
 						<li>NEW: Added [donotemail][/donotemail] Short Code (Refer To Usage Tab)</li>
 						<li>NEW: Added In Most Emailed Pages To WP-Stats</li>
 						<li>NEW: Use _n() Instead Of __ngettext() And _n_noop() Instead Of __ngettext_noop()</li>
+						<li>NEW: Uses New Widget Class From WordPress</li>
+						<li>NEW: Merge Widget Code To wp-email.php And Remove wp-email-widget.php</li>
 						<li>FIXED: Uses $_SERVER['PHP_SELF'] With plugin_basename(__FILE__) Instead Of Just $_SERVER['REQUEST_URI']</li>
 						<li>FIXED: Nested ShortCode Issues</li>
 						<li>FIXED: Double Slashes In SMTP Username</li>
@@ -601,6 +603,15 @@
 					<p>The <b>second value</b> is the text for emailing page.</p>					
 					<p>Default: email_link('', '')</p>
 					<p>Alternatively, you can set the text in 'WP-Admin -> E-Mail -> E-Mail Options'.</p>
+				</li>
+			</ol>
+			<div class="SubSubTitle">EMail Stats (With Widgets)</div>
+			<ol>
+				<li>
+					Go to '<strong>WP-Admin -> Appearance -> Widgets</strong>'
+				</li>
+				<li>
+					The widget name is <strong>Email</strong>.
 				</li>
 			</ol>
 			<div class="SubSubTitle">EMail Stats (Outside WP Loop)</div>

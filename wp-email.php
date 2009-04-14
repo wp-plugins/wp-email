@@ -1308,6 +1308,99 @@ function email_page_most_stats($content) {
 }
 
 
+### Class: WP-EMail Widget
+ class WP_Widget_Email extends WP_Widget {
+	// Constructor
+	function WP_Widget_Email() {
+		$widget_ops = array('description' => __('WP-EMail views statistics', 'wp-email'));
+		$this->WP_Widget('email', __('Email', 'wp-email'), $widget_ops);
+	}
+
+	// Display Widget
+	function widget($args, $instance) {
+		extract($args);
+		$title = attribute_escape($instance['title']);
+		$type = attribute_escape($instance['type']);
+		$mode = attribute_escape($instance['mode']);
+		$limit = intval($instance['limit']);
+		$chars = intval($instance['chars']);
+		//$cat_ids = explode(',', attribute_escape($instance['cat_ids']));
+		echo $before_widget.$before_title.$title.$after_title;
+		echo '<ul>'."\n";
+		switch($type) {
+			case 'most_emailed':
+				get_mostemailed($mode, $limit, $chars);
+				break;
+		}
+		echo '</ul>'."\n";
+		echo $after_widget;
+	}
+
+	// When Widget Control Form Is Posted
+	function update($new_instance, $old_instance) {
+		if (!isset($new_instance['submit'])) {
+			return false;
+		}
+		$instance = $old_instance;
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['type'] = strip_tags($new_instance['type']);
+		$instance['mode'] = strip_tags($new_instance['mode']);
+		$instance['limit'] = intval($new_instance['limit']);
+		$instance['chars'] = intval($new_instance['chars']);
+		//$instance['cat_ids'] = strip_tags($new_instance['cat_ids']);
+		return $instance;
+	}
+
+	// DIsplay Widget Control Form
+	function form($instance) {
+		global $wpdb;
+		$instance = wp_parse_args((array) $instance, array('title' => __('EMail', 'wp-email'), 'type' => 'most_emailed', 'mode' => 'both', 'limit' => 10, 'chars' => 200));
+		$title = attribute_escape($instance['title']);
+		$type = attribute_escape($instance['type']);
+		$mode = attribute_escape($instance['mode']);
+		$limit = intval($instance['limit']);
+		$chars = intval($instance['chars']);
+		//$cat_ids = attribute_escape($instance['cat_ids']);
+?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wp-email'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Statistics Type:', 'wp-email'); ?>
+				<select name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>" class="widefat">
+					<option value="most_emailed"<?php selected('most_emailed', $type); ?>><?php _e('Most Emailed', 'wp-email'); ?></option>
+				</select>
+			</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('mode'); ?>"><?php _e('Include Views From:', 'wp-email'); ?>
+				<select name="<?php echo $this->get_field_name('mode'); ?>" id="<?php echo $this->get_field_id('mode'); ?>" class="widefat">
+					<option value="both"<?php selected('both', $mode); ?>><?php _e('Posts &amp; Pages', 'wp-email'); ?></option>
+					<option value="post"<?php selected('post', $mode); ?>><?php _e('Posts Only', 'wp-email'); ?></option>
+					<option value="page"<?php selected('page', $mode); ?>><?php _e('Pages Only', 'wp-email'); ?></option>
+				</select>
+			</label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('limit'); ?>"><?php _e('No. Of Records To Show:', 'wp-email'); ?> <input class="widefat" id="<?php echo $this->get_field_id('limit'); ?>" name="<?php echo $this->get_field_name('limit'); ?>" type="text" value="<?php echo $limit; ?>" /></label>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('chars'); ?>"><?php _e('Maximum Post Title Length (Characters):', 'wp-email'); ?> <input class="widefat" id="<?php echo $this->get_field_id('chars'); ?>" name="<?php echo $this->get_field_name('chars'); ?>" type="text" value="<?php echo $chars; ?>" /></label><br />
+			<small><?php _e('<strong>0</strong> to disable.', 'wp-email'); ?></small>
+		</p>
+		<input type="hidden" id="<?php echo $this->get_field_id('submit'); ?>" name="<?php echo $this->get_field_name('submit'); ?>" value="1" />
+<?php
+	}
+}
+
+
+### Function: Init WP-EMail Widget
+add_action('widgets_init', 'widget_email_init');
+function widget_email_init() {
+	register_widget('WP_Widget_Email');
+}
+
+
 ### Function: Create E-Mail Table
 add_action('activate_wp-email/wp-email.php', 'create_email_table');
 function create_email_table() {
