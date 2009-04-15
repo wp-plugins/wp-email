@@ -1474,6 +1474,8 @@ function create_email_table() {
 	if($email_mailer == 'php') {
 		update_option('email_mailer', 'mail');
 	}
+	// Version 2.50 Upgrade
+	delete_option('widget_email_most_emailed');
 	// Set 'manage_email' Capabilities To Administrator	
 	$role = get_role('administrator');
 	if(!$role->has_cap('manage_email')) {
