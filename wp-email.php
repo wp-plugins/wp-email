@@ -610,8 +610,8 @@ add_filter('email_form-fieldvalues', 'email_fill_fields');
 function email_fill_fields($email_fields) {
     global $current_user;
     if ($current_user->ID > 0) {
-        $email_fields['yourname'] = attr($current_user->first_name.' '.$current_user->last_name);
-        $email_fields['youremail'] = attr($current_user->user_email);
+        $email_fields['yourname'] = esc_attr($current_user->first_name.' '.$current_user->last_name);
+        $email_fields['youremail'] = esc_attr($current_user->user_email);
     }
     return $email_fields;
 }
@@ -1319,12 +1319,12 @@ function email_page_most_stats($content) {
 	// Display Widget
 	function widget($args, $instance) {
 		extract($args);
-		$title = attr($instance['title']);
-		$type = attr($instance['type']);
-		$mode = attr($instance['mode']);
+		$title = esc_attr($instance['title']);
+		$type = esc_attr($instance['type']);
+		$mode = esc_attr($instance['mode']);
 		$limit = intval($instance['limit']);
 		$chars = intval($instance['chars']);
-		//$cat_ids = explode(',', attr($instance['cat_ids']));
+		//$cat_ids = explode(',', esc_attr($instance['cat_ids']));
 		echo $before_widget.$before_title.$title.$after_title;
 		echo '<ul>'."\n";
 		switch($type) {
@@ -1355,12 +1355,12 @@ function email_page_most_stats($content) {
 	function form($instance) {
 		global $wpdb;
 		$instance = wp_parse_args((array) $instance, array('title' => __('EMail', 'wp-email'), 'type' => 'most_emailed', 'mode' => 'both', 'limit' => 10, 'chars' => 200));
-		$title = attr($instance['title']);
-		$type = attr($instance['type']);
-		$mode = attr($instance['mode']);
+		$title = esc_attr($instance['title']);
+		$type = esc_attr($instance['type']);
+		$mode = esc_attr($instance['mode']);
 		$limit = intval($instance['limit']);
 		$chars = intval($instance['chars']);
-		//$cat_ids = attr($instance['cat_ids']);
+		//$cat_ids = esc_attr($instance['cat_ids']);
 ?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'wp-email'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label>
