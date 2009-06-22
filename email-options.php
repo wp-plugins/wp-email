@@ -283,7 +283,7 @@ $email_smtp = get_option('email_smtp');
 					<option value="sendmail"<?php selected('sendmail', get_option('email_mailer')); ?>><?php _e('SendMail', 'wp-email'); ?></option>
 					<option value="smtp"<?php selected('smtp', get_option('email_mailer')); ?>><?php _e('SMTP', 'wp-email'); ?></option>
 				</select>
-				<br /><?php _e('If you ARE NOT using a smtp server of if there is a problem sending out email using your smtp server. Please Choose PHP or Send Mail.', 'wp-email'); ?>
+				<br /><?php _e('If you ARE NOT using a smtp server or if there is a problem sending out email using your smtp server. Please Choose PHP or Send Mail.', 'wp-email'); ?>
 			</td> 
 		</tr>
 		<tr> 
