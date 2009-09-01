@@ -610,7 +610,7 @@ add_filter('email_form-fieldvalues', 'email_fill_fields');
 function email_fill_fields($email_fields) {
     global $current_user;
     if ($current_user->ID > 0) {
-        $email_fields['yourname'] = esc_attr($current_user->first_name.' '.$current_user->last_name);
+        $email_fields['yourname'] = trim(esc_attr($current_user->first_name.' '.$current_user->last_name));
         $email_fields['youremail'] = esc_attr($current_user->user_email);
     }
     return $email_fields;
