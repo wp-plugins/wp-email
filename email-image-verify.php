@@ -1,20 +1,16 @@
 <?php
-/*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-EMail 2.50										|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- E-Mail Image Verification														|
-|	- wp-content/plugins/wp-email/email-image-verify.php				|
-|																							|
-+----------------------------------------------------------------+
-*/
+/**
+ * WordPress 2.8 Plugin: WP-EMail 2.50
+ * Copyright (c) 2009 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ * File Information:
+ * - E-Mail Image Verification
+ * - wp-content/plugins/wp-email/email-image-verify.php
+ */
 
 
 ### Start Session
@@ -62,4 +58,3 @@ imagejpeg($image);
 
 ### Destroy The Image
 imagedestroy($image);
-?>
