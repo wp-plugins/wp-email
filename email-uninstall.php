@@ -1,20 +1,16 @@
 <?php
-/*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-EMail 2.50										|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- Uninstall WP-EMail																|
-|	- wp-content/plugins/wp-email/email-uninstall.php						|
-|																							|
-+----------------------------------------------------------------+
-*/
+/**
+ * WordPress 2.8 Plugin: WP-EMail 2.50
+ * Copyright (c) 2009 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ * File Information:
+ * - Uninstall WP-EMail
+ * - wp-content/plugins/wp-email/email-uninstall.php
+ */
 
 
 ### Check Whether User Can Manage EMail
@@ -26,12 +22,12 @@ if(!current_user_can('manage_email')) {
 ### Variables Variables Variables
 $base_name = plugin_basename('wp-email/email-manager.php');
 $base_page = 'admin.php?page='.$base_name;
-$mode = trim($_GET['mode']);
+$mode = empty($_GET['mode'])? '' : trim($_GET['mode']);
 $email_tables = array($wpdb->email);
 $email_settings = array('email_smtp', 'email_contenttype', 'email_mailer', 'email_template_subject', 'email_template_body', 'email_template_bodyalt', 'email_template_sentsuccess', 'email_template_sentfailed', 'email_template_error', 'email_interval', 'email_snippet', 'email_multiple', 'email_imageverify', 'email_options', 'email_fields', 'email_template_title', 'email_template_subtitle', 'widget_email_most_emailed', 'widget_email');
 
 
-### Form Processing 
+### Form Processing
 if(!empty($_POST['do'])) {
 	// Decide What To Do
 	switch($_POST['do']) {
@@ -61,7 +57,7 @@ if(!empty($_POST['do'])) {
 					}
 				}
 				echo '</p>';
-				echo '</div>'; 
+				echo '</div>';
 				$mode = 'end-UNINSTALL';
 			}
 			break;
@@ -74,7 +70,7 @@ switch($mode) {
 		//  Deactivating WP-EMail
 		case 'end-UNINSTALL':
 			$deactivate_url = 'plugins.php?action=deactivate&amp;plugin=wp-email/wp-email.php';
-			if(function_exists('wp_nonce_url')) { 
+			if(function_exists('wp_nonce_url')) {
 				$deactivate_url = wp_nonce_url($deactivate_url, 'deactivate-plugin_wp-email/wp-email.php');
 			}
 			echo '<div class="wrap">';
@@ -137,4 +133,3 @@ switch($mode) {
 </form>
 <?php
 } // End switch($mode)
-?>

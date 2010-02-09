@@ -1,20 +1,16 @@
 <?php
-/*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-EMail 2.50										|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- Manages Your E-Mail Logs													|
-|	- wp-content/plugins/wp-email/email-manager.php						|
-|																							|
-+----------------------------------------------------------------+
-*/
+/**
+ * WordPress 2.8 Plugin: WP-EMail 2.50
+ * Copyright (c) 2009 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ * File Information:
+ * - Manages Your E-Mail Logs
+ * - wp-content/plugins/wp-email/email-manager.php
+ */
 
 
 ### Check Whether User Can Manage EMail
@@ -26,12 +22,12 @@ if(!current_user_can('manage_email')) {
 ### E-Mail Variables
 $base_name = plugin_basename('wp-email/email-manager.php');
 $base_page = 'admin.php?page='.$base_name;
-$email_page = intval($_GET['emailpage']);
-$email_sortby = trim($_GET['by']);
+$email_page = empty($_GET['emailpage'])? 1 : max(intval($_GET['emailpage']), 1);
+$email_sortby = empty($_GET['by'])? '' : trim($_GET['by']);
 $email_sortby_text = '';
-$email_sortorder = trim($_GET['order']);
+$email_sortorder = empty($_GET['order'])? 'DESC':trim($_GET['order']);
 $email_sortorder_text = '';
-$email_log_perpage = intval($_GET['perpage']);
+$email_log_perpage = (empty($_GET['perpage']) || intval($_GET['perpage']) < 1)? 20 : intval($_GET['perpage']);
 $email_sort_url = '';
 
 
@@ -109,7 +105,7 @@ switch($email_sortorder) {
 }
 
 
-### Form Processing 
+### Form Processing
 if(!empty($_POST['delete_logs'])) {
 	if(trim($_POST['delete_logs_yes']) == 'yes') {
 		$delete_logs = $wpdb->query("DELETE FROM $wpdb->email");
@@ -129,9 +125,9 @@ $total_email = $total_email_success+$total_email_failed;
 
 
 ### Checking $email_page and $offset
-if(empty($email_page) || $email_page == 0) { $email_page = 1; }
-if(empty($offset)) { $offset = 0; }
-if(empty($email_log_perpage) || $email_log_perpage == 0) { $email_log_perpage = 20; }
+//if(empty($email_page) || $email_page == 0) { $email_page = 1; }
+//if(empty($offset)) { $offset = 0; }
+//if(empty($email_log_perpage) || $email_log_perpage == 0) { $email_log_perpage = 20; }
 
 
 ### Determin $offset
@@ -139,18 +135,18 @@ $offset = ($email_page-1) * $email_log_perpage;
 
 
 ### Determine Max Number Of Polls To Display On Page
-if(($offset + $email_log_perpage) > $total_email) { 
-	$max_on_page = $total_email; 
-} else { 
-	$max_on_page = ($offset + $email_log_perpage); 
+if(($offset + $email_log_perpage) > $total_email) {
+	$max_on_page = $total_email;
+} else {
+	$max_on_page = ($offset + $email_log_perpage);
 }
 
 
 ### Determine Number Of Polls To Display On Page
-if (($offset + 1) > ($total_email)) { 
-	$display_on_page = $total_email; 
-} else { 
-	$display_on_page = ($offset + 1); 
+if (($offset + 1) > ($total_email)) {
+	$display_on_page = $total_email;
+} else {
+	$display_on_page = ($offset + 1);
 }
 
 ### Determing Total Amount Of Pages
@@ -173,7 +169,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 		if(EMAIL_SHOW_REMARKS) {
 			$colspan++;
 		}
-	?>	
+	?>
 	<table class="widefat">
 		<thead>
 		<tr>
@@ -196,7 +192,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 			$i = 0;
 			foreach($email_logs as $email_log) {
 				if($i%2 == 0) {
-					$style = '';					
+					$style = '';
 				}  else {
 					$style = 'class="alternate"';
 				}
@@ -285,7 +281,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 					?>
 				</td>
 			</tr>
-		</table>	
+		</table>
 		<!-- </Paging> -->
 		<?php
 			}
@@ -308,7 +304,7 @@ $email_logs = $wpdb->get_results("SELECT * FROM $wpdb->email ORDER BY $email_sor
 						<option value="posttitle"<?php if($email_sortby == 'email_posttitle') { echo ' selected="selected"'; }?>><?php _e('Post Title', 'wp-email'); ?></option>
 						<option value="ip"<?php if($email_sortby == 'email_ip') { echo ' selected="selected"'; }?>><?php _e('IP', 'wp-email'); ?></option>
 						<option value="host"<?php if($email_sortby == 'email_host') { echo ' selected="selected"'; }?>><?php _e('Host', 'wp-email'); ?></option>
-						<option value="status"<?php if($email_sortby == 'email_status') { echo ' selected="selected"'; }?>><?php _e('Status', 'wp-email'); ?></option>	
+						<option value="status"<?php if($email_sortby == 'email_status') { echo ' selected="selected"'; }?>><?php _e('Status', 'wp-email'); ?></option>
 					</select>
 					&nbsp;&nbsp;&nbsp;
 					<select name="order" size="1">

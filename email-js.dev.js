@@ -1,19 +1,15 @@
-/*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-EMail 2.50										|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- E-Mail Javascript File															|
-|	- wp-content/plugins/wp-email/email-js.js	 								|
-|																							|
-+----------------------------------------------------------------+
-*/
+/**
+ * WordPress 2.8 Plugin: WP-EMail 2.50
+ * Copyright (c) 2009 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ * File Information:
+ * - E-Mail Javascript File
+ * - wp-content/plugins/wp-email/email-js.js
+ */
 
 
 // Variables
@@ -33,7 +29,7 @@ emailL10n.max_allowed = parseInt(emailL10n.max_allowed);
 function validate_email_form() {
 	// Variables
 	var errFlag = false;
-	var errMsg = emailL10n.text_error + "\n";	
+	var errMsg = emailL10n.text_error + "\n";
 	errMsg = errMsg + "__________________________________\n\n";
 
 	// Your Name Validation
@@ -180,7 +176,7 @@ function email_form() {
 	}
 	if(validate_email_form()) {
 		email_ajax_data = 'wp-email=1';
-		jQuery('#wp-email-submit').attr('disabled', true); 
+		jQuery('#wp-email-submit').attr('disabled', true);
 		jQuery('#wp-email-loading').show();
 		if(jQuery('#yourname').length) {
 			email_ajax_data += '&yourname=' + email_yourname;

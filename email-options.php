@@ -1,20 +1,16 @@
 <?php
 /*
-+----------------------------------------------------------------+
-|																							|
-|	WordPress 2.8 Plugin: WP-EMail 2.50										|
-|	Copyright (c) 2009 Lester "GaMerZ" Chan									|
-|																							|
-|	File Written By:																	|
-|	- Lester "GaMerZ" Chan															|
-|	- http://lesterchan.net															|
-|																							|
-|	File Information:																	|
-|	- Configure E-Mail Options														|
-|	- wp-content/plugins/wp-email/email-options.php						|
-|																							|
-+----------------------------------------------------------------+
-*/
+ * WordPress 2.8 Plugin: WP-EMail 2.50
+ * Copyright (c) 2009 Lester "GaMerZ" Chan
+ *
+ * File Written By:
+ * - Lester "GaMerZ" Chan
+ * - http://lesterchan.net
+ *
+ * File Information:
+ * - Configure E-Mail Options
+ * - wp-content/plugins/wp-email/email-options.php
+ */
 
 
 ### Check Whether User Can Manage EMail
@@ -29,7 +25,7 @@ $base_page = 'admin.php?page='.$base_name;
 
 
 ### If Form Is Submitted
-if($_POST['Submit']) {
+if( !empty($_POST['Submit']) ) {
 	$email_smtp_name = strip_tags(trim($_POST['email_smtp_name']));
 	$email_smtp_password = strip_tags(trim($_POST['email_smtp_password']));
 	$email_smtp_server = strip_tags(trim($_POST['email_smtp_server']));
@@ -163,7 +159,7 @@ $email_smtp = get_option('email_smtp');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=<?php echo plugin_basename(__FILE__); ?>">
 <div class="wrap">
 	<div id="icon-wp-email" class="icon32"><br /></div>
-	<h2><?php _e('E-Mail Options', 'wp-email'); ?></h2>	
+	<h2><?php _e('E-Mail Options', 'wp-email'); ?></h2>
 	<h3><?php _e('SMTP Settings', 'wp-email'); ?></h3>
 	<table class="form-table">
 		 <tr>
@@ -200,13 +196,13 @@ $email_smtp = get_option('email_smtp');
 					$email_icon = $email_options['email_icon'];
 					$email_icon_url = plugins_url('wp-email/images');
 					$email_icon_path = WP_PLUGIN_DIR.'/wp-email/images';
-					if($handle = @opendir($email_icon_path)) {     
-						while (false !== ($filename = readdir($handle))) {  
+					if($handle = @opendir($email_icon_path)) {
+						while (false !== ($filename = readdir($handle))) {
 							if ($filename != '.' && $filename != '..' && $filename != 'loading.gif') {
 								if(is_file($email_icon_path.'/'.$filename)) {
 									echo '<p>';
 									if($email_icon == $filename) {
-										echo '<input type="radio" name="email_icon" value="'.$filename.'" checked="checked" />'."\n";										
+										echo '<input type="radio" name="email_icon" value="'.$filename.'" checked="checked" />'."\n";
 									} else {
 										echo '<input type="radio" name="email_icon" value="'.$filename.'" />'."\n";
 									}
@@ -215,8 +211,8 @@ $email_smtp = get_option('email_smtp');
 									echo '&nbsp;&nbsp;&nbsp;('.$filename.')';
 									echo '</p>'."\n";
 								}
-							} 
-						} 
+							}
+						}
 						closedir($handle);
 					}
 				?>
@@ -275,7 +271,7 @@ $email_smtp = get_option('email_smtp');
 				</select>
 			</td>
 		</tr>
-		<tr> 
+		<tr>
 			<th scope="row" valign="top"><?php _e('Method Used To Send E-Mail:', 'wp-email'); ?></th>
 			<td>
 				<select name="email_mailer" size="1">
@@ -284,28 +280,28 @@ $email_smtp = get_option('email_smtp');
 					<option value="smtp"<?php selected('smtp', get_option('email_mailer')); ?>><?php _e('SMTP', 'wp-email'); ?></option>
 				</select>
 				<br /><?php _e('If you ARE NOT using a smtp server or if there is a problem sending out email using your smtp server. Please Choose PHP or Send Mail.', 'wp-email'); ?>
-			</td> 
+			</td>
 		</tr>
-		<tr> 
+		<tr>
 			<th scope="row" valign="top"><?php _e('No. Of Words Before Cutting Off:', 'wp-email'); ?></th>
-			<td><input type="text" id="email_snippet" name="email_snippet" value="<?php echo  get_option('email_snippet'); ?>" size="5" maxlength="5" /><br /><?php _e('Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.', 'wp-email'); ?></td> 
+			<td><input type="text" id="email_snippet" name="email_snippet" value="<?php echo  get_option('email_snippet'); ?>" size="5" maxlength="5" /><br /><?php _e('Setting this value more than 0 will enable the snippet feature. This feature will allow you to send a portion (defined by the text field above) of the article to your friend instead of the whole article.', 'wp-email'); ?></td>
 		</tr>
-		<tr> 
+		<tr>
 			<th scope="row" valign="top"><?php _e('Interval Between E-Mails:', 'wp-email'); ?></th>
-			<td><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_option('email_interval'); ?>" size="5" maxlength="5" /> <?php _e('Mins', 'wp-email'); ?><br /><?php _e('It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.', 'wp-email'); ?></td> 
+			<td><input type="text" id="email_interval" name="email_interval" value="<?php echo  get_option('email_interval'); ?>" size="5" maxlength="5" /> <?php _e('Mins', 'wp-email'); ?><br /><?php _e('It allows you to specify the interval in minutes between each email sent per user based on IP to prevent spam and flood.', 'wp-email'); ?></td>
 		</tr>
-		<tr> 
+		<tr>
 				<th scope="row" valign="top"><?php _e('Max Number Of Multiple E-Mails:', 'wp-email'); ?></th>
-				<td><input type="text" id="email_multiple" name="email_multiple" value="<?php echo  get_option('email_multiple'); ?>" size="5" maxlength="3" /><br /><?php _e('Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go.', 'wp-email'); ?></td> 
-		</tr> 
-		<tr> 
+				<td><input type="text" id="email_multiple" name="email_multiple" value="<?php echo  get_option('email_multiple'); ?>" size="5" maxlength="3" /><br /><?php _e('Setting this value more than 1 will enable this feature. It allows the maximum number of multiple e-mails that can be send at one go.', 'wp-email'); ?></td>
+		</tr>
+		<tr>
 			<th scope="row" valign="top"><?php _e('Enable Image Verification:', 'wp-email'); ?></th>
 			<td>
 				<select name="email_imageverify" size="1">
 					<option value="1"<?php selected('1', get_option('email_imageverify')); ?>><?php _e('Yes', 'wp-email'); ?></option>
 					<option value="0"<?php selected('0', get_option('email_imageverify')); ?>><?php _e('No', 'wp-email'); ?></option>
 				</select><br /><?php _e('It is recommanded to choose <strong>Yes</strong> unless your server does not support PHP GD Library.', 'wp-email'); ?>
-			</td> 
+			</td>
 		</tr>
 	</table>
 
@@ -362,7 +358,7 @@ $email_smtp = get_option('email_smtp');
 			</td>
 			<td><input type="text" id="email_template_title" name="email_template_title" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_title'))); ?>" size="82" /></td>
 		</tr>
-		<tr> 
+		<tr>
 			<td width="30%">
 				<strong><?php _e('E-Mail Page Subtitle:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
@@ -375,7 +371,7 @@ $email_smtp = get_option('email_smtp');
 				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('subtitle');" class="button" />
 			</td>
-			<td><input type="text" id="email_template_subtitle" name="email_template_subtitle" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subtitle'))); ?>" size="82" /></td> 
+			<td><input type="text" id="email_template_subtitle" name="email_template_subtitle" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subtitle'))); ?>" size="82" /></td>
 		</tr>
 	</table>
 
@@ -398,7 +394,7 @@ $email_smtp = get_option('email_smtp');
 			</td>
 			<td><input type="text" id="email_template_subject" name="email_template_subject" value="<?php echo htmlspecialchars(stripslashes(get_option('email_template_subject'))); ?>" size="82" /></td>
 		</tr>
-		<tr> 
+		<tr>
 			<td width="30%">
 				<strong><?php _e('E-Mail Body:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
@@ -418,9 +414,9 @@ $email_smtp = get_option('email_smtp');
 				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('body');" class="button" />
 			</td>
-			<td><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo htmlspecialchars(stripslashes(get_option('email_template_body'))); ?></textarea></td> 
+			<td><textarea cols="80" rows="15" id="email_template_body" name="email_template_body"><?php echo htmlspecialchars(stripslashes(get_option('email_template_body'))); ?></textarea></td>
 		</tr>
-		<tr> 
+		<tr>
 			<td width="30%">
 				<strong><?php _e('E-Mail Alternate Body:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
@@ -440,7 +436,7 @@ $email_smtp = get_option('email_smtp');
 				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('bodyalt');" class="button" />
 			</td>
-			<td><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo htmlspecialchars(stripslashes(get_option('email_template_bodyalt'))); ?></textarea></td> 
+			<td><textarea cols="80" rows="15" id="email_template_bodyalt" name="email_template_bodyalt"><?php echo htmlspecialchars(stripslashes(get_option('email_template_bodyalt'))); ?></textarea></td>
 		</tr>
 	</table>
 
@@ -460,7 +456,7 @@ $email_smtp = get_option('email_smtp');
 			</td>
 			<td><textarea cols="80" rows="10" id="email_template_sentsuccess" name="email_template_sentsuccess"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentsuccess'))); ?></textarea></td>
 		</tr>
-		<tr> 
+		<tr>
 			<td width="30%">
 				<strong><?php _e('Sent Failed:', 'wp-email'); ?></strong><br /><br />
 				<?php _e('Allowed Variables:', 'wp-email'); ?><br />
@@ -473,7 +469,7 @@ $email_smtp = get_option('email_smtp');
 				<p style="margin: 2px 0;">- %EMAIL_PERMALINK%</p><br />
 				<input type="button" name="RestoreDefault" value="<?php _e('Restore Default Template', 'wp-email'); ?>" onclick="email_default_templates('sentfailed');" class="button" />
 			</td>
-			<td><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentfailed'))); ?></textarea></td> 
+			<td><textarea cols="80" rows="10" id="email_template_sentfailed" name="email_template_sentfailed"><?php echo htmlspecialchars(stripslashes(get_option('email_template_sentfailed'))); ?></textarea></td>
 		</tr>
 	</table>
 	<h3><?php _e('E-Mail Misc Templates', 'wp-email'); ?></h3>
