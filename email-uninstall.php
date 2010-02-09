@@ -22,7 +22,7 @@ if(!current_user_can('manage_email')) {
 ### Variables Variables Variables
 $base_name = plugin_basename('wp-email/email-manager.php');
 $base_page = 'admin.php?page='.$base_name;
-$mode = trim($_GET['mode']);
+$mode = empty($_GET['mode'])? '' : trim($_GET['mode']);
 $email_tables = array($wpdb->email);
 $email_settings = array('email_smtp', 'email_contenttype', 'email_mailer', 'email_template_subject', 'email_template_body', 'email_template_bodyalt', 'email_template_sentsuccess', 'email_template_sentfailed', 'email_template_error', 'email_interval', 'email_snippet', 'email_multiple', 'email_imageverify', 'email_options', 'email_fields', 'email_template_title', 'email_template_subtitle', 'widget_email_most_emailed', 'widget_email');
 

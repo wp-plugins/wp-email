@@ -22,12 +22,12 @@ if(!current_user_can('manage_email')) {
 ### E-Mail Variables
 $base_name = plugin_basename('wp-email/email-manager.php');
 $base_page = 'admin.php?page='.$base_name;
-$email_page = intval($_GET['emailpage']);
-$email_sortby = trim($_GET['by']);
+$email_page = empty($_GET['emailpage'])? 1 : max(intval($_GET['emailpage']), 1);
+$email_sortby = empty($_GET['by'])? '' : trim($_GET['by']);
 $email_sortby_text = '';
-$email_sortorder = trim($_GET['order']);
+$email_sortorder = empty($_GET['order'])? 'DESC':trim($_GET['order']);
 $email_sortorder_text = '';
-$email_log_perpage = intval($_GET['perpage']);
+$email_log_perpage = (empty($_GET['perpage']) || intval($_GET['perpage']) < 1)? 20 : intval($_GET['perpage']);
 $email_sort_url = '';
 
 
@@ -125,9 +125,9 @@ $total_email = $total_email_success+$total_email_failed;
 
 
 ### Checking $email_page and $offset
-if(empty($email_page) || $email_page == 0) { $email_page = 1; }
-if(empty($offset)) { $offset = 0; }
-if(empty($email_log_perpage) || $email_log_perpage == 0) { $email_log_perpage = 20; }
+//if(empty($email_page) || $email_page == 0) { $email_page = 1; }
+//if(empty($offset)) { $offset = 0; }
+//if(empty($email_log_perpage) || $email_log_perpage == 0) { $email_log_perpage = 20; }
 
 
 ### Determin $offset

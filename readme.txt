@@ -4,7 +4,7 @@ Donate link: http://lesterchan.net/wordpress
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend
 Requires at least: 2.8
 Tested up to: 2.9.1
-Stable tag: 2.50
+Stable tag: 2.51
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
 
@@ -152,6 +152,9 @@ Do note that if you are using WP-Print, any text within [donotemail][/donotemail
 WP-Email will load `email-css.css` from your theme's directory if it exists.  If it doesn't exist then it will load the default `email-css.css` that comes with WP-Email.  Just move your custom CSS to the appropriate file in your theme directory and it will be "upgrade-proof"
 
 == Changelog ==
+
+= 2.51 =
+* FIXED: Warnings of non-existant array indices
 
 = 2.50 =
 * NEW: Works For WordPress 2.8 Only

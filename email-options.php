@@ -25,7 +25,7 @@ $base_page = 'admin.php?page='.$base_name;
 
 
 ### If Form Is Submitted
-if($_POST['Submit']) {
+if( !empty($_POST['Submit']) ) {
 	$email_smtp_name = strip_tags(trim($_POST['email_smtp_name']));
 	$email_smtp_password = strip_tags(trim($_POST['email_smtp_password']));
 	$email_smtp_server = strip_tags(trim($_POST['email_smtp_server']));
