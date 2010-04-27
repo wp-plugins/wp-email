@@ -4,7 +4,7 @@ Donate link: http://lesterchan.net/wordpress
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend
 Requires at least: 2.8
 Tested up to: 2.9.1
-Stable tag: 2.51
+Stable tag: 2.52
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
 
@@ -137,7 +137,7 @@ if (function_exists('get_emails_failed'))
 1. Find `define('EMAIL_SHOW_REMARKS', true);`
 1. Replace with `define('EMAIL_SHOW_REMARKS', false);`
 
-= How can I keep some post text form being sent in the E-Mail? =
+= How can I keep some post text from being sent in the E-Mail? =
 
 If you do not want to email a portion of your post's content, do the following:
 
@@ -151,7 +151,18 @@ Do note that if you are using WP-Print, any text within [donotemail][/donotemail
 
 WP-Email will load `email-css.css` from your theme's directory if it exists.  If it doesn't exist then it will load the default `email-css.css` that comes with WP-Email.  Just move your custom CSS to the appropriate file in your theme directory and it will be "upgrade-proof"
 
+= How can I make the E-Mail title different from the post title? =
+
+If you add a custom field with the key "wp-email-title" it will be used as the E-Mail title.
+
+= How can I set a default or suggested remark for the user? =
+
+If you add a custom field with the key "wp-email-remark" it will be placed in the remarks field in the E-Mail form.
+
 == Changelog ==
+
+= 2.52 =
+* Added support for the wp-email-title and wp-email-remark custom fields
 
 = 2.51 =
 * FIXED: Warnings of non-existant array indices

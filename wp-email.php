@@ -3,7 +3,7 @@
  * Plugin Name: WP-EMail
  * Plugin URI: http://lesterchan.net/portfolio/programming/php/
  * Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
- * Version: 2.51
+ * Version: 2.52
  * Author: Lester 'GaMerZ' Chan
  * Author URI: http://lesterchan.net
  */
@@ -412,10 +412,20 @@ if(!function_exists('get_the_id')) {
 }
 
 
+### Function: Get E-Mail Remark
+function email_get_remark() {
+	global $post;
+	return get_post_meta($post->ID, 'wp-email-remark', true);
+}
+
+
 ### Function: Get E-Mail Title
 function email_get_title() {
 	global $post;
-	$post_title = $post->post_title;
+	$post_title = get_post_meta($post->ID, 'wp-email-title', true);
+	if( empty($post_title) ) {
+		$post_title = $post->post_title;
+	}
 	if(!empty($post->post_password)) {
 		$post_title = sprintf(__('Protected: %s', 'wp-email'), $post_title);
 	} elseif($post->post_status == 'private') {
@@ -1153,7 +1163,15 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			if(intval($email_fields['yourremarks']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '	<label for="yourremarks">'.__('Your Remark:', 'wp-email').'</label><br />'."\n";
-				$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">'.$error_field['yourremarks'].'</textarea>'."\n";
+				$output .= '	<textarea cols="49" rows="8" id="yourremarks" name="yourremarks" class="Forms">';
+				$val = email_get_remark();
+				if ( !empty($error_field['yourremarks']) ) {
+					$val = $error_field['yourremarks'];
+				}
+				if ( !empty($val) ) {
+					$output .= esc_html($val);
+				}
+				$output .= '</textarea>'."\n";
 				$output .= '</p>'."\n";
 			}
 			if(intval($email_fields['friendname']) == 1) {
