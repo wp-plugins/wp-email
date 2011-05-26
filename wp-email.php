@@ -843,7 +843,8 @@ function process_email_form() {
 		$page_id = intval($_POST['page_id']);
 		// Get Post Information
 		if($p > 0) {
-			$query_post = 'p='.$p;
+			$post_type = get_post_type($p);
+			$query_post = 'p='. $p . '&post_type=' . $post_type;
 			$id = $p;
 		} else {
 			$query_post = 'page_id='.$page_id;
