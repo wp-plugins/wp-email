@@ -770,6 +770,27 @@ if(!function_exists('get_emails_failed')) {
 }
 
 
+### Function: Get EMail Sent For Post
+if(!function_exists('get_email_count')) {
+	function get_email_count($post_id = 0, $echo = true) {
+	    global $wpdb;
+	    if($post_id == 0) {
+	    	global $post;
+	    	$post_id = $post->ID;
+		}
+		
+	    $post_id = intval($post_id);
+	    
+	    $totalemails = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_postid = $post_id");
+		if($echo) {
+			echo number_format_i18n($totalemails);
+		} else {
+			return number_format_i18n($totalemails);
+		}
+	}
+}
+
+
 ### Function: Get Most E-Mailed
 if(!function_exists('get_mostemailed')) {
 	function get_mostemailed($mode = '', $limit = 10, $chars = 0, $echo = true) {
