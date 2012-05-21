@@ -842,7 +842,7 @@ function process_email_form() {
 		// Verify Referer
 		if(!check_ajax_referer('wp-email-nonce', 'wp-email_nonce', false))
 		{
-			_e('Failed To Verify Referer', 'wp-email');
+			_e('Failed To Verify Referrer', 'wp-email');
 			exit();
 		}
 		
