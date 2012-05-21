@@ -586,7 +586,7 @@ function not_spamming() {
 	global $wpdb;
 	$current_time = current_time('timestamp');
 	$email_ip = get_email_ipaddress();
-	$email_host = @gethostbyaddr($email_ip);
+	$email_host = esc_attr(@gethostbyaddr($email_ip));
 	$email_status = __('Success', 'wp-email');
 	$last_emailed = $wpdb->get_var("SELECT email_timestamp FROM $wpdb->email WHERE email_ip = '$email_ip' AND email_host = '$email_host' AND email_status = '$email_status' ORDER BY email_timestamp DESC LIMIT 1");
 	$email_allow_interval = intval(get_option('email_interval'))*60;
@@ -759,6 +759,25 @@ if(!function_exists('get_emails_failed')) {
 }
 
 
+### Function: Get EMail Sent For Post 
+if(!function_exists('get_email_count')) { 
+	function get_email_count($post_id = 0, $echo = true) { 
+		global $wpdb; 
+		if($post_id == 0) { 
+			 global $post; 
+			$post_id = $post->ID; 
+		} 
+		$post_id = intval($post_id); 
+		$totalemails = $wpdb->get_var("SELECT COUNT(email_id) FROM $wpdb->email WHERE email_postid = $post_id"); 
+		if($echo) { 
+			echo number_format_i18n($totalemails); 
+		} else { 
+			return number_format_i18n($totalemails); 
+		} 
+	} 
+}
+
+
 ### Function: Get Most E-Mailed
 if(!function_exists('get_mostemailed')) {
 	function get_mostemailed($mode = '', $limit = 10, $chars = 0, $echo = true) {
@@ -838,8 +857,9 @@ function process_email_form() {
 		$page_id = intval($_POST['page_id']);
 		// Get Post Information
 		if($p > 0) {
-			$query_post = 'p='.$p;
-			$id = $p;
+			$post_type = get_post_type($p); 
+	 		$query_post = 'p='. $p . '&post_type=' . $post_type; 
+			$id = $p; 
 		} else {
 			$query_post = 'page_id='.$page_id;
 			$id = $page_id;
@@ -1070,7 +1090,7 @@ function process_email_form() {
 			$email_posttitle = addslashes($post_title);
 			$email_timestamp = current_time('timestamp');
 			$email_ip = get_email_ipaddress();
-			$email_host = @gethostbyaddr($email_ip);
+			$email_host = esc_attr(@gethostbyaddr($email_ip));
 			foreach($friends as $friend) {
 				$email_friendname = addslashes($friend['name']);
 				$email_friendemail = addslashes($friend['email']);
@@ -1244,11 +1264,16 @@ if($_GET['sortby'] == 'email') {
 
 
 ### Function: Plug Into WP-Stats
-if(strpos(get_option('stats_url'), $_SERVER['REQUEST_URI']) || strpos($_SERVER['REQUEST_URI'], 'stats-options.php') || strpos($_SERVER['REQUEST_URI'], 'wp-stats/wp-stats.php')) {
-	add_filter('wp_stats_page_admin_plugins', 'email_page_admin_general_stats');
-	add_filter('wp_stats_page_admin_most', 'email_page_admin_most_stats');
-	add_filter('wp_stats_page_plugins', 'email_page_general_stats');
-	add_filter('wp_stats_page_most', 'email_page_most_stats');
+add_action('wp','email_wp_stats'); 
+function email_wp_stats() { 
+	if(function_exists('stats_page')) { 
+		if(strpos(get_option('stats_url'), $_SERVER['REQUEST_URI']) || strpos($_SERVER['REQUEST_URI'], 'stats-options.php') || strpos($_SERVER['REQUEST_URI'], 'wp-stats/wp-stats.php')) { 
+			add_filter('wp_stats_page_admin_plugins', 'email_page_admin_general_stats'); 
+			add_filter('wp_stats_page_admin_most', 'email_page_admin_most_stats'); 
+			add_filter('wp_stats_page_plugins', 'email_page_general_stats'); 
+			add_filter('wp_stats_page_most', 'email_page_most_stats'); 
+		} 
+	}
 }
 
 
