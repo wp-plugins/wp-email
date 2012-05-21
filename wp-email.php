@@ -154,19 +154,19 @@ add_action('wp_enqueue_scripts', 'email_scripts');
 function email_scripts() {
 	global $text_direction;
 	if(@file_exists(TEMPLATEPATH.'/email-css.css')) {
-		wp_enqueue_style('wp-email', get_stylesheet_directory_uri().'/email-css.css', false, '2.50', 'all');
+		wp_enqueue_style('wp-email', get_stylesheet_directory_uri().'/email-css.css', false, '2.60', 'all');
 	} else {
-		wp_enqueue_style('wp-email', plugins_url('wp-email/email-css.css'), false, '2.50', 'all');
+		wp_enqueue_style('wp-email', plugins_url('wp-email/email-css.css'), false, '2.60', 'all');
 	}
 	if('rtl' == $text_direction) {
 		if(@file_exists(TEMPLATEPATH.'/email-css-rtl.css')) {
-			wp_enqueue_style('wp-email-rtl', get_stylesheet_directory_uri().'/email-css-rtl.css', false, '2.50', 'all');
+			wp_enqueue_style('wp-email-rtl', get_stylesheet_directory_uri().'/email-css-rtl.css', false, '2.60', 'all');
 		} else {
-			wp_enqueue_style('wp-email-rtl', plugins_url('wp-email/email-css-rtl.css'), false, '2.50', 'all');
+			wp_enqueue_style('wp-email-rtl', plugins_url('wp-email/email-css-rtl.css'), false, '2.60', 'all');
 		}
 	}
 	$email_max = intval(get_option('email_multiple'));
-	wp_enqueue_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.50', true);
+	wp_enqueue_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.60', true);
 	wp_localize_script('wp-email', 'emailL10n', array(
 		'ajax_url' => admin_url('admin-ajax.php'),
 		'max_allowed' => $email_max,
@@ -191,7 +191,7 @@ add_action('admin_enqueue_scripts', 'email_stylesheets_admin');
 function email_stylesheets_admin($hook_suffix) {
 	$email_admin_pages = array('wp-email/email-manager.php', 'wp-email/email-options.php', 'wp-email/email-uninstall.php');
 	if(in_array($hook_suffix, $email_admin_pages)) {
-		wp_enqueue_style('wp-email-admin', plugins_url('wp-email/email-admin-css.css'), false, '2.50', 'all');
+		wp_enqueue_style('wp-email-admin', plugins_url('wp-email/email-admin-css.css'), false, '2.60', 'all');
 	}
 }
 
@@ -1518,7 +1518,7 @@ function create_email_table() {
 	if($email_mailer == 'php') {
 		update_option('email_mailer', 'mail');
 	}
-	// Version 2.50 Upgrade
+	// Version 2.60 Upgrade
 	delete_option('widget_email_most_emailed');
 	// Set 'manage_email' Capabilities To Administrator
 	$role = get_role('administrator');
