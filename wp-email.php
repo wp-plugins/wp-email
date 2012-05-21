@@ -838,11 +838,14 @@ function process_email_form() {
 	global $wpdb, $post, $text_direction;
 	// If User Click On Mail
 	if(isset($_POST['action']) && $_POST['action'] == 'email') {
-		if(!wp_verify_nonce($_POST['wp-email_nonce'], 'wp-email-nonce'))
+
+		// Verify Referer
+		if(!check_ajax_referer('wp-email-nonce', 'wp-email_nonce', false))
 		{
-			_e('Failed To Verify _wpnonce', 'wp-email');
+			_e('Failed To Verify Referer', 'wp-email');
 			exit();
 		}
+		
 		@session_start();
 		email_textdomain();
 		header('Content-Type: text/html; charset='.get_option('blog_charset').'');
