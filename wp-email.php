@@ -695,6 +695,7 @@ function email_popup_form_header($echo = true, $temp_id) {
 			$output .= '<p style="display: none;"><input type="hidden" id="p" name="p" value="'.$id.'" /></p>'."\n";
 		}
 	}
+	$output .= '<p style="display: none;"><input type="hidden" id="wp-email_nonce" name="wp-email_nonce" value="'.wp_create_nonce('wp-email-nonce').'" /></p>'."\n";
 	if($echo) {
 		echo $output;
 	} else {
@@ -850,14 +851,14 @@ function process_email_form() {
 		email_textdomain();
 		header('Content-Type: text/html; charset='.get_option('blog_charset').'');
 		// POST Variables
-		$yourname = strip_tags(stripslashes(trim($_POST['yourname'])));
-		$youremail = strip_tags(stripslashes(trim($_POST['youremail'])));
-		$yourremarks = strip_tags(stripslashes(trim($_POST['yourremarks'])));
-		$friendname = strip_tags(stripslashes(trim($_POST['friendname'])));
-		$friendemail = strip_tags(stripslashes(trim($_POST['friendemail'])));
-		$imageverify = $_POST['imageverify'];
-		$p = intval($_POST['p']);
-		$page_id = intval($_POST['page_id']);
+		$yourname		= (!empty($_POST['yourname'])	? strip_tags(stripslashes(trim($_POST['yourname']))) : '');
+		$youremail		= (!empty($_POST['youremail'])	? strip_tags(stripslashes(trim($_POST['youremail']))) : '');
+		$yourremarks	= (!empty($_POST['yourremarks'])? strip_tags(stripslashes(trim($_POST['yourremarks']))) : '');
+		$friendname		= (!empty($_POST['friendname'])	? strip_tags(stripslashes(trim($_POST['friendname']))) : '');
+		$friendemail	= (!empty($_POST['friendemail'])? strip_tags(stripslashes(trim($_POST['friendemail']))) : '');
+		$imageverify	= (!empty($_POST['imageverify'])? $_POST['imageverify'] : '');
+		$p 				= (!empty($_POST['p'])			? intval($_POST['p']) : 0);
+		$page_id 		= (!empty($_POST['page_id'])	? intval($_POST['page_id']) : 0);
 		// Get Post Information
 		if($p > 0) {
 			$post_type = get_post_type($p); 
@@ -1138,6 +1139,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 	$email_options = get_option('email_options');
 	$email_type = intval($email_options['email_type']);
 	$error_field = apply_filters('email_form-fieldvalues', $error_field);
+	$output = '';
 	// Template - Subtitle
 	if($subtitle) {
 		$template_subtitle = stripslashes(get_option('email_template_subtitle'));
@@ -1157,14 +1159,10 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 	if (not_spamming()) {
 		if(not_password_protected()) {
 			if($email_type == 2){
-				$output .= email_popup_form_header(false, $error_field['id']);
+				$output .= email_popup_form_header(false, (!empty($error_field['id']) ? $error_field['id'] : 0));
 			} else {
-				$output .= email_form_header(false, $error_field['id']);
+				$output .= email_form_header(false, (!empty($error_field['id']) ? $error_field['id'] : 0));
 			}
-			$output .= '<!-- Display Error, If There Is Any -->'."\n";
-			$output .= $template_email_sentfailed;
-			$output .= $template_email_error;
-			$output .= '<!-- End Display Error, If There Is Any -->'."\n";
 			$output .= '<p id="wp-email-required">'.__('* Required Field', 'wp-email').'</p>'."\n";
 			if(intval($email_fields['yourname']) == 1) {
 				$output .= '<p>'."\n";
@@ -1195,12 +1193,12 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			if(intval($email_fields['friendname']) == 1) {
 				$output .= '<p>'."\n";
 				$output .= '<label for="friendname">'.__('Friend\'s Name: *', 'wp-email').'</label><br />'."\n";
-				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="TextField" value="'.$error_field['friendname'].'" />'.email_multiple(false)."\n";
+				$output .= '<input type="text" size="50" id="friendname" name="friendname" class="TextField" value="'.(!empty($error_field['friendname']) ? $error_field['friendname'] : '').'" />'.email_multiple(false)."\n";
 				$output .= '</p>'."\n";
 			}
 			$output .= '<p>'."\n";
 			$output .= '<label for="friendemail">'.__('Friend\'s E-Mail: *', 'wp-email').'</label><br />'."\n";
-			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="TextField" value="'.$error_field['friendemail'].'" dir="ltr" />'.email_multiple(false)."\n";
+			$output .= '<input type="text" size="50" id="friendemail" name="friendemail" class="TextField" value="'.(!empty($error_field['friendemail']) ? $error_field['friendemail'] : '').'" dir="ltr" />'.email_multiple(false)."\n";
 			$output .= '</p>'."\n";
 			if($email_image_verify) {
 				$output .= '<p>'."\n";
