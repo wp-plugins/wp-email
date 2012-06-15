@@ -168,7 +168,7 @@ function email_scripts() {
 	$email_max = intval(get_option('email_multiple'));
 	wp_enqueue_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.60', true);
 	wp_localize_script('wp-email', 'emailL10n', array(
-		'ajax_url' => admin_url('admin-ajax.php'),
+		'ajax_url' => admin_url('admin-ajax.php', (is_ssl() ? 'https' : 'http')),
 		'max_allowed' => $email_max,
 		'text_error' => __('The Following Error Occurs:', 'wp-email'),
 		'text_name_invalid' => __('- Your Name is empty/invalid', 'wp-email'),
