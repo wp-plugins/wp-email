@@ -3,7 +3,7 @@
  * Plugin Name: WP-EMail
  * Plugin URI: http://lesterchan.net/portfolio/programming/php/
  * Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
- * Version: 2.60
+ * Version: 2.61
  * Author: Lester 'GaMerZ' Chan
  * Author URI: http://lesterchan.net
  */
@@ -482,10 +482,8 @@ function email_content_alt() {
 ### Function: E-Mail Get The Content
 function get_email_content() {
 	global $pages, $multipage, $numpages, $post;
-	if (!empty($post->post_password)) {
-		if (stripslashes($_COOKIE['wp-postpass_'.COOKIEHASH]) != $post->post_password) {
-			return __('Password Protected Post', 'wp-email');
-		}
+	if(post_password_required()) {
+		return __('Password Protected Post', 'wp-email');
 	}
 	if($multipage) {
 		for($page = 0; $page < $numpages; $page++) {
@@ -522,19 +520,6 @@ function get_email_ipaddress() {
 	}
 	return esc_attr($ip_address);
 }
-
-
-### Function: Check For Password Protected Post
-function not_password_protected() {
-	global $post;
-	if (!empty($post->post_password)) {
-		if ($_COOKIE['wp-postpass_'.COOKIEHASH] != $post->post_password) {
-			return false;
-		}
-	}
-	return true;
-}
-
 
 ### Function: There Are Still Many PHP 4.x Users
 if(!function_exists('htmlspecialchars_decode')) {
@@ -1157,7 +1142,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 		$output .= '<div id="wp-email-content" class="wp-email">'."\n";
 	}
 	if (not_spamming()) {
-		if(not_password_protected()) {
+		if(!post_password_required()) {
 			if($email_type == 2){
 				$output .= email_popup_form_header(false, (!empty($error_field['id']) ? $error_field['id'] : 0));
 			} else {
@@ -1210,7 +1195,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 			$output .= '</form>'."\n";
 		} else {
 			$output .= get_the_password_form();
-		} // End if(not_password_protected())
+		} // End if(!post_password_required())
 	} else {
 		$output .= '<p>'.sprintf(_n('Please wait for <strong>%s Minute</strong> before sending the next article.', 'Please wait for <strong>%s Minutes</strong> before sending the next article.', email_flood_interval(false), 'wp-email'), email_flood_interval(false)).'</p>'."\n";
 	} // End if (not_spamming())
