@@ -9,7 +9,7 @@
  */
 
 /*
-	Copyright 2012  Lester Chan  (email : lesterchan@gmail.com)
+	Copyright 2013  Lester Chan  (email : lesterchan@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -1427,6 +1427,7 @@ function email_page_most_stats($content) {
 ### Function: Init WP-EMail Widget
 add_action('widgets_init', 'widget_email_init');
 function widget_email_init() {
+	email_textdomain();
 	register_widget('WP_Widget_Email');
 }
 

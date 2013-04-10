@@ -3,7 +3,7 @@ Contributors: GamerZ, aaroncampbell
 Donate link: http://lesterchan.net/site/donation/
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend
 Requires at least: 2.8
-Tested up to: 3.3.2
+Tested up to: 3.5.1
 Stable tag: trunk
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
