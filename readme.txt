@@ -35,7 +35,17 @@ Once installed take the following steps to set it up:
 
 1. Under E-Mail Settings, modify the setting Method Used To Send E-Mail accordingly. If the method is wrong, no email will get sent.
 1. You Need To Re-Generate The Permalink (WP-Admin -> Settings -> Permalinks -> Save Changes)
-1. Refer To Usage For Further Instructions
+1. Open `wp-content/themes/<YOUR THEME NAME>/index.php`
+      You may place it in single.php, post.php, page.php, etc also.
+1. Find: `<?php while (have_posts()) : the_post(); ?>`
+1. Add Anywhere Below It: `<?php if(function_exists('wp_email')) { email_link(); } ?>`
+
+Simply add this code <strong>inside the loop</strong> where you want the email link to display:
+<code>
+if(function_exists('email_link')) {
+	email_link();
+}
+</code>
 
 == Upgrade Notice ==
 N/A
