@@ -2,24 +2,26 @@
 Contributors: GamerZ  
 Donate link: http://lesterchan.net/site/donation/  
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend  
-Requires at least: 2.8  
-Tested up to: 3.8  
-Stable tag: 2.61  
+Requires at least: 3.9  
+Tested up to: 3.9  
+Stable tag: 2.62  
 License: GPLv2 or later  
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
 
 == Description ==
 
-Allows people to recommend/send your WordPress blog's post/page to a friend.
+= Development =
+* [https://github.com/lesterchan/wp-email](https://github.com/lesterchan/wp-email "https://github.com/lesterchan/wp-email")
 
-[Demo](http://lesterchan.net/wordpress/2006/07/05/donations/email/ "Demo") | [Translations](http://dev.wp-plugins.org/browser/wp-email/i18n/ "Translations") | [Support Forums](http://forums.lesterchan.net/index.php?board=13.0 "WP-EMail Support Forums")
+= Translations =
+* [http://dev.wp-plugins.org/browser/wp-email/i18n/](http://dev.wp-plugins.org/browser/wp-email/i18n/ "http://dev.wp-plugins.org/browser/wp-email/i18n/")
+
 
 = Credits =
 * Icons courtesy of [FamFamFam](http://www.famfamfam.com/).
 * __ngetext() by [Anna Ozeritskaya](http://hweia.ru/).
 * Right-to-left language support by [Kambiz R. Khojasteh](http://persian-programming.com/)
-* Maintenance by [AaronCampbell](http://xavisys.com)
 
 = Donations =
 I spent most of my free time creating, updating, maintaining and supporting these plugins, if you really love my plugins and could spare me a couple of bucks as my school allowance, I will really appericiate it. If not feel free to use it without any obligations. Thank You. My Paypal account is lesterchan@gmail.com.
@@ -76,9 +78,9 @@ if(function_exists('email_link'))
 You can also force `email_link()` to return the link rather than echo it by setting the third parameter to false:
 <code>
 if(function_exists('email_link')) {
-	$email_link ### email_link( 'E-Mail Text Link for Post', 'E-Mail Text Link for Page', false);
+	$email_link email_link( 'E-Mail Text Link for Post', 'E-Mail Text Link for Page', false);
 } else {
-	$email_link ### '';
+	$email_link '';
 }
 
 echo $email_link;
@@ -154,6 +156,9 @@ If you add a custom field with the key "wp-email-title" it will be used as the E
 If you add a custom field with the key "wp-email-remark" it will be placed in the remarks field in the E-Mail form.
 
 == Changelog ==
+
+= 2.62 =
+* NEW: WordPress 3.9 Dashicons
 
 = 2.61 =
 * FIXED: Unable to load WP-Email on Password Protected posts
