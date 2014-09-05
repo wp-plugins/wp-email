@@ -3,14 +3,14 @@
  Plugin Name: WP-EMail
  Plugin URI: http://lesterchan.net/portfolio/programming/php/
  Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
- Version: 2.62
+ Version: 2.63
  Author: Lester 'GaMerZ' Chan
  Author URI: http://lesterchan.net
  Text Domain: wp-email
  */
 
 /*
-	Copyright 2013  Lester Chan  (email : lesterchan@gmail.com)
+	Copyright 2014  Lester Chan  (email : lesterchan@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,12 +27,6 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/**
- * @todo flush permalinks when needed so the user doesn't have to
- * @todo Make EMAIL_SHOW_REMARKS a setting and remove the readme.txt's FAQs
- * @todo Make loading of CSS file completely optional
- * @todo Consider making donotemail shortcode not affect wp-print without optional parameter?
- */
 
 ### Define: Show Email Remarks In Logs?
 define('EMAIL_SHOW_REMARKS', true);
@@ -56,77 +50,14 @@ function email_menu() {
 	add_menu_page(__('E-Mail', 'wp-email'), __('E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php', '', 'dashicons-email-alt');
 	add_submenu_page('wp-email/email-manager.php', __('Manage E-Mail', 'wp-email'), __('Manage E-Mail', 'wp-email'), 'manage_email', 'wp-email/email-manager.php');
 	add_submenu_page('wp-email/email-manager.php', __('E-Mail Options', 'wp-email'), __('E-Mail Options', 'wp-email'),  'manage_email', 'wp-email/email-options.php');
-	add_submenu_page('wp-email/email-manager.php', __('Uninstall WP-EMail', 'wp-email'), __('Uninstall WP-EMail', 'wp-email'),  'manage_email', 'wp-email/email-uninstall.php');
 }
 
 
-### Function: E-Mail htaccess ReWrite Rules
-add_filter('generate_rewrite_rules', 'email_rewrite');
-function email_rewrite($wp_rewrite) {
-	$email_link = get_permalink();
-	$page_uris = $wp_rewrite->page_uri_index();
-	$uris = $page_uris[0];
-	if(substr($email_link, -1, 1) != '/' && substr($wp_rewrite->permalink_structure, -1, 1) != '/') {
-		$email_link_text = '/email';
-		$email_popup_text = '/emailpopup';
-	} else {
-		$email_link_text = 'email';
-		$email_popup_text = 'emailpopup';
-	}
-	// WP-EMail Standalone Post Rules
-	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_link_text, EP_PERMALINK);
-	$rewrite_rules = array_slice($rewrite_rules, 5, 1);
-	$r_rule = array_keys($rewrite_rules);
-	$r_rule = array_shift($r_rule);
-	$r_rule = str_replace('/trackback', '', $r_rule);
-	$r_link = array_values($rewrite_rules);
-	$r_link = array_shift($r_link);
-	$r_link = str_replace('tb=1', 'email=1', $r_link);
-	$wp_rewrite->rules = array_merge(array($r_rule => $r_link), $wp_rewrite->rules);
-	// WP-Email Standalone Page Rules
-	if(is_array($uris)) {
-		$email_page_rules = array();
-		foreach ($uris as $uri => $pagename) {
-			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
-			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpage', EP_PAGES);
-			$rewrite_rules = array_slice($rewrite_rules, 5, 1);
-			$r_rule = array_keys($rewrite_rules);
-			$r_rule = array_shift($r_rule);
-			$r_rule = str_replace('/trackback', '', $r_rule);
-			$r_link = array_values($rewrite_rules);
-			$r_link = array_shift($r_link);
-			$r_link = str_replace('tb=1', 'email=1', $r_link);
-			$email_page_rules = array_merge($email_page_rules, array($r_rule => $r_link));
-		}
-		$wp_rewrite->rules = array_merge($email_page_rules, $wp_rewrite->rules);
-	}
-
-	// WP-EMail Popup Post Rules
-	$rewrite_rules = $wp_rewrite->generate_rewrite_rule($wp_rewrite->permalink_structure.$email_popup_text, EP_PERMALINK);
-	$rewrite_rules = array_slice($rewrite_rules, 5, 1);
-	$r_rule = array_keys($rewrite_rules);
-	$r_rule = array_shift($r_rule);
-	$r_rule = str_replace('/trackback', '', $r_rule);
-	$r_link = array_values($rewrite_rules);
-	$r_link = array_shift($r_link);
-	$r_link = str_replace('tb=1', 'emailpopup=1', $r_link);
-	$wp_rewrite->rules = array_merge(array($r_rule => $r_link), $wp_rewrite->rules);
-	if(is_array($uris)) {
-		$email_page_rules = array();
-		foreach ($uris as $uri => $pagename) {
-			$wp_rewrite->add_rewrite_tag('%pagename%', "($uri)", 'pagename=');
-			$rewrite_rules = $wp_rewrite->generate_rewrite_rules($wp_rewrite->get_page_permastruct().'/emailpopuppage', EP_PAGES);
-			$rewrite_rules = array_slice($rewrite_rules, 5, 1);
-			$r_rule = array_keys($rewrite_rules);
-			$r_rule = array_shift($r_rule);
-			$r_rule = str_replace('/trackback', '', $r_rule);
-			$r_link = array_values($rewrite_rules);
-			$r_link = array_shift($r_link);
-			$r_link = str_replace('tb=1', 'emailpopup=1', $r_link);
-			$email_page_rules = array_merge($email_page_rules, array($r_rule => $r_link));
-		}
-		$wp_rewrite->rules = array_merge($email_page_rules, $wp_rewrite->rules);
-	}
+### Function: Add htaccess Rewrite Endpoint - this handles all the rules
+add_action( 'init', 'wp_email_endpoint' );
+function wp_email_endpoint() {
+	add_rewrite_endpoint( 'email', EP_PERMALINK | EP_PAGES );
+	add_rewrite_endpoint( 'emailpopup', EP_PERMALINK | EP_PAGES );
 }
 
 
@@ -163,9 +94,9 @@ function email_scripts() {
 		}
 	}
 	$email_max = intval(get_option('email_multiple'));
-	wp_enqueue_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.60', true);
+	wp_enqueue_script('wp-email', plugins_url('wp-email/email-js.js'), array('jquery'), '2.63', true);
 	wp_localize_script('wp-email', 'emailL10n', array(
-		'ajax_url' => admin_url('admin-ajax.php', (is_ssl() ? 'https' : 'http')),
+		'ajax_url' => admin_url('admin-ajax.php'),
 		'max_allowed' => $email_max,
 		'text_error' => __('The Following Error Occurs:', 'wp-email'),
 		'text_name_invalid' => __('- Your Name is empty/invalid', 'wp-email'),
@@ -219,10 +150,8 @@ function email_link($email_post_text = '', $email_page_text = '', $echo = true) 
 					} else {
 						$email_text = $email_page_text;
 					}
-					$email_link = $email_link.'emailpage/';
-				} else {
-					$email_link = $email_link.'email/';
 				}
+				$email_link = $email_link.'email/';
 			} else {
 				if(is_page()) {
 					if(empty($email_page_text)) {
@@ -246,10 +175,8 @@ function email_link($email_post_text = '', $email_page_text = '', $echo = true) 
 					} else {
 						$email_text = $email_page_text;
 					}
-					$email_link = $email_link.'emailpopuppage/';
-				} else {
-					$email_link = $email_link.'emailpopup/';
 				}
+				$email_link = $email_link.'emailpopup/';
 			} else {
 				if(is_page()) {
 					if(empty($email_page_text)) {
@@ -378,6 +305,12 @@ function email_pagetitle($page_title) {
 }
 
 
+### Function: Add noindex & nofollow to meta
+function email_meta_nofollow() {
+	echo '<meta name="robots" content="noindex, nofollow" />'."\n";
+}
+
+
 ### Function: E-Mail Post ID
 if(!function_exists('get_the_id')) {
 	function get_the_id() {
@@ -414,7 +347,7 @@ function email_get_title() {
 function email_title($page_title) {
 	if(in_the_loop()) {
 		$post_title = email_get_title();
-		$post_author = the_author('', false);
+		$post_author = get_the_author();
 		$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
 		$post_category = email_category(__(',', 'wp-email').' ');
 		$post_category_alt = strip_tags($post_category);
@@ -794,10 +727,11 @@ if(!function_exists('get_mostemailed')) {
 ### Function: Load WP-EMail
 add_action('template_redirect', 'wp_email', 5);
 function wp_email() {
-	if(intval(get_query_var('email')) == 1) {
+	global $wp_query;
+	if( array_key_exists( 'email' , $wp_query->query_vars ) ) {
 		include(WP_PLUGIN_DIR.'/wp-email/email-standalone.php');
 		exit();
-	} elseif(intval(get_query_var('emailpopup')) == 1) {
+	} elseif( array_key_exists( 'emailpopup' , $wp_query->query_vars ) ) {
 		include(WP_PLUGIN_DIR.'/wp-email/email-popup.php');
 		exit();
 	}
@@ -1102,7 +1036,7 @@ function email_form($content, $echo = true, $subtitle = true, $div = true, $erro
 	// Variables
 	$multipage = false;
 	$post_title = email_get_title();
-	$post_author = the_author('', false);
+	$post_author = get_the_author();
 	$post_date = get_the_time(get_option('date_format').' ('.get_option('time_format').')', '', '', false);
 	$post_category = email_category(__(',', 'wp-email').' ');
 	$post_category_alt = strip_tags($post_category);
@@ -1419,11 +1353,34 @@ function widget_email_init() {
 }
 
 
-### Function: Create E-Mail Table
-add_action('activate_wp-email/wp-email.php', 'create_email_table');
-function create_email_table() {
+### Function: Activate Plugin
+register_activation_hook( __FILE__, 'email_activation' );
+function email_activation( $network_wide )
+{
+	if ( is_multisite() && $network_wide )
+	{
+		$ms_sites = wp_get_sites();
+
+		if( 0 < sizeof( $ms_sites ) )
+		{
+			foreach ( $ms_sites as $ms_site )
+			{
+				switch_to_blog( $ms_site['blog_id'] );
+				email_activate();
+			}
+		}
+
+		restore_current_blog();
+	}
+	else
+	{
+		email_activate();
+	}
+}
+
+function email_activate() {
 	global $wpdb;
-	email_textdomain();
+
 	if(@is_file(ABSPATH.'/wp-admin/upgrade-functions.php')) {
 		include_once(ABSPATH.'/wp-admin/upgrade-functions.php');
 	} elseif(@is_file(ABSPATH.'/wp-admin/includes/upgrade.php')) {
@@ -1431,6 +1388,7 @@ function create_email_table() {
 	} else {
 		die('We have problem finding your \'/wp-admin/upgrade-functions.php\' and \'/wp-admin/includes/upgrade.php\'');
 	}
+
 	$charset_collate = '';
 	if($wpdb->supports_collation()) {
 		if(!empty($wpdb->charset)) {
@@ -1440,63 +1398,65 @@ function create_email_table() {
 			$charset_collate .= " COLLATE $wpdb->collate";
 		}
 	}
+
 	// Create E-Mail Table
 	$create_table = "CREATE TABLE $wpdb->email (".
-							"email_id int(10) NOT NULL auto_increment,".
-							"email_yourname varchar(200) NOT NULL default '',".
-							"email_youremail varchar(200) NOT NULL default '',".
-							"email_yourremarks text NOT NULL,".
-							"email_friendname varchar(200) NOT NULL default '',".
-							"email_friendemail varchar(200) NOT NULL default '',".
-							"email_postid int(10) NOT NULL default '0',".
-							"email_posttitle text NOT NULL,".
-							"email_timestamp varchar(20) NOT NULL default '',".
-							"email_ip varchar(100) NOT NULL default '',".
-							"email_host varchar(200) NOT NULL default '',".
-							"email_status varchar(20) NOT NULL default '',".
-							"PRIMARY KEY (email_id)) $charset_collate;";
+		"email_id int(10) NOT NULL auto_increment,".
+		"email_yourname varchar(200) NOT NULL default '',".
+		"email_youremail varchar(200) NOT NULL default '',".
+		"email_yourremarks text NOT NULL,".
+		"email_friendname varchar(200) NOT NULL default '',".
+		"email_friendemail varchar(200) NOT NULL default '',".
+		"email_postid int(10) NOT NULL default '0',".
+		"email_posttitle text NOT NULL,".
+		"email_timestamp varchar(20) NOT NULL default '',".
+		"email_ip varchar(100) NOT NULL default '',".
+		"email_host varchar(200) NOT NULL default '',".
+		"email_status varchar(20) NOT NULL default '',".
+		"PRIMARY KEY (email_id)) $charset_collate;";
 	maybe_create_table($wpdb->email, $create_table);
-	// Add In Options (12 Records)
-	add_option('email_smtp', array('username' => '', 'password' => '', 'server' => ''), 'Your SMTP Name, Password, Server');
-	add_option('email_contenttype', 'text/html', 'Your E-Mail Type');
-	add_option('email_mailer', 'php', 'Your Mailer Type');
-	add_option('email_template_subject', __('Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'wp-email'), 'Template For E-Mail Subject');
-	add_option('email_template_body', __('<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'wp-email'), 'Template For E-Mail Body');
+
+	// Add In Options
+	add_option('email_smtp', array('username' => '', 'password' => '', 'server' => ''));
+	add_option('email_contenttype', 'text/html');
+	add_option('email_mailer', 'php');
+	add_option('email_template_subject', __('Recommended Article By %EMAIL_YOUR_NAME%: %EMAIL_POST_TITLE%', 'wp-email'));
+	add_option('email_template_body', __('<p>Hi <strong>%EMAIL_FRIEND_NAME%</strong>,<br />Your friend, <strong>%EMAIL_YOUR_NAME%</strong>, has recommended this article entitled \'<strong>%EMAIL_POST_TITLE%</strong>\' to you.</p><p><strong>Here is his/her remark:</strong><br />%EMAIL_YOUR_REMARKS%</p><p><strong>%EMAIL_POST_TITLE%</strong><br />Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%</p>%EMAIL_POST_CONTENT%<p>Article taken from %EMAIL_BLOG_NAME% - <a href="%EMAIL_BLOG_URL%">%EMAIL_BLOG_URL%</a><br />URL to article: <a href="%EMAIL_PERMALINK%">%EMAIL_PERMALINK%</a></p>', 'wp-email'));
 	add_option('email_template_bodyalt', __('Hi %EMAIL_FRIEND_NAME%,'."\n".
-	'Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.'."\n\n".
-	'Here is his/her remarks:'."\n".
-	'%EMAIL_YOUR_REMARKS%'."\n\n".
-	'%EMAIL_POST_TITLE%'."\n".
-	'Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%'."\n".
-	'%EMAIL_POST_CONTENT%'."\n".
-	'Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%'."\n".
-	'URL to article: %EMAIL_PERMALINK%', 'wp-email'), 'Template For E-Mail Alternate Body');
-	add_option('email_template_sentsuccess', '<p>'.__('Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p><p>&laquo; <a href="%EMAIL_PERMALINK%">'.__('Back to %EMAIL_POST_TITLE%', 'wp-email').'</a></p>', 'wp-email'), 'Template For E-Mail That Is Sent Successfully');
-	add_option('email_template_sentfailed', '<p>'.__('An error has occurred when trying to send this email: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Failed To Sent');
-	add_option('email_template_error', '<p>'.__('An error has occurred: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>', 'Template For E-Mail That Has An Error');
-	add_option('email_interval', 10, 'The Number Of Minutes Before The User Can E-Mail The Next Article');
-	add_option('email_snippet', 0, 'Enable Snippet Feature For Your E-Mail?');
-	add_option('email_multiple', 5, 'Maximum Number Of Multiple E-Mails');
+		'Your friend, %EMAIL_YOUR_NAME%, has recommended this article entitled \'%EMAIL_POST_TITLE%\' to you.'."\n\n".
+		'Here is his/her remarks:'."\n".
+		'%EMAIL_YOUR_REMARKS%'."\n\n".
+		'%EMAIL_POST_TITLE%'."\n".
+		'Posted By %EMAIL_POST_AUTHOR% On %EMAIL_POST_DATE% In %EMAIL_POST_CATEGORY%'."\n".
+		'%EMAIL_POST_CONTENT%'."\n".
+		'Article taken from %EMAIL_BLOG_NAME% - %EMAIL_BLOG_URL%'."\n".
+		'URL to article: %EMAIL_PERMALINK%', 'wp-email'));
+	add_option('email_template_sentsuccess', '<p>'.__('Article: <strong>%EMAIL_POST_TITLE%</strong> has been sent to <strong>%EMAIL_FRIEND_NAME% (%EMAIL_FRIEND_EMAIL%)</strong></p><p>&laquo; <a href="%EMAIL_PERMALINK%">'.__('Back to %EMAIL_POST_TITLE%', 'wp-email').'</a></p>', 'wp-email'));
+	add_option('email_template_sentfailed', '<p>'.__('An error has occurred when trying to send this email: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>');
+	add_option('email_template_error', '<p>'.__('An error has occurred: ', 'wp-email').'<br /><strong>&raquo;</strong> %EMAIL_ERROR_MSG%</p>');
+	add_option('email_interval', 10);
+	add_option('email_snippet', 0);
+	add_option('email_multiple', 5);
+
 	// Version 2.05 Options
-	add_option('email_imageverify', 1, 'Enable Image Verification?');
+	add_option('email_imageverify', 1);
+
 	// Version 2.10 Options
 	$email_options = array('post_text' => __('Email This Post', 'wp-email'), 'page_text' => __('Email This Page', 'wp-email'), 'email_icon' => 'email_famfamfam.png', 'email_type' => 1, 'email_style' => 1, 'email_html' => '<a href="%EMAIL_URL%" rel="nofollow" title="%EMAIL_TEXT%">%EMAIL_TEXT%</a>');
+	add_option('email_options', $email_options);
 	$email_fields = array('yourname' => 1, 'youremail' => 1, 'yourremarks' => 1, 'friendname' => 1, 'friendemail' => 1);
-	add_option('email_options', $email_options, 'Email Options');
-	add_option('email_fields', $email_fields, 'Email Fields');
+	add_option('email_fields', $email_fields);
+
 	// Version 2.11 Options
-	add_option('email_template_title', __('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'), 'Template For E-Mail Page Title');
-	add_option('email_template_subtitle', '<p style="text-align: center;">'.__('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email').'</p>', 'Template For E-Mail Page SubTitle');
-	// Version 2.20 Upgrade
-	$email_mailer = get_option('email_mailer');
-	if($email_mailer == 'php') {
-		update_option('email_mailer', 'mail');
-	}
-	// Version 2.60 Upgrade
-	delete_option('widget_email_most_emailed');
+	add_option('email_template_title', __('E-Mail \'%EMAIL_POST_TITLE%\' To A Friend', 'wp-email'));
+	add_option('email_template_subtitle', '<p style="text-align: center;">'.__('Email a copy of <strong>\'%EMAIL_POST_TITLE%\'</strong> to a friend', 'wp-email').'</p>');
+
 	// Set 'manage_email' Capabilities To Administrator
 	$role = get_role('administrator');
 	if(!$role->has_cap('manage_email')) {
 		$role->add_cap('manage_email');
 	}
+
+	// Flush Rewrite Rules
+	flush_rewrite_rules();
 }

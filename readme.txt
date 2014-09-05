@@ -3,13 +3,16 @@ Contributors: GamerZ
 Donate link: http://lesterchan.net/site/donation/  
 Tags: email, e-mail, wp-email, mail, send, recommend, ajax, friend  
 Requires at least: 3.9  
-Tested up to: 3.9  
-Stable tag: 2.62  
+Tested up to: 4.0  
+Stable tag: 2.63  
 License: GPLv2 or later  
 
 Allows people to recommend/send your WordPress blog's post/page to a friend.
 
 == Description ==
+
+= Build Status =
+[![Build Status](https://travis-ci.org/lesterchan/wp-email.svg?branch=master)](https://travis-ci.org/lesterchan/wp-email)
 
 = Development =
 * [https://github.com/lesterchan/wp-email](https://github.com/lesterchan/wp-email "https://github.com/lesterchan/wp-email")
@@ -17,11 +20,9 @@ Allows people to recommend/send your WordPress blog's post/page to a friend.
 = Translations =
 * [http://dev.wp-plugins.org/browser/wp-email/i18n/](http://dev.wp-plugins.org/browser/wp-email/i18n/ "http://dev.wp-plugins.org/browser/wp-email/i18n/")
 
-
 = Credits =
+* Plugin icon by [Yannick](http://yanlu.de) from [Flaticon](http://www.flaticon.com)
 * Icons courtesy of [FamFamFam](http://www.famfamfam.com/).
-* __ngetext() by [Anna Ozeritskaya](http://hweia.ru/).
-* Right-to-left language support by [Kambiz R. Khojasteh](http://persian-programming.com/)
 
 = Donations =
 I spent most of my free time creating, updating, maintaining and supporting these plugins, if you really love my plugins and could spare me a couple of bucks as my school allowance, I will really appericiate it. If not feel free to use it without any obligations. Thank You. My Paypal account is lesterchan@gmail.com.
@@ -48,10 +49,11 @@ N/A
 
 == Screenshots ==
 
-1. Admin E-Mail logs
-2. Options/settings page
-3. Sample E-Mail Post link
-4. Sample E-Mail Post screen
+1. Admin - E-Mail Logs
+2. Admin - Options Page
+3. Admin - Templates Page
+4. Sample E-Mail Post link
+5. Sample E-Mail Post screen
 
 == Frequently Asked Questions ==
 
@@ -156,6 +158,13 @@ If you add a custom field with the key "wp-email-title" it will be used as the E
 If you add a custom field with the key "wp-email-remark" it will be placed in the remarks field in the E-Mail form.
 
 == Changelog ==
+
+= 2.63 =
+* NEW: Finally there is custom post type support. Props [nimmolo](http://andrewnimmo.org/ "nimmolo").
+* NEW: Allow Multisite Network Activate
+* NEW: Uses WordPress uninstall.php file to uninstall the plugin
+* NEW: Added noindex, nofollow to meta tag to email-standalone.php
+* FIXED: Use get_the_author() instead of the_author('', false)
 
 = 2.62 =
 * NEW: WordPress 3.9 Dashicons
