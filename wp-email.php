@@ -3,7 +3,7 @@
  Plugin Name: WP-EMail
  Plugin URI: http://lesterchan.net/portfolio/programming/php/
  Description: Allows people to recommand/send your WordPress blog's post/page to a friend.
- Version: 2.63
+ Version: 2.64
  Author: Lester 'GaMerZ' Chan
  Author URI: http://lesterchan.net
  Text Domain: wp-email
@@ -728,12 +728,17 @@ if(!function_exists('get_mostemailed')) {
 add_action('template_redirect', 'wp_email', 5);
 function wp_email() {
 	global $wp_query;
-	if( array_key_exists( 'email' , $wp_query->query_vars ) ) {
-		include(WP_PLUGIN_DIR.'/wp-email/email-standalone.php');
-		exit();
-	} elseif( array_key_exists( 'emailpopup' , $wp_query->query_vars ) ) {
-		include(WP_PLUGIN_DIR.'/wp-email/email-popup.php');
-		exit();
+
+	$template_redirect = apply_filters( 'wp_email_template_redirect', true );
+
+	if( $template_redirect ) {
+		if (array_key_exists('email', $wp_query->query_vars)) {
+			include(WP_PLUGIN_DIR . '/wp-email/email-standalone.php');
+			exit();
+		} elseif (array_key_exists('emailpopup', $wp_query->query_vars)) {
+			include(WP_PLUGIN_DIR . '/wp-email/email-popup.php');
+			exit();
+		}
 	}
 }
 
@@ -1174,12 +1179,10 @@ if($_GET['sortby'] == 'email') {
 add_action('wp','email_wp_stats');
 function email_wp_stats() {
 	if(function_exists('stats_page')) {
-		if(strpos(get_option('stats_url'), $_SERVER['REQUEST_URI']) || strpos($_SERVER['REQUEST_URI'], 'stats-options.php') || strpos($_SERVER['REQUEST_URI'], 'wp-stats/wp-stats.php')) {
-			add_filter('wp_stats_page_admin_plugins', 'email_page_admin_general_stats');
-			add_filter('wp_stats_page_admin_most', 'email_page_admin_most_stats');
-			add_filter('wp_stats_page_plugins', 'email_page_general_stats');
-			add_filter('wp_stats_page_most', 'email_page_most_stats');
-		}
+		add_filter('wp_stats_page_admin_plugins', 'email_page_admin_general_stats');
+		add_filter('wp_stats_page_admin_most', 'email_page_admin_most_stats');
+		add_filter('wp_stats_page_plugins', 'email_page_general_stats');
+		add_filter('wp_stats_page_most', 'email_page_most_stats');
 	}
 }
 
