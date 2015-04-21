@@ -81,13 +81,13 @@ function email_javascripts_header() {
 add_action('wp_enqueue_scripts', 'email_scripts');
 function email_scripts() {
 	global $text_direction;
-	if(@file_exists(TEMPLATEPATH.'/email-css.css')) {
+	if(@file_exists(get_stylesheet_directory().'/email-css.css')) {
 		wp_enqueue_style('wp-email', get_stylesheet_directory_uri().'/email-css.css', false, '2.60', 'all');
 	} else {
 		wp_enqueue_style('wp-email', plugins_url('wp-email/email-css.css'), false, '2.60', 'all');
 	}
 	if('rtl' == $text_direction) {
-		if(@file_exists(TEMPLATEPATH.'/email-css-rtl.css')) {
+		if(@file_exists(get_stylesheet_directory().'/email-css-rtl.css')) {
 			wp_enqueue_style('wp-email-rtl', get_stylesheet_directory_uri().'/email-css-rtl.css', false, '2.60', 'all');
 		} else {
 			wp_enqueue_style('wp-email-rtl', plugins_url('wp-email/email-css-rtl.css'), false, '2.60', 'all');
@@ -245,10 +245,10 @@ function email_donotemail_shortcode2($atts, $content = null) {
 
 
 ### Function: Snippet Words
-if(!function_exists('snippet_words')) {
-	function snippet_words($text, $length = 0) {
-		$words = split(' ', $text);
-		return join(" ",array_slice($words, 0, $length)).'...';
+if(!function_exists( 'snippet_words' ) ) {
+	function snippet_words( $text, $length = 0 ) {
+		$words = explode(' ', $text);
+		return implode(' ', array_slice( $words, 0, $length ) ) . ' ...';
 	}
 }
 
@@ -276,25 +276,19 @@ if(!function_exists('snippet_text')) {
 
 
 ### Function: Add E-Mail Filters
-function email_addfilters() {
-	global $emailfilters_count;
-	if(get_option('k2version') === false) {
-		$loop_count = 0;
-	} else {
-		$loop_count = 1;
+function email_addfilters( $wp_query ) {
+	if ( $wp_query->is_main_query() ) {
+		add_filter( 'the_title', 'email_title' );
+		add_filter( 'the_content', 'email_form', 10, 5 );
 	}
-	if(intval($emailfilters_count) == $loop_count) {
-		add_filter('the_title', 'email_title');
-		add_filter('the_content', 'email_form', 10, 5);
-	}
-	$emailfilters_count++;
 }
 
 
 ### Function: Remove E-Mail Filters
 function email_removefilters() {
-	remove_filter('the_title', 'email_title');
-	remove_filter('the_content', 'email_form', 10, 5);
+	remove_action( 'loop_start', 'email_addfilters' );
+	remove_filter( 'the_title', 'email_title' );
+	remove_filter( 'the_content', 'email_form', 10, 5 );
 }
 
 
@@ -474,7 +468,7 @@ if(!function_exists('is_valid_email')) {
 ### Function: Check Valid Remarks (Ensure No E-Mail Injections)
 if(!function_exists('is_valid_remarks')) {
 	function is_valid_remarks($content) {
-		$injection_strings = array('apparently-to', 'cc', 'bcc', 'boundary', 'charset', 'content-disposition', 'content-type', 'content-transfer-encoding', 'errors-to', 'in-reply-to', 'message-id', 'mime-version', 'multipart/mixed', 'multipart/alternative', 'multipart/related', 'reply-to', 'x-mailer', 'x-sender', 'x-uidl');
+		$injection_strings = array('apparently-to', 'content-disposition', 'content-type', 'content-transfer-encoding', 'errors-to', 'in-reply-to', 'message-id', 'mime-version', 'multipart/mixed', 'multipart/alternative', 'multipart/related', 'reply-to', 'x-mailer', 'x-sender', 'x-uidl');
 		foreach ($injection_strings as $spam) {
 			$check = strpos(strtolower($content), $spam);
 			if ($check !== false) {
